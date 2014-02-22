@@ -1,5 +1,5 @@
 from models.protectedNames import ProtectedNames 
-from fetch_user import get_user
+from fetch_user import get_user_by_username
 import re
 
 def validate_username(username, localUser = None):
@@ -15,5 +15,5 @@ def validate_username(username, localUser = None):
     if len(username)<5 or len(username)>20:
         raise NameError("Your username must be at least 5 characters and no more than 20")
 
-    if get_user(username) is not None:
+    if get_user_by_username(username) is not None:
         raise NameError("That username is already taken")
