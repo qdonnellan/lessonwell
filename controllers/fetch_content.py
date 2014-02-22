@@ -1,4 +1,5 @@
 from models.content import Content
+from google.appengine.ext import ndb
 
 def get_content(parentKEY, contentID):
     '''
