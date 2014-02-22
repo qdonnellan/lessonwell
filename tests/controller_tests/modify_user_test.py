@@ -1,5 +1,6 @@
 from tests.main_test_handler import TestBase
 from controllers.modify_user import new_user, edit_user
+from controllers.fetch_user import get_user_by_username
 from models.user import User
 
 
@@ -31,6 +32,18 @@ class ModifyUserTest(TestBase):
         self.assertEqual(User.query().count(), 1)
         self.assertRaises(NameError, new_user, 'jamesusername', 'Bill Bradley', '2@example.com', '2')
         self.assertEqual(User.query().count(), 1)
+
+    def test_edit_existing_user(self):
+        '''
+        test that the edit user function is working as it should
+        '''
+        this_username = 'jamesusername'
+        new_user(this_username, 'James Smith', 'james@example.com', '12345678')
+        edit_user(this_username, formalName ='Nathan Smith')
+        user = get_user_by_username(this_username)
+        self.assertEqual(user.formalName, 'Nathan Smith')
+
+
 
 
 
