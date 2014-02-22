@@ -12,7 +12,6 @@ class User(ndb.Model):
     bio = ndb.TextProperty(required=False)
     pic = ndb.StringProperty(required = False)
     tagline = ndb.StringProperty(required = False)
-    contentType = ndb.StringProperty(required = True)
     stripeID = ndb.StringProperty(required = False)
     created = ndb.DateTimeProperty(auto_now_add = True)
     stripe_pub_key = ndb.StringProperty(required = False)
