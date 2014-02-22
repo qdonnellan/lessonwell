@@ -1,6 +1,6 @@
 from models.user import User
 
-def get_user(username):
+def get_user_by_username(username):
     '''
     return the user object given their username
     '''
