@@ -1,8 +1,10 @@
 from google.appengine.ext import ndb
 
-class PrivacyMap(ndb.Model):
+class Approval(ndb.Model):
     '''
-    specify the privacy connections between google users and content objects
+    specify which googleID's are approved to access which course
+
+    approval entities have parents which are course objects
     '''
     googleID = ndb.StringProperty(required = True)
     email = ndb.StringProperty(required = True)
