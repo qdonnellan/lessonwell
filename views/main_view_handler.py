@@ -2,6 +2,8 @@ import webapp2
 from jinja_environment import JinjaEnvironment
 from google.appengine.api import users
 
+from stripe_keys import pub_key
+
 class ViewHandler(webapp2.RequestHandler):
     '''
     MainHandler inherited by all views to make rendering views super easy
@@ -22,6 +24,7 @@ class ViewHandler(webapp2.RequestHandler):
         self.write(self.render_str(
             template, 
             google_users_api = users,
+            stripe_publish_key = pub_key,
             **kw
             )
         )
