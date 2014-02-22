@@ -19,10 +19,6 @@ import urllib, urllib2
 import json 
 from format import shorthand
 
-class MainPage(MainHandler):
-    def get(self):
-        self.render('home.html', homeActive = 'active')
-
 class terms(MainHandler):
     def get(self):
         self.redirect('/about?doc=terms')
@@ -279,7 +275,6 @@ app = webapp2.WSGIApplication([
     ('/ajax_quiz', quizHandler),
     ('/ajax_format', formatHandler),
     ('/ajax_standards/(\w+)', standardsHandler),
-    ('/(\w+)/donate', donate),
     ('/change_card', changeCard),
     ('/stripe_connect', stripeConnect),
     ('/db_transform', dbTransform),

@@ -6,7 +6,6 @@ from google.appengine.api import images
 from google.appengine.ext.blobstore import BlobInfo
 from format import shorthand
 
-
 import auth
 from stripeHandlers import stripe_publish_key, connect_client_id, monetize, donate
 
