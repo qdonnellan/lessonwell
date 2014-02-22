@@ -31,28 +31,22 @@ def new_content(title, body, parentKEY, contentType, privacy, listed):
     key = contentObject.put()
     return key.id()
 
-def edit_content(contentID, title, body, parentKEY, should_delete = None, privacy = None, listed = None):
+def edit_content(contentID, parentKEY, title=None, body=None, should_delete = None, privacy = None, listed = None):
     '''
-    edit existing content object
+    edit existing content object or delete object if should_delete == 'Delete'
 
     return the id of the content object
     '''
     contentObject = get_content(parentKEY, contentID)
     if should_delete == 'Delete':
-        if contentObject is not None:
-            contentObject.key.delete()
+        if contentObject is not None: contentObject.key.delete()
         return None
     else:
-        if privacy == 'true':
-            privacy = 'private'
-        else:
-            privacy = 'public'      
-        contentObject.populate(
-            title = title,
-            body = body,
-            privacy = privacy,
-            listed = listed
-            )
+        if privacy == 'true': contentObject.privacy = 'private'
+        if title: contentObject.title = title
+        if body: contentObject.body = body
+        if listed: contentObject.listed = listed
+
         key = contentObject.put()
         return key.id()
 
