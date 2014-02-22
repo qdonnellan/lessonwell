@@ -26,7 +26,7 @@ class TestBase(unittest.TestCase):
     def tearDown(self):
         self.testbed.deactivate()
 
-    def create_google_user(self, email_address, admin=False, user_id = '123'):
+    def create_google_user(self, email_address='example@gmail.com', admin=False, user_id = '123'):
         self.testbed.setup_env(
             USER_EMAIL = email_address,
             USER_ID = user_id,
