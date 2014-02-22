@@ -14,7 +14,6 @@ def new_user(username, formalName, email, googleID, stripeID=None):
         googleID = googleID, 
         stripeID = stripeID,
         email = email,
-        contentType = "user",
         parent = None,
         )
     userObject.put()
