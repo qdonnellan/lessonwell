@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="container">
+  <div class="marketing home-stuff">
+    <section>
+      <h1>Computer Science & Lessonwell</h1>
+      <h2 class="text-theme">Put your computer science/programming courses online today</h2>
+      <p class="marketing-byline">Automatic syntax highlighting, automatic line numbering</p>
+    </section>   
+    <div class="row-fluid">
+      <div class="span7">
+        <div class="flex-video widescreen">
+          <iframe src="https://www.youtube-nocookie.com/embed/NvK2vftHcPU" frameborder="0" allowfullscreen=""></iframe>
+        </div>
+      </div>
+      <div class="span4 offset1">
+        <h1><i class="icon-code text-success"></i></h1>
+        <h2>Forget about styling, just type and we'll do the rest.</h2>
+        <p class="marketing-byline">Put your computer science/coding lessons online today</p>
+        <a href="/pricing" class="btn btn-primary btn-large"><i class="icon-chevron-sign-right"></i> Start Here</a>
+      </div>
+      <div class="span12">
+        <hr class="soften">
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <h2>Create stylized, syntax-highlighted code blocks with minimal typing</h2>
+        <p class="marketing-byline">Wrap your code with our code-tags, and let lessonwell take it from there</p>
+      </div>
+    </div>
+    <div class="row-fluid">
+      
+      <div class="span5">
+
+<pre style="text-align:left !important" class="example-code">code::
+&lt;html&gt;
+  &lt;div class="awesome-div"&gt;
+    &lt;p&gt;
+      Hello World!
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/html&gt;
+::code
+</pre>
+      </div>
+      <div class="span2 hidden-phone">
+        <h1><i class="icon-circle-arrow-right"></i></h1>
+      </div>
+      <div class="span5">
+        <br>
+<pre style="text-align:left !important" class="prettyprint linenums">
+&lt;html&gt;
+  &lt;div class="awesome-div"&gt;
+    &lt;p&gt;
+      Hello World!
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/html&gt;
+</pre>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <hr class="soften">
+      </div>
+      <div class="span12">
+        <h2>Embed code blocks into instant feedback multiple choice quizzes</h2>
+        <p class="marketing-byline">Quiz your students and provide them instant feedback</p>
+      </div>
+    </div>
+    <div class="row-fluid">
+      
+      <div class="span5">
+        <p class="hidden-phone"><br><br><br></p>
+
+<pre style="text-align:left !important" class="example-code">quiz::
+What is missing in the first line of the code below?
+
+code::
+def my_func(x)
+  print x*2
+::code
+
+@@ A semi-colon at the end of the line
+@@ A colon at the end of the line**
+@@ Nothing, this code is perfectly fine!
+::quiz
+</pre>
+      </div>
+      <div class="span2 hidden-phone">
+        <br><br><br><br><br>
+        <h1><i class="icon-circle-arrow-right"></i></h1>
+      </div>
+      <div class="span5" style="text-align:left !important;">
+        {{sample_quiz | safe}}  
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+{% endblock %}

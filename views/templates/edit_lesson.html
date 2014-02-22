@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% import 'common.html' as common with context %}
+
+{% block randomjs %}<script src="/js/qselection.js" type="text/javascript"></script>{% endblock %}
+
+{% block side_list %}
+	<ul class="side-list">
+		{{ common.course_link() }}
+		<li>
+			<a class="unit-link unit-active" href="/{{user.username}}/course{{course.key.id()}}/unit{{unit.key.id()}}">
+				<p><i class="icon-caret-down"></i> {{unit.title}}</p>
+			</a>
+		</li>
+		{% if lesson is none %}
+		{% set edit_link_class = "lesson-edit-link" %}
+		<li > 
+				<a href="#" class="lesson-link"><p><i class="icon-caret-down"></i> Add Lesson</p></a>			
+		</li>
+		{% else %}
+		{% set edit_link_class = "lesson-sub-edit-link" %}
+		<li >
+			<a  class="lesson-link" href="/{{user.username}}/course{{course.key.id()}}/unit{{unit.key.id()}}?lesson=lesson{{lesson.key.id()}}">
+				<p><i class="icon-caret-down"></i> {{lesson.title}}</p>
+			</a>
+		</li>
+		<li >
+			<a class="lesson-edit-link" href="#"><p><i class="icon-caret-down"></i> Edit Lesson</p></a>
+		</li>
+		{% endif %}
+	</ul>
+	<div class="tabbable" >
+		<ul class="side-list">
+				<li class="{% if panel not in ['attach', 'standards']%}active{% endif %}">
+					<a class="{{edit_link_class}}" href="#lesson-information" data-toggle="tab">
+						<p>Basic Information </p>
+					</a>
+				</li>
+				{% if lesson is not none %}			
+				<li class="{% if panel == 'attach' %}active{% endif %}">
+					<a class="{{edit_link_class}}" href="#lesson-attachments" data-toggle="tab">
+						<p>Attachments </p>
+					</a>
+				</li>
+				{% endif %}
+				<li class="{% if panel == 'standards' %}active{% endif %}">
+					<a class="{{edit_link_class}}" href="#lesson-standards" data-toggle="tab">
+						<p>Learning Standards</p>
+					</a>
+				</li>	
+				{% if lesson is not none %}					
+				<li >
+					<a class="{{edit_link_class}}" href="#delete-lesson" data-toggle="tab">
+						<p>Delete Lesson</p>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+{% endblock %}
+
+{% block body %}
+
+{% if status == True %}
+<div class="container">
+	<div class="row">
+			<div class="tab-content pageContents">
+				<div class="tab-pane {% if panel not in ['attach', 'standards']%}active{% endif %} fade in" id ="lesson-information">
+					<div class="page-header">
+						<h1>Edit Lesson: Basic Information</h1>
+					</div>
+					<form class="form-horizontal" method="post">
+						<div class="form-group">
+							<label class="control-label col-lg-2" for="inputLessonName">Lesson Name</label>
+							<div class="col-lg-10">
+								{% if lesson is not none %}
+									<input class="form-control" type="text" id="inputLessonName" name="lessonName" value='{{lesson.title}}'>
+								{% else %}
+									<input class="font-control" type="text" id="inputLessonName" name="lessonName">
+								{% endif %}
+								<span class="help-block">Your lessons will be ordered alphabetically by their names (numbers first, then capital letters, then lowercase)</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-lg-2" for="inputContent">Content</label>
+							<div class="col-lg-10">
+								<span class="help-block">To insert an image, youtube/vimeo video, or link, just paste the link to that resource into the field below. Lessonwell will automatically retrieve that image/video/link and format it correctly</span>
+								<p>
+					      	{{ common.shorthand_buttons() }}
+					      </p>
+								<textarea class="form-control col-lg-12 content-area" id="inputContent" name="content" rows="15" placeholder="use the shorthand to quickly make a great looking lesson">{% if lesson is not none %}{{lesson.body}}{% endif %}</textarea>
+								
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" name="save_lesson" class="btn btn-primary">Save Lesson</button>
+							</div>
+						</div>
+									
+					</form>
+				</div>
+				<div class="tab-pane fade in {% if panel == 'standards' %}active{% endif %}" id ="lesson-standards">
+					<div class="page-header">
+						<h2><i class="icon-certificate text-theme"></i> Learning Standards</h2>
+					</div>
+					<div>
+						<!-- include 'teks_sections.html' -->
+						Coming Soon
+					</div>
+				</div>
+				{% if lesson is not none %}
+				<div class="tab-pane fade in {% if panel == 'attach' %}active{% endif %}" id ="lesson-attachments">
+					<div class="page-header">
+						<h1>Edit Lesson: Attachments</h1>
+					</div>
+					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{upload_url}}">
+						<div class="control-group">
+							<label class="control-label" >Attach File: </label>
+							<div class="controls">
+								<div class="fileupload fileupload-new" data-provides="fileupload">
+								  <span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" name="file" /></span>
+								  <span class="fileupload-preview"></span>
+								  <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+								</div>
+								<button type="submit" name="upload" class="btn btn-primary btn-small">
+									<i class="icon-cloud-upload"></i> Upload Attachments
+								</button>		
+							</div>
+						</div>	
+					</form>
+					<div class='well'>
+						<h4>Current Attachments</h4>
+						{% if lesson.blobs not in [none, '', {}] %}
+							{% for key in lesson.blobs %}
+								<p>
+									<a class="btn btn-mini btn-danger" 
+										href="/delete_attachment/{{key}}/{{course.key.id()}}/{{unit.key.id()}}/{{lesson.key.id()}}">
+										remove
+									</a>
+									<i class="muted icon-paper-clip"></i>
+									<a href="/attachment/{{lesson.blobs[key]}}" target="blank">
+										{{ BlobInfo.get(lesson.blobs[key]).filename }}
+									</a>
+
+								</p>
+							{% endfor %}
+						{% else %}
+							<p class="marketing-byline">No attachments found</p>
+						{% endif %}
+					</div>
+				</div>
+				{% endif %}
+				{% if lesson is not none %}
+				<div class="tab-pane fade in" id ="delete-lesson">
+					<form class="form" method="post">
+						<div class="page-header">
+							<h2><i class="icon-trash text-error"></i> Delete This Lesson</h2>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								
+								<span class="help-block">You can delete this lesson forever by: </span>
+								<input type="text" id="should_delete" name="should_delete">
+									<ol>
+										<li>typing <span class="text-error">Delete</span> in the box above (capitalization is important)</li>
+										<li>Click "Delete Lesson" below</li>
+									</ol>
+								<span class="help-bloc text-error"><strong>Deleting your content is permanent</strong></span>
+								<div class="controls marketing">
+									<button type="submit" class="btn btn-danger" name="save_lesson">Delete Lesson</button>
+								</div>
+							</div>
+						</div>		
+					</form>						
+				</div>
+				{% endif %}	
+			</div>
+	</div>
+</div>
+
+{% else %}
+	<div class="container">
+		<div class="marketing">
+			<h1>Woops!</h1>
+			<p class="marketing-byline">You can't add any more lessons to this unit!<p>
+				<hr class='soften'>
+			<h1>Upgrade today</h1>
+			<p class="marketing-byline">Go to your profile, and upgrade your subscription to <strong>Basic</strong> to create unlimited lessons in your course</p>
+			<p><a class="btn btn-warning btn-large" href="/pricing "><i class="icon-edit icon-white icon-circle-arrow-up"></i> Upgrade Today</a>
+			    </p>
+		</div>	
+	</div>
+{% endif %}
+
+{% endblock %}

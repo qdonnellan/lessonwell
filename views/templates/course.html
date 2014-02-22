@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% import 'common.html' as common with context %}
+{% block side_list %}
+<ul class="side-list" > 
+	{{common.course_link(active=true)}}  
+	{% for unit in units %}  
+  <li>
+  	<a href="/{{user.username}}/course{{course.key.id()}}/unit{{unit.key.id()}}" class="unit-link">
+  		<p><i class="icon-caret-right"></i> {{unit.title}}</p>
+  	</a>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block body %}
+{% if access.status in ['approved', 'paid'] or course.privacy in ['public', '', none] %}
+	<div class="visible-xs container">
+		<div class="xs-header">
+			<h1>{{course.title}}</h1>
+			<p class="lead">{{course.body}}</p>
+			<div class="xs-nav-buttons visible-xs">
+				<a href="/{{user.username}}" class="btn btn-default btn-lg"><i class='icon-chevron-sign-left'></i> Back to teacher profile</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="mobile-unit-links col-lg-12">
+				<ul>
+					{% for unit in units %}
+					<li>
+						<a href="/{{user.username}}/course{{course.key.id()}}/unit{{unit.key.id()}}">
+							<p><i class="icon-chevron-sign-right pull-right"></i> {{unit.title}}<br><span>{{unit.body}}</span></p>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="big-container container hidden-xs">
+		<h1>{{course.title}}</h1>
+		<p class="lead">{{course.body}}</p>
+		<div>
+			{% if user.username == localUser.username %}
+				<a href="/add_unit/{{course.key.id()}}" class="btn btn-primary btn-lg"><i class="icon-plus"></i> New unit</a>				
+				<a href="/edit_course/{{course.key.id()}}" class="btn btn-success btn-lg">
+					<i class="icon-edit"></i> Edit this course
+				</a>
+			{% endif %}		
+		</div>		
+		{% if localUser.pending and (course.key.id() in localUser.pending) %}								
+		<div class="notification-div alert alert-warning col-lg-6 col-lg-offset-3">
+			<p><strong>Pending Registrations</strong> This course has pending student access requests. </p>
+			<p>
+				<a href="/edit_course/{{course.key.id()}}?panel=access" class="btn btn-lg btn-warning">
+					<strong><i class="icon-key"></i> Manage Course Access</strong>
+				</a>
+			</p>
+		</div>
+	{% endif %}		
+	</div>
+	
+{% else %}
+	<div class="container">
+		<div class="marketing">
+			{% if course.access_amount > 0 and customer.plan in ['max', 'plus', 'basic'] %}
+				<h1><i class="icon-money icon-4x text-success"></i><h1>
+				<h1>This course has an access fee</h1>
+			{% else %}
+				<h1><i class="icon-lock icon-4x text-theme"></i><h1>
+				<h1>This is a private course</h1>
+			{% endif %}
+				
+				{% if current_google_user %}
+				<p class="lead">Now that your Google Account is linked, you may request individual permission to view this course {% if course.access_amount > 0 and customer.plan in ['max', 'plus', 'basic'] %} or purchase access for the one-time price of ${{course.access_amount}}{% endif %}.</p>
+					<p>
+						<button disabled class="btn btn-primary">Currently logged in as <strong>{{current_google_user.email()}}</strong></button>
+					</p>
+					<br>
+					<div class="row">
+						<div class="col-lg-12">
+						{% if course.access_amount > 0 and customer.plan in ['max', 'plus', 'basic'] %}
+							<div class="well col-lg-6">
+								<h4>Option 1: Purchase Access</h4>
+								<p class="lead muted">
+									You may purchase access to this course for ${{course.access_amount}}. By clicking the "Purchase Access" button below you agree that:
+									<ol class="purchase-terms muted">
+										<li>You have read and understand the lessonwell <a href="/tos" target="_blank">Terms of Service</a></li>
+										<li>This is a non-refundable purchase with no warranties or guarantees of any kind provided by lessonwell or the author of this course</li>
+									</ol>
+									<br>
+								</p>
+								<form method="post">
+								  <script 
+								  	src="https://checkout.stripe.com/v2/checkout.js" 
+								  	class="stripe-button"
+								  	data-currency = 'usd'
+								    data-key="{{user.stripe_pub_key}}"
+								    data-amount = '{{course.access_amount*100}}'
+								    data-name = '{{course.title}}'
+								    data-description = "A course by: {{user.username}}"
+								    data-panel-label = "Purchase Access: "
+								    data-label = "Purchase Access for ${{course.access_amount}}"
+								    >
+							    </script>
+								</form>
+							</div>							
+						{% endif %}
+							<div class="well col-lg-6">
+								<h4>{% if course.access_amount >0 and customer.plan in ['max', 'plus', 'basic'] %}Option 2: {% endif %}Personally Request Access</h4>
+								<p class="lead">
+									<span class="muted">Please enter your full name{% if course.passphrase not in ['', none] %}, the correct passphrase,{% endif %} then click "Request Access."</span>
+								</p>
+								{% if access.status == 'pending' %}
+									<p><strong class="text-theme">Your request to access this course is pending. Check back for updates</strong></p>
+								{% elif access.status == 'denied' %}
+									<p><strong class="text-error">Your request to access this course {% if course.access_amount >0 %}without paying{% endif %} has been denied</strong></p>
+								{% else %}			
+								{% if passphrase_error == 'true' %}
+									<p><strong class="text-error"><i class="icon-ban-circle"></i> Invalid Passphrase</strong></p>
+								{% endif %}		
+									<form method="post" class="form-inline">
+										<p>
+											<input type="text" name="formalName" class="form-control" placeholder="James Smith">
+											{% if course.passphrase not in ['', none] %}
+												<input type="text" name="passphrase" class="form-control" placeholder="passphrase">
+											{% endif %}
+										</p>
+										<p>
+											<button class="btn btn-success" type="submit" name="request_access"><i class="icon-key"></i> Request Access</button>
+										</p>
+										
+									</form>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+					
+				{% else %}
+					{% if course.access_amount > 0 and customer.plan in ['max', 'plus', 'basic'] %}
+						<p class="lead">The teacher has set an access fee for this course. To gain access you must first sign in with your Google Account. After you have logged into a Google Account you may pay for access. Your access is associated with your Google Account so you will be able to access this course on any computer that you can log into your Google Account.</p>
+					{% else %}
+						<p class="lead">The teacher has made the content of this course private. To gain access you must first sign in with your Google Account. Only then you may request teacher approval.</p>							
+					{% endif %}
+					<a class="btn btn-large btn-primary" href="{{loginURL}}">Sign in with Google</a>
+				{% endif %}
+			<hr class="soften">
+		</div>
+	</div>
+{% endif %}
+
+{% endblock %}

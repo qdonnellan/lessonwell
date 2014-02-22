@@ -1,0 +1,38 @@
+<div class="marketing thumbnail">
+	<h2>{{course.title}}</h2>
+	<p>
+		<span class="muted">created by: </span>
+		<a href="/{{course.key.parent().get().username}}">{{course.key.parent().get().formalName}}</a>
+	</p>	 
+	<div class="media">
+		<a class="pull-left" href="/{{course.key.parent().get().username}}/course{{course.key.id()}}">
+		{% if course.blobs is none or course.blobs['cover_image'] is none %}
+			<img class="media-object courseImage" src="http://placehold.it/80x80&text=no image" alt="">
+		{% else %}
+			<img class="media-object courseImage" src="{{images.get_serving_url(course.blobs['cover_image'])}}" alt="">
+		{% endif %}
+		</a>
+		<div class="media-body">				
+			<p><small>{{course.body}}</small></p>
+		</div>																						
+	</div>
+		<div class="bs-docs-social course-bottom">
+		<p>
+			<div class="btn-group">
+				{% if course.privacy == 'private' %}									
+					{% if course.access_amount > 0 %}
+						<a class='btn disabled'><i class="icon-tags text-success icon-large"></i>  ${{course.access_amount}}.00</a>
+					{% else %}
+						<a class='btn disabled'><i class="icon-lock text-error icon-large"></i>  Private </a>
+					{% endif %}	
+				{% else %}
+						<a class='btn  disabled'><i class="icon-globe text-theme icon-large"></i>  Public</a>	
+				{% endif %}
+				<a class="btn " href="/{{course.key.parent().get().username}}/course{{course.key.id()}}">
+					<i class="icon-search"></i> Explore Course
+				</a>
+			</div>	
+		</p>
+	</div>
+</div>
+<br>

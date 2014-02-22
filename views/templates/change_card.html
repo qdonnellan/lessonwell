@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block side_list %}
+<ul class="side-list">
+    <li class="active">
+        <a href="#" class="course-link"><i class="icon-check-empty"></i> Change Payment Information</a>
+    </li>
+    <li class="completed-step">
+        <a href="#" class="course-link"><i class="icon-check-empty"></i> Success</a>
+    </li>
+
+</ul>
+
+{% endblock %}
+
+{% block stripe %}
+                <!-- The required Stripe lib -->
+                <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+
+                <!-- jQuery is used only for this example; it isn't required to use Stripe -->
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+                <script type="text/javascript">
+                    // This identifies your website in the createToken call below
+                    Stripe.setPublishableKey("{{stripe_publish_key}}");
+
+                    var stripeResponseHandler = function(status, response) {
+                        var $form = $('#payment-form');
+
+                        if (response.error) {
+                            // Show the errors on the form
+                            $form.find('.payment-errors').text(response.error.message);
+                            $form.find('button').prop('disabled', false);
+                            } else {
+                                // token contains id, last4, and card type
+                                var token = response.id;
+                                // Insert the token into the form so it gets submitted to the server
+                                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+                                // and re-submit
+                                $form.get(0).submit();
+                            }
+                        };
+
+                    jQuery(function($) {
+                        $('#payment-form').submit(function(e) {
+                            var $form = $(this);
+
+                            // Disable the submit button to prevent repeated clicks
+                            $form.find('button').prop('disabled', true);
+
+                            Stripe.createToken($form, stripeResponseHandler);
+
+                            // Prevent the form from submitting with the default action
+                            return false;
+                        });
+                    });
+                </script>
+{% endblock %}
+
+{% block body %}
+<div class="container">    
+    <div class="page-header">
+        <h1>Payment Information</h1>   
+    </div> 
+
+    <div class="row">
+        <div class="row">
+            <div class="alert alert-error" style="display:{{alert.errorDisplay}}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Oh snap!</strong>{{alert.errorMsg}}
+            </div>        
+        </div>     
+        <div>   
+            <form class="form-horizontal" method="POST" action = '', id="payment-form">
+                <div class="form-group">
+                        <label class="col-lg-2 control-label">Card on File:</label>
+                    {% if localCustomer.exists %}
+                        {% if localCustomer.customer.active_card is not none %}                        
+                                <div class="col-lg-6 ">
+                                    <input class="input form-control" type="text" placeholder = "&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; {{localCustomer.customer.active_card.last4}}" disabled>
+                                    <span class="help-block"><span class="muted">If you wish to use a different card, simply type your information in below. Otherwise, leave the fields below blank. If you no longer wish to be charged by lessonwell, simply downgrade to the <a href="/sign_up/free?upgrade=true">free plan</a></span></span>
+                                </div>                            
+                        {% else %}
+                            <div class="col-lg-6">
+                                <input class="form-control input" type="text" placeholder = "NO CARD ON FILE" disabled>
+                                <span class="help-block"><span class="muted">If you are subscribed to a paid plan, you must have a card on file</span></span>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="col-lg-6">
+                            <input class="form-control input" type="text" placeholder = "NO CARD ON FILE" disabled>
+                            <span class="help-block"><span class="muted">You must have a card on file if you wish to subscribe to a paid plan.</span></span>
+                        </div>   
+                    {% endif %}                        
+                </div>       
+                    
+                <div class="form-group">
+                    <div class="col-lg-10"> 
+                        <h4>Enter you new card information below</h4>
+                        <span class="help-block"><span class="muted">Only if you wish to use a different card than the one on file</span></span>
+                    
+                        <strong><span class="payment-errors text-danger"></span></strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" col-lg-2 control-label">Card Number: </label>
+                    <div class="col-lg-6">
+                        <input class="form-control" type="text" data-stripe="number" name="c-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;">
+                        <span class="help-block"><span class="muted">Numbers only, no spaces or hyphens</span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Expiration Date: </label>
+                    <div class="col-lg-6">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="c-exp-month" data-stripe="exp-month" placeholder="MM" >
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="c-exp-year" data-stripe="exp-year" placeholder="YYYY">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Security Code: </label>
+                    <div class="col-lg-6">         
+                        <input type="text" class="form-control" data-stripe="cvc"  name="c-cvc" placeholder="CVC code">          
+                    </div>
+                </div>               
+                
+                <div class="form-group">
+                    <div class="col-lg-6 col-lg-offset-2">
+                        <label class="checkbox">
+                            <input type="checkbox" name="termsChecked" value="sdfSJSkjnsd"> <strong>I have read and agree to the lessonwell <a href="/tos" target="_blank">Terms of Service</a></strong>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-6 col-lg-offset-2">
+                        <button type="submit" name="newUser" class="btn btn-primary">Update payment information</button>
+                        <a href="http://www.stripe.com" target="_blank">
+                        <img src="/img/stripe_logo.png" class="pull-right">
+                        </a>     
+                    </div>            
+                </div>  
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

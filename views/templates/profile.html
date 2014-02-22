@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+
+{% block side_list %}
+<ul class="side-list">      
+	{% for course in courses %} 
+		{% import 'common.html' as common with context %} 
+		{{ common.course_link() }}
+  {% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block body %}
+	<div class="visible-xs container">
+		<div class="xs-header">
+			<h1>{{user.formalName}}</h1>
+			<p class="lead">{{user.tagline}}</p>
+		</div>
+		<div class="row">
+			<div class="mobile-unit-links col-lg-12">
+				<ul>
+					{% for course in courses %}
+					<li>
+						<a href="/{{user.username}}/course{{course.key.id()}}">
+							<p><i class="icon-chevron-sign-right pull-right"></i> {{course.title}}<br><span>{{course.body}}</span></p>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+
+		<div class="alert alert-error span7 offset2" style="display:{{alert.errorDisplay}}">
+			<br>
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Oh snap! </strong>{{alert.errorMsg}}
+		</div>
+		<div>
+			<div class="col-lg-12">
+				{% if inactiveContent.exists and (user.username == localUser.username) %}
+				<br>
+					<section id="profileCourses">
+						<div class="alert alert-warning">
+							<p><strong>You have {{inactiveContent.count}} de-activated course(s).</strong>. This happens when you create a course on the plus plan then downgrade to the free plan. We automatically de-activate the courses by age, leaving the first course(s) you created active. Upgrade again to re-activate these courses. We will not delete your content, even it it happens to be deactivated.</p>
+							<p style="text-align:center">
+								<a class="btn btn-warning" href="/sign_up/plus?upgrade=true">Upgrade</a>
+							</p>
+						</div>
+					</section>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="big-container container hidden-xs">
+		<h1>{{user.formalName}}</h1>
+		<p class="lead">{{user.tagline}}</p>
+		<div>
+			{% if user.username == localUser.username %}
+				<a href="/new_course" class="btn btn-primary btn-lg"><i class="icon-plus"></i> New Course</a>				
+				<a href="/edit_profile" class="btn btn-success btn-lg">
+					<i class="icon-edit"></i> Edit your Account
+				</a>
+			{% endif %}		
+		</div>	
+		<div class="lesson-content ">
+			<p class="user-profile">
+			{% if bio %}
+				{{bio | safe}}
+			{% else %}
+				{% if user.username == localUser.username %}
+					You don't have anything in your bio yet, <a href="/edit_profile">edit your profile</a> to add an awesome description of yourself!
+				{% else %}
+
+				{% endif %}
+
+			{% endif %}
+			</p>
+		</div>		
+	</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,29 @@
+application: lessonwell
+version: 2
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /css
+  static_dir: public/css
+
+- url: /js
+  static_dir: public/js
+
+- url: /img
+  static_dir: public/img
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: .*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: "2.5.1"
+
+- name: jinja2
+  version: "2.6"
