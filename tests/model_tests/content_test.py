@@ -1,7 +1,6 @@
 from tests.main_test_handler import TestBase
 from models.content import Content
 import unittest
-from google.appengine.ext.db import BadValueError
 
 class ContentModelTest(TestBase):
     '''
