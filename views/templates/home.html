@@ -17,10 +17,10 @@
 			</div>
 		</div>
 		<p>
-			{% if localUser %}
-				<a href="/{{localUser.username}}" class="btn btn-primary btn-lg">View Your Profile</a>
+			{% if username %}
+				<a href="/{{username}}" class="btn btn-primary btn-lg">View Your Profile</a>
 			{% endif %}
-			<a href="/sign_up/free" class="btn btn-success btn-lg">Start Today for Free</a>
+			<a href="/sign_up" class="btn btn-success btn-lg">Start Today for Free</a>
 			
 		</p>
 	</div>
@@ -38,7 +38,7 @@
 		<h1>FREE</h1>
 		<p class="lead sub-sub-lead"><strong>lessonwell</strong> is free to use, and only takes seconds to set up</p>
 		<p class="center-button-div">
-		<a href="/sign_up/free" class="btn btn-lg btn-warning">Start Today</a>
+		<a href="/sign_up" class="btn btn-lg btn-warning">Start Today</a>
 		</p>
 	</div>
 	
