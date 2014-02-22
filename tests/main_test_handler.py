@@ -43,10 +43,10 @@ class TestBase(unittest.TestCase):
         new_user(username = username, email='test@example.com', formalName ='James Smith', googleID = '123')
         return get_user_by_username(username)
 
-    def create_sample_course(self, title='foo', body='bar', user = None):
+    def create_sample_course(self, title='foo', body='bar', user = None, listed=None, privacy = None):
         if not user:
             user = self.create_and_return_local_user()
-        content_id = new_content(title=title, body=body, parentKEY=user.key, contentType='course', privacy=None, listed=None)
+        content_id = new_content(title=title, body=body, parentKEY=user.key, contentType='course', privacy=privacy, listed=listed)
         return content_id
 
 
