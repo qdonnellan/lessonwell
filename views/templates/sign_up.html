@@ -1,246 +1,87 @@
 {% extends "base.html" %}
 
 {% block side_list %}
-{% if should_upgrade == 'true' %}
-<ul class="side-list">
-  <li class="active">
-    <a class="course-link" href="#"><i class="icon-check-empty"></i> Change Subscription</a>
-  </li>
-  <li class='completed-step'>
-    <a class="course-link"><i class="icon-check-empty"></i> Change Complete</a>
-  </li>
-</ul>
-{% else %}
-<ul class="side-list">
-  <li>
-    <a class="course-link" href="/link/{{plan.id}}"><i class="icon-check"></i> Step 1: Link Google Account</a>
-  </li>
-  <li class="active">
-    <a class="course-link" href="#"><i class="icon-check-empty"></i> Step 2: Personal Information</a>
-  </li>
-  <li class='completed-step'>
-    <a class="course-link"><i class="icon-check-empty"></i> Registration Complete</a>
-  </li>
-</ul>
-
-{% endif %}
-
+    <ul class="side-list">
+      <li>
+        <a class="course-link" href="/link/{{plan.id}}"><i class="icon-check"></i> Step 1: Link Google Account</a>
+      </li>
+      <li class="active">
+        <a class="course-link" href="#"><i class="icon-check-empty"></i> Step 2: Personal Information</a>
+      </li>
+      <li class='completed-step'>
+        <a class="course-link"><i class="icon-check-empty"></i> Registration Complete</a>
+      </li>
+    </ul>
 {% endblock %}
-    {% block stripe %}
-        {% if plan.id != 'free' and not localCustomer.exists %}
-            <!-- The required Stripe lib -->
-            <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 
-            <!-- jQuery is used only for this example; it isn't required to use Stripe -->
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-            <script type="text/javascript">
-                // This identifies your website in the createToken call below
-                Stripe.setPublishableKey("{{stripe_publish_key}}");
-
-                var stripeResponseHandler = function(status, response) {
-                    var $form = $('#payment-form');
-
-                    if (response.error) {
-                        // Show the errors on the form
-                        $form.find('.payment-errors').text(response.error.message);
-                        $form.find('button').prop('disabled', false);
-                        } else {
-                            // token contains id, last4, and card type
-                            var token = response.id;
-                            // Insert the token into the form so it gets submitted to the server
-                            $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-                            // and re-submit
-                            $form.get(0).submit();
-                        }
-                    };
-
-                jQuery(function($) {
-                    $('#payment-form').submit(function(e) {
-                        var $form = $(this);
-
-                        // Disable the submit button to prevent repeated clicks
-                        $form.find('button').prop('disabled', true);
-
-                        Stripe.createToken($form, stripeResponseHandler);
-
-                        // Prevent the form from submitting with the default action
-                        return false;
-                    });
-                });
-            </script>
-        {% endif %}
-    {% endblock %}
 
 {% block body %}
 
 <div class="container">    
-    {% if not localUser.exists %} 
-        <div class="page-header">
-            <h1>Personal Information
-            <a href="http://www.stripe.com" target="_blank">
-                <img src="/img/stripe_logo.png" class="pull-right">
-            </a></h1>    
-             
-            
-        </div> 
-    {% elif localCustomer.exists %}
-        <div class="page-header">
-            <h1>Change Plan: {{localCustomer.customer.subscription.plan.id | upper}} <i class="icon-arrow-right"></i> {{plan.id | upper}}
-            <a href="http://www.stripe.com" target="_blank">
-                <img src="/img/stripe_logo.png" class="pull-right">
-            </a> </h1>
-            
-        </div>
-    {% else %}
-        <div class="page-header">
-            <h1>We could not determine you current plan...
-            <a href="http://www.stripe.com" target="_blank">
-                <img src="/img/stripe_logo.png" class="pull-right">
-            </a> </h1>
-
-        </div>
-    {% endif %}
-
+    <div class="page-header">
+        <h1>Personal Information
+        <a href="http://www.stripe.com" target="_blank"><img src="/img/stripe_logo.png" class="pull-right"></a></h1>    
+    </div> 
     <div>
+        {% if alert %}
         <div>
-            <div class="alert alert-danger" style="display:{{alert.errorDisplay}}">
+            <div class="alert alert-danger">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Oh snap!</strong>{{alert.errorMsg}}
             </div>        
-        </div>     
+        </div>  
+        {% endif %}   
         <div>   
-            <form class="form-horizontal" method="post" action = '', id="payment-form">
-                {% if not localUser.exists %}       
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label" for="inputFormalname">Your Name</label>
-                        <div class="col-lg-6">
-                            <input type="text" id="inputFormalname" name="formalName"  class="form-control">
-                        </div>
+            <form class="form-horizontal" method="post" action = '', id="payment-form">      
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="inputFormalname">Your Name</label>
+                    <div class="col-lg-6">
+                        <input type="text" id="inputFormalname" name="formalName"  class="form-control">
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label" for="inputUsername">Username</label>
-                        <div class="col-lg-6">
-                            <input type="text" id="inputUsername" name="username" class="form-control">
-                            <span class="help-inline"><strong class="text-danger">You will not be able to change your username</strong></span>
-                            <span class="help-block"><span class="muted">Your username will be used to link to your courses. For example, if you choose "roboto" your courses will be at <b>lessonwell.com/roboto</b></span></span>
-                            <span class="help-block"><span class="muted">Your username may only contatin <strong>letters or numbers</strong> and should be <strong>between 5 and 20 characters</strong>.</span></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label  col-lg-2" for="inputUsername">Email</label>
-                        <div class="col-lg-6">           
-                            <input class="input form-control" id="disabledInput" type="text" placeholder = "{{googleEmail}}" disabled>            
-                            <span class="help-block"><span class="muted">Currently, you cannot change your email address. We will only use this email to contact you if we have important information or issues concerning your account. We also use your email to help us identify your payment information. We will never spam you, or give your email to anyone else. </span></span>
-                        </div>
-                    </div>
-                {% endif %}                            
-
-                <input name="optionsPlan" value="{{plan.id}}" type="hidden">
-
-   
-                {% if localCustomer.exists %}
-                    <div class="form-group">
-                            <label class="col-lg-2 control-label">Card on File:</label>
-                        {% if localCustomer.customer.active_card is not none %}                        
-                                <div class="col-lg-6">
-                                    <input class="input form-control" type="text" placeholder = "&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; {{localCustomer.customer.active_card.last4}}" disabled>
-                                    <span class="help-block"><span class="muted">If you wish to use a different card, simply type your information in below. Otherwise, leave the fields below blank.</span></span>
-                                </div>                            
-                        {% else %}
-                                <div class="col-lg-6">
-                                    <input class="input form-control" type="text" placeholder = "NO CARD ON FILE" disabled>
-                                    <span class="help-block"><span class="muted">If you are subscribing to a paid plan from a free plan, you will need to register a card with us.</span></span>
-                                </div> 
-                        {% endif %}                        
-                    </div>
-
-                    
-                {% endif %}
-                {% if plan.id != 'free'%}        
-                    
-                    <div class="form-group">
-                        <div class="col-lg-6"> 
-                            {% if localCustomer.exists %}
-                                <div class="">
-                                    <h4>Enter you new card information below</h4>
-                                    <span class="help-block"><span class="text-error">Only if you wish to use a different card than the one on file</span></span>
-                                </div>
-                            {% endif %}
-                            <strong><span class="payment-errors text-error"></span></strong>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Card Number: </label>
-                        <div class="col-lg-6">
-                            <input class="form-control" type="text" data-stripe="number" name="c-number" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;">
-                            <span class="help-block"><span class="muted">Numbers only, no spaces or hyphens</span></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Expiration Date: </label>
-                        <div class="col-lg-6">
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" class="input-mini" name="c-exp-month" data-stripe="exp-month" placeholder="MM" >
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="text" class="input-mini" name="c-exp-year" data-stripe="exp-year" placeholder="YYYY">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Security Code: </label>
-                        <div class="col-lg-6">         
-                            <input class="form-control" type="text" class="input-small" data-stripe="cvc"  name="c-cvc" placeholder="CVC code">          
-                        </div>
-                    </div> 
-                    {% if localCustomer.exists %}
-                        {% if localCustomer.expiredTrial == False %}
-                            <div class="form-group">
-                                <label class="control-label"></label>
-                                <div class="controls col-lg-12">
-                                    <h4>You are about to subcsribe to the {{plan.name}} plan</h4>
-                                    <strong>Your 30-day free trial ends on {{localCustomer.trialEnd}}.</strong> After this date your card will be charged ${{planAmount}} per month until you change or cancel your subscription plan. <span class="muted">You may change your subscription at anytime, just go to your profile and edit your account. Your plans are pro-rated, so you only pay what you use (if you cancel after 5 days, you only pay for 5 days)</span>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% else %}
-                        <div class="form-group">
-                            <label class="control-label"></label>
-                            <div class="controls col-lg-12">
-                                <h4>You are about to subcsribe to the {{plan.name}} plan</h4>
-                                <strong>Your 30-day free trial ends on {{trialEnd}}.</strong> After this date your card will be charged ${{planAmount}} per month until you change or cancel your subscription plan. <span class="muted">You may change your subscription at anytime, just go to your profile and edit your account. Your plans are pro-rated, so you only pay what you use (if you cancel after 5 days, you only pay for 5 days)</span>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% else %}
-                    <div class="form-group">
-                        <label class="control-label col-lg-12"></label>
-                        <div class="controls col-lg-12">
-                            <h4>You are about to subcsribe to the {{plan.name}} plan</h4>
-                            <strong>The free plan is free!</strong> If you have a card on file with us, it will not be charged unless you change your plan. <span class="muted">You may change your subscription at anytime, just go to your profile and edit your account. Your plans are pro-rated, so you only pay what you use (if you cancel after 5 days, you only pay for 5 days)</span>
-                        </div>
-                    </div>
-                {% endif %}                
-
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <h4>By submitting this information you acknowledge that you have read the lessonwell <a href="/tos" target="_blank">Terms of Service</a></h4>
-                        
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-12 sign-up-button">
-                    {% if localCustomer.exists %}
-                        <button type="submit" name="updateUser" class=" btn btn-primary btn-lg">Update my Subscription!</button>
-                    {% else %}         
-                        <button type="submit" name="newUser" class=" btn btn-primary btn-lg">Create my Account!</button>
-                    {% endif %}
-                        
-                </div>            
-            </div>  
+                <div class="form-group">
+                    <label class="col-lg-2 control-label" for="inputUsername">Username</label>
+                    <div class="col-lg-6">
+                        <input type="text" id="inputUsername" name="username" class="form-control">
+                        <span class="help-inline"><strong class="text-danger">You will not be able to change your username</strong></span>
+                        <span class="help-block"><span class="muted">Your username will be used to link to your courses. For example, if you choose "roboto" your courses will be at <b>lessonwell.com/roboto</b></span></span>
+                        <span class="help-block"><span class="muted">Your username may only contatin <strong>letters or numbers</strong> and should be <strong>between 5 and 20 characters</strong>.</span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label  col-lg-2" for="inputUsername">Email</label>
+                    <div class="col-lg-6">           
+                        <input class="input form-control" id="disabledInput" type="text" placeholder = "{{google_users_api.get_current_user().email()}}" disabled>            
+                        <span class="help-block"><span class="muted">Your Google Account; we will only use this email to contact you if we have important information or issues concerning your account. We also use your email to help us identify your payment information. We will never spam you, or give your email to anyone else. </span></span>
+                    </div>
+                </div>
+                 
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <div class="controls col-lg-8">
+                        <h4>You are about to subcsribe to lessonwell</h4>
+                        <strong>Your free trial will end on {{trialEnd}}</strong> After this date your card will be charged <strong>${{planAmount}}</strong> per month unless you cancel your subscription plan. <span class="muted">You may cancel your subscription at anytime, just go to your profile and edit your account. Your plans are pro-rated, so you only pay for what you use (if you cancel 5 days after the free trial is up, you only pay for 5 days). If you cancel before the end of your free trial, your card will not be charged.</span>
+                    </div>
+                </div>               
+
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        <p><strong>IMPORTANT: </strong>By submitting this information you acknowledge that you have read, and agree to abide by, the lessonwell <a href="/tos" target="_blank">Terms of Service</a></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8">
+                        <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{stripe_publish_key}}"
+                            data-image="/Logo_of_Google_Drive.png"
+                            data-name="lessonwell"
+                            data-description="Monthly Subscription, $10"
+                            data-amount="1000">
+                        </script>     
+                    </div>       
+                </div>  
             </form>
         </div>
     </div>
