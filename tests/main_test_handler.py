@@ -44,10 +44,14 @@ class TestBase(unittest.TestCase):
         return get_user_by_username(username)
 
     def create_sample_course(self, title='foo', body='bar', user = None, listed=None, privacy = None):
+        '''
+        create a sample course and return the ID of that course
+        '''
         if not user:
             user = self.create_and_return_local_user()
         content_id = new_content(title=title, body=body, parentKEY=user.key, contentType='course', privacy=privacy, listed=listed)
         return content_id
+
 
 
 
