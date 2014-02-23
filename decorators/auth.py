@@ -1,4 +1,7 @@
 from google.appengine.api import users
+from controllers.fetch_content_by_id import get_course
+from controllers.check_privacy import check_privacy
+from controllers.fetch_approval import get_approval_status_for_google_id
 
 def google_user_required(decorated_function):
     '''
@@ -12,3 +15,29 @@ def google_user_required(decorated_function):
             decorated_function(self, *kw, **kwargs)
     return check_current_user
 
+def check_approval(decorated_function):
+    '''
+    check if the current user is approved to view this course/unit/lesson
+
+    userID should be the first kw, kw[0]
+    courseID should be the second kw, kw[1]
+    '''
+    def approve_or_deny(self,*kw,**kwargs):
+        userID, courseID = kw[0], kw[1]
+        try:
+            course = get_course(userID, courseID)
+        except:
+            self.write_json({'error':'that content does not exist'})
+        else:
+            is_private = check_privacy(course)
+            if is_private:
+                try:
+                    current_user = users.get_current_user()
+                    status = get_approval_status_for_google_id(course, current_user.user_id()).status
+                    if status != 'approved': raise NameError('not approved')
+                    decorated_function(self, *kw, **kwargs)
+                except:
+                    self.abort(401)
+            else:
+                decorated_function(self, *kw, **kwargs)
+    return approve_or_deny
