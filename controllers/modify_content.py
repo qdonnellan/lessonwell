@@ -14,7 +14,7 @@ def add_or_edit_content(title, body, parentKEY, contentType, content=None, shoul
         editContent(content.key.id(), title, body, parentKEY, should_delete, privacy, listed)
         return content.key.id() 
 
-def new_content(title, body, parentKEY, contentType, privacy, listed):
+def new_content(title, body, parentKEY, contentType, privacy=None, listed=None):
     '''
     create a new content object
 
