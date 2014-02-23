@@ -1,5 +1,5 @@
 from tests.main_test_handler import TestBase
-from controllers.fetch_user import get_user_by_username, get_user_by_google_id
+from controllers.fetch_user import get_user_by_username, get_user_by_google_id, get_user
 from models.user import User
 
 class FetchUserTest(TestBase):
@@ -25,9 +25,22 @@ class FetchUserTest(TestBase):
         self.assertEqual(fetched_user.email, 'foobar@gmail.com')
 
     def test_get_user_by_google_id(self):
+        '''
+        test that a user can be fetched by their googleID
+        '''
         self.create_new_user('foobar', 'foobar@gmail.com', '12345678')
         fetched_user= get_user_by_google_id('12345678')
         self.assertEqual(fetched_user.email, 'foobar@gmail.com')
+
+    def test_get_user(self):
+        '''
+        test that a uer can be fetched by their local database id 
+        '''
+        user = User(username='foo', email='bar', googleID = '123').put()
+        user_id = user.id()
+        self.assertIsNotNone(get_user(user_id))
+        self.assertEqual(get_user(user_id).username, 'foo')
+
 
 
 
