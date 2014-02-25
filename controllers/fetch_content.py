@@ -25,16 +25,11 @@ def get_all_content(parentKEY, contentType):
         contentObject = Content.query(Content.contentType == contentType, ancestor=parentKEY).order(Content.title)
     return contentObject
 
-def get_listed_courses(sort=None):   
+def get_listed_courses():   
     '''
     return a Content Query iterable of courses that are marked as "listed" by their authors
-
-    iterable is sorted by popularity by default, else is 'recent' is passed, then it is sorted by creation data
     '''
-    if sort and 'recent' in sort:
-        contents = Content.query(Content.contentType == 'course', Content.listed == 'listed').order(-Content.created)
-    else:
-        contents = Content.query(Content.contentType == 'course', Content.listed == 'listed').order(-Content.popularity)
+    contents = Content.query(Content.contentType == 'course', Content.listed == 'listed').order(-Content.created)
     return contents
 
 def get_all_courses():
