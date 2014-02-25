@@ -65,7 +65,7 @@ class FetchContentTest(TestBase):
         for i in range(3):
             self.create_sample_course(title = 'Foo Course %s' % i, user=user, listed='listed')
 
-        content_query = get_listed_courses(sort='recent')
+        content_query = get_listed_courses()
         self.assertEqual(content_query.get().title, 'Foo Course 2')
 
 
