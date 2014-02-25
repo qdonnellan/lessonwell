@@ -26,8 +26,7 @@ def new_content(title, body, parentKEY, contentType, privacy=None, listed=None):
         title = title, 
         contentType = contentType, 
         privacy = privacy,
-        listed = listed,
-        popularity = 0)
+        listed = listed)
     key = contentObject.put()
     return key.id()
 
@@ -57,10 +56,3 @@ def activateContent(contentObject, activateType):
     if contentObject.active != activateType or contentObject.active is None:
         contentObject.active = activateType
         contentObject.put()
-
-def increase_popularity(course):
-    '''
-    increment the popularity of this course by 1
-    '''
-    course.popularity += 1
-    course.put()
