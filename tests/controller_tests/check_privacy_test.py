@@ -25,3 +25,9 @@ class CheckPrivacyTest(TestBase):
         course = get_course(author.key.id(), course_id)
         self.assertTrue(check_privacy(course))
 
+    def test_check_privacy_of_none_course(self):
+        '''
+        a privacy check on nothing should raise an exception
+        '''
+        self.assertRaises(Exception, check_privacy, None)
+

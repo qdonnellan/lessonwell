@@ -62,5 +62,26 @@ class FetchContentByIDTest(TestBase):
         # pass params distinct to a course
         self.assertEqual(get_content(userID, courseID).contentType, 'course')
 
+    def test_get_course_with_no_ids_should_raise_exception(self):
+        '''
+        trying to get a course without sending the correct id's should raise an exception
+        '''
+        self.assertRaises(Exception, get_course, None, None)
+
+    def test_get_unit_with_no_ids_should_raise_exception(self):
+        '''
+        trying to get a unit without sending the corrct id's should raise an exception
+        '''
+        self.assertRaises(Exception, get_unit, None, None, None)
+
+    def test_get_lesson_with_no_ids_should_raise_exception(self):
+        '''
+        trying to get a lesson without sending the corrct id's should raise an exception
+        '''
+        self.assertRaises(Exception, get_lesson, None, None, None, None)
+
+
+
+
 
 
