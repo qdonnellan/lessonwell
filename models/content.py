@@ -15,7 +15,5 @@ class Content(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add = True)
     privacy = ndb.StringProperty(required = False)
     listed = ndb.StringProperty(required=False)
-    access_amount = ndb.IntegerProperty(required = False)
     passphrase = ndb.StringProperty(required=False)
-    popularity = ndb.IntegerProperty(required=False, default = 0)
     blobs = ndb.JsonProperty(required=False)
