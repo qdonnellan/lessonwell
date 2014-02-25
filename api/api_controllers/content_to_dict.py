@@ -15,7 +15,6 @@ def content_to_dict(content):
     data['created'] = content.created.strftime("%Y-%m-%d %H:%M:%S")
     data['listed'] = content.listed
     data['privacy'] = content.privacy
-    data['access_amount'] = content.access_amount
     data['passphrase'] = content.passphrase
 
     return data
