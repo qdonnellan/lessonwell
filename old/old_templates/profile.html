@@ -1,16 +1,6 @@
 {% extends "base.html" %}
 
 
-{% block side_list %}
-<ul class="side-list">      
-	{% for course in courses %} 
-		{% import 'common.html' as common with context %} 
-		{{ common.course_link() }}
-  {% endfor %}
-</ul>
-
-{% endblock %}
-
 {% block body %}
 	<div class="visible-xs container">
 		<div class="xs-header">
