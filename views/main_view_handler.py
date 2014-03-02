@@ -1,8 +1,9 @@
 import webapp2
 from jinja_environment import JinjaEnvironment
 from google.appengine.api import users
-
+from controllers.fetch_user import get_user_by_google_id
 from stripe_keys import pub_key
+
 
 class ViewHandler(webapp2.RequestHandler):
     '''
@@ -20,11 +21,18 @@ class ViewHandler(webapp2.RequestHandler):
     def render(self, template, **kw):  
         '''
         simply render a template with passed variables using Jinja2
-        '''                
+        '''  
+        current_google_user = users.get_current_user() 
+        if current_google_user: 
+            localUser = get_user_by_google_id(current_google_user.user_id())
+        else:
+            localUser = False
         self.write(self.render_str(
             template, 
             google_users_api = users,
             stripe_publish_key = pub_key,
+            error = self.request.get('error'),
+            localUser = localUser,
             **kw
             )
         )
@@ -52,4 +60,5 @@ class ViewHandler(webapp2.RequestHandler):
                 self.abort(401)
         if not user:
             self.abort(401)
+
 
