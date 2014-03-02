@@ -34,13 +34,13 @@ class TestBase(unittest.TestCase):
             overwrite = True
         )
 
-    def create_and_return_local_user(self, username='testuser123'):
+    def create_and_return_local_user(self, username='testuser123', googleID = '123'):
         '''
         create a user with a default email address and formal name, return that object
 
         a helper function for tests that require a local (app) user to operate
         '''
-        new_user(username = username, email='test@example.com', formalName ='James Smith', googleID = '123')
+        new_user(username = username, email='test@example.com', formalName ='James Smith', googleID = googleID)
         return get_user_by_username(username)
 
     def create_sample_course(self, title='foo', body='bar', user = None, listed=None, privacy = None):
