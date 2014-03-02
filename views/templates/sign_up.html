@@ -1,92 +1,85 @@
 {% extends "base.html" %}
 
-{% block side_list %}
-    <ul class="side-list">
-      <li>
-        <a class="course-link" href="/link/{{plan.id}}"><i class="icon-check"></i> Step 1: Link Google Account</a>
-      </li>
-      <li class="active">
-        <a class="course-link" href="#"><i class="icon-check-empty"></i> Step 2: Personal Information</a>
-      </li>
-      <li class='completed-step'>
-        <a class="course-link"><i class="icon-check-empty"></i> Registration Complete</a>
-      </li>
-    </ul>
-{% endblock %}
-
-
 
 {% block body %}
 
-<div class="container">    
-    <div class="page-header">
-        <h1>Personal Information
-        <a href="http://www.stripe.com" target="_blank"><img src="/img/stripe_logo.png" class="pull-right"></a></h1>    
-    </div> 
-    <div>
-        {% if alert %}
-        <div>
+<div class="container"> 
+    <div class="content-div col-md-12">   
+        <div class="page-header">
+            <h1>Personal Information
+            <a href="http://www.stripe.com" target="_blank"><img src="/img/stripe_logo.png" class="pull-right"></a></h1>    
+        </div> 
+        <div class="col-md-8">
+            {% if error %}
             <div class="alert alert-danger">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Oh snap!</strong>{{alert.errorMsg}}
-            </div>        
-        </div>  
-        {% endif %}   
-        <div>   
+                <strong>Oh snap!</strong> {{error}}
+            </div>    
+            {% endif %}     
             <form class="form-horizontal" method="post" action = '', id="payment-form">      
                 <div class="form-group">
                     <label class="col-lg-2 control-label" for="inputFormalname">Your Name</label>
-                    <div class="col-lg-6">
+                    <div class="col-lg-10">
                         <input type="text" id="inputFormalname" name="formalName"  class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" data-bind="css: {'has-error': has_error, 'has-success': has_success}">
                     <label class="col-lg-2 control-label" for="inputUsername">Username</label>
-                    <div class="col-lg-6">
-                        <input type="text" id="inputUsername" name="username" class="form-control">
-                        <span class="help-inline"><strong class="text-danger">You will not be able to change your username</strong></span>
-                        <span class="help-block"><span class="muted">Your username will be used to link to your courses. For example, if you choose "roboto" your courses will be at <b>lessonwell.com/roboto</b></span></span>
-                        <span class="help-block"><span class="muted">Your username may only contatin <strong>letters or numbers</strong> and should be <strong>between 5 and 20 characters</strong>.</span></span>
+                    <div class="col-lg-10">
+                        <input type="text" id="inputUsername" name="username" class="form-control" data-bind="value: username, valueUpdate: 'afterkeydown'">
+                        <span class="help-block" data-bind="if: error_msg">
+                            <span data-bind="text: error_msg"></span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label  col-lg-2" for="inputUsername">Email</label>
-                    <div class="col-lg-6">           
+                    <label class="control-label  col-lg-2" for="disabledInput">Email</label>
+                    <div class="col-lg-10">           
                         <input class="input form-control" id="disabledInput" type="text" placeholder = "{{google_users_api.get_current_user().email()}}" disabled>            
-                        <span class="help-block"><span class="muted">Your Google Account; we will only use this email to contact you if we have important information or issues concerning your account. We also use your email to help us identify your payment information. We will never spam you, or give your email to anyone else. </span></span>
+                        <span class="help-block">Your Google Account; we will only use this email to contact you if we have important information or issues concerning your account. We also use your email to help us identify your payment information. We will never spam you, or give your email to anyone else. </span>
                     </div>
                 </div>
-                 
-                <div class="form-group">
-                    <label class="control-label"></label>
-                    <div class="controls col-lg-8">
-                        <h4>You are about to subcsribe to lessonwell</h4>
-                        <strong>Your free trial will end on {{trialEnd}}</strong> After this date your card will be charged <strong>${{planAmount}}</strong> per month unless you cancel your subscription plan. <span class="muted">You may cancel your subscription at anytime, just go to your profile and edit your account. Your plans are pro-rated, so you only pay for what you use (if you cancel 5 days after the free trial is up, you only pay for 5 days). If you cancel before the end of your free trial, your card will not be charged.</span>
-                    </div>
-                </div>               
 
                 <div class="form-group">
-                    <div class="col-lg-8">
-                        <p><strong>IMPORTANT: </strong>By submitting this information you acknowledge that you have read, and agree to abide by, the lessonwell <a href="/tos" target="_blank">Terms of Service</a></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-8">
-                        <script
-                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="{{stripe_publish_key}}"
-                            data-image="/Logo_of_Google_Drive.png"
-                            data-name="lessonwell"
-                            data-label='Enter Card Information and Subscribe'
-                            data-panel-label='Subscribe'
-                            data-description="$10 Monthly Subscription"
-                            data-amount="1000">
-                        </script>     
+                    <label class="control-label  col-lg-2" for="subscribeButton">Subscribe</label>
+                    <div class="col-lg-10">
+                        <div data-bind="ifnot: error_msg">
+                            <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="{{stripe_publish_key}}"
+                                data-image="/img/lessonwell_square.png"
+                                data-name="lessonwell"
+                                data-label='Enter Payment Information and Subscribe'
+                                data-panel-label='Subscribe'
+                                data-description="$10 Monthly Subscription"
+                                data-amount="1000"
+                                data-email="{{google_users_api.get_current_user().email()}}">
+                            </script> 
+                            <span class="help-block">By submitting this information you acknowledge that you have read, and agree to abide by, the lessonwell <a href="/tos" target="_blank">Terms of Service</a></span>
+                        </div>  
+                        <div class="help-block" data-bind="if: error_msg">
+                            <span class="text-warning">
+                                You must fix the errors above before you can proceed
+                            </span>
+                        </div> 
                     </div>       
-                </div>  
+                </div> 
             </form>
+        </div>
+        <div class="col-md-4">
+            <div class="alert alert-success">
+                <p class="text-center">free trial end date:</p>
+                <h4 class="text-center">
+                    {{trialEnd}} 
+                </h4>
+                After this date your card will be charged <strong>${{planAmount}}</strong> per month unless you cancel your subscription. <span class="muted">You may cancel at anytime. Plans are pro-rated; you only pay for what you use (if you cancel 5 days after the free trial is up, you only pay for 5 days). If you cancel before the end of your free trial, your card will not be charged.</span>
+            </div>    
         </div>
     </div>
 </div>
+
+<script src="/js/knockout-3.0.0.js"></script> 
+<script src="/js/sign_up.js"></script> 
+
 
 {% endblock %}
