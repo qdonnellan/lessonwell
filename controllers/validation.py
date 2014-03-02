@@ -9,7 +9,7 @@ def validate_username(username, localUser = None):
     if username in ProtectedNames:
         raise NameError("That username is protected, choose a different one")
 
-    if re.match("^[a-zA-Z0-9]+$", username) is None:
+    if re.match("^[a-zA-Z0-9]*$", username) is None:
         raise NameError("Your username may only contain numbers and letters")
 
     if len(username)<5 or len(username)>20:
