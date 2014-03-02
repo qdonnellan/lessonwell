@@ -1,7 +1,6 @@
 from tests.main_test_handler import TestBase
 import unittest
 
-@unittest.skip("skipping the PublicViewTest")
 class PublicViewTest(TestBase):
     '''
     test that the public views are implemented and functioning correctly
@@ -22,21 +21,6 @@ class PublicViewTest(TestBase):
             response = self.testapp.get('/about')
             self.assertEqual(response.status_int, 200)
             self.assertIn('About', response.body)
-
-    def test_public_sign_up_page_view_not_authenticated(self):
-        '''
-        test views of '/sign_up'
-        '''
-        response = self.testapp.get('/sign_up')
-        self.assertEqual(response.status_int, 302)
-
-    def test_public_sign_up_page_view_with_google_authentication(self):
-        '''
-        test views of '/sign_up' with a user authenticated to google
-        '''
-        self.create_google_user()
-        response = self.testapp.get('/sign_up')
-        self.assertEqual(response.status_int, 200)
 
     def test_public_link_google_account_page(self):
         '''
