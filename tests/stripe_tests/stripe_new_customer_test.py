@@ -1,7 +1,6 @@
 from tests.main_test_handler import TestBase
 from controllers.stripe_controllers.new_customer import new_customer
-import stripe
-from stripe_keys import api_key
+
 import unittest
 
 @unittest.skip('skipping long stripe tests, should activate(#) on/off as needed')
@@ -9,12 +8,6 @@ class StripeNewCustomerTest(TestBase):
     '''
     test the implementation of the stripe customer creation process
     '''
-    def generate_sample_token(self, card='4242424242424242', cvc='123', MM=12, YYYY=2015):
-        '''
-        generate a sample token for test purposes
-        '''
-        stripe.api_key = api_key
-        return stripe.Token.create(card={"number": card, "exp_month": MM, "exp_year": YYYY, "cvc": cvc })
 
     def test_new_customer_with_valid_card(self):
         '''
