@@ -7,5 +7,8 @@ class APIHandler(webapp2.RequestHandler):
     '''
 
     def write_json(self, data):
+        '''
+        take the passed data, add JSON headers, and encode the data as a json string
+        '''
         self.response.headers['Content-Type'] = 'application/json' 
         self.response.out.write(json.dumps(data))
