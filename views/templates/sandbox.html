@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+<div class="sandbox">
+    <!-- Instructional Video(gifs) modal -->
+    <div class="modal fade example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <img src="/img/instructional_gifs/test22.gif" class="img-responsive">
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
+    <div class="sandbox-header">
+        <div class="col-sm-6 text-center">
+            <i class="fa fa-reply fa-rotate-270 fa-2x text-muted"></i> Type up your content here  <button class="btn btn-primary" data-toggle="modal" data-target=".example-modal">Examples</button>
+        </div>
+        <div class="col-sm-6 text-center">
+            Your lesson will be formatted here <i class="fa fa-share fa-rotate-90 fa-2x text-muted"></i> 
+        </div>
+    </div>
+    <div class="sandbox-content">
+        <textarea  data-bind="value: sandboxInput, valueUpdate: 'afterkeydown'" id="sandbox-textarea" class="col-sm-6 form-control"></textarea>
+        <div id="sandbox-output" class="col-sm-6" data-bind="html: sandboxOutput"></div>
+    </div>
+</div>
+
+
+
+<script src="/js/knockout-3.0.0.js"></script> 
+<script src='/js/markdown.js'></script>
+<script src="/js/sandbox.js"></script>
+
+{% endblock %}
