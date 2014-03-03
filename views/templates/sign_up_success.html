@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="content-div container">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="page-header text-center">
+            <h1>Welcome</h1>
+            <p class="lead">You have successfully created a lessonwell account.<p>
+        </div>
+        <div>
+            <div class="panel panel-default">
+                <a href="/{{localUser.username}}" >
+                    <div class="panel-body">
+                        <div class="col-md-4 text-center">
+                            <h1><i class="fa fa-user fa-3x"></i></h1>
+                        </div>
+                        <div class='col-md-8'>
+                            <h3>View your profile</h3>
+                            <p class="lead">
+                                Edit your personal information, cancel your subscription, add a course; it all happens from your profile page
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="panel panel-default">
+                <a href="#" >
+                    <div class="panel-body">
+                        <div class="col-md-4 text-center">
+                            <h1><i class="fa fa-book fa-3x"></i></h1>
+                        </div>
+                        <div class='col-md-8'>
+                            <h3>Create your first course</h3>
+                            <p class="lead">
+                                Create a course, add units, and lessons, change privacy settings, etc.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
