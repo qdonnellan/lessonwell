@@ -13,5 +13,6 @@ ProtectedNames = [
     'catalog',
     'attachment',
     'coupon',
-    'promotion'
+    'promotion',
+    'sandbox'
 ]
