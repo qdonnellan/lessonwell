@@ -29,6 +29,13 @@ class PublicViewTest(TestBase):
         response = self.testapp.get('/link')
         self.assertEqual(response.status_int, 200)
 
+    def test_public_sandbox_page(self):
+        '''
+        the sandbox page should be up and running
+        '''
+        response = self.testapp.get('/sandbox')
+        self.assertEqual(response.status_int, 200)
+
 
 
 
