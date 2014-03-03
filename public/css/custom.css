@@ -1,11 +1,13 @@
 html, 
 body {
   height: 100%;
-  font-size: 12pt
-  
+  font-size: 12pt;
+  font-family: 'Lato', sans-serif;
 }
 
-/*test change */
+h1, h2, h3, h4, h5 {
+  font-family: 'Neuton', serif;
+}
 
 h1 { font-size: 2.5em; }
 h2 { font-size: 2em}
