@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+    <div class="container">
+        <h1>{{teacher.formalName}}</h1>
+        <p class="lead">{{teacher.tagline}}</p>
+        <div>
+            {% if teacher.username == localUser.username %}
+                <a href="/new_course" class="btn btn-primary btn-lg"><i class="icon-plus"></i> New Course</a>               
+                <a href="/edit_profile" class="btn btn-success btn-lg">
+                    <i class="icon-edit"></i> Edit your Account
+                </a>
+            {% endif %}     
+        </div>  
+        <div>
+            <p class="user-profile">
+            {% if bio %}
+                {{bio | safe}}
+            {% else %}
+                {% if teacher.username == localUser.username %}
+                    You don't have anything in your bio yet, <a href="/edit_profile">edit your profile</a> to add an awesome description of yourself!
+                {% endif %}
+            {% endif %}
+            </p>
+        </div>      
+    </div>
+{% endblock %}
