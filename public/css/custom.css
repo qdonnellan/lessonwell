@@ -18,7 +18,6 @@
 #sandbox-textarea {
   width:50%;
   height:100%;
-
   font-size: 1.2em;
   box-sizing: border-box;         /* For IE and modern versions of Chrome */
   -moz-box-sizing: border-box;    /* For Firefox                          */
@@ -33,7 +32,6 @@
   padding-bottom: 50px;
   padding-right: 5px;
   font-size: 1.2em;
-  background-color: #eff0f4;
 }
 
 .sandbox {
@@ -42,17 +40,38 @@
   width: 100%;
 }
 
+#sandbox-output pre {
+    font-size: 1em !important;
+    padding: 10px !important;
+    margin: 0px !important;
+    border: 0px !important;
+    background-color: #f8f8f8 !important;
+}
+
+pre code {
+  padding: 0px !important;
+}
+
 .sandbox-header {
-  background: #f6f6f6;
+  background: #e6e9ed;
   border-bottom: 1px solid #ccc;
   height: 50px;
   padding-top: 7px;
   width: 100%;
 }
 
+.sandbox .breadcrumb > span > button {
+  margin-top: -2px !important;
+}
+
+.sandbox .breadcrumb > span {
+  margin-left: 10px !important
+}
+
 .sandbox textarea {
   border-radius: 0px;
-  font-family: 'Ubuntu Mono', sans-serif !important
+  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+  font-weight: 500;
 }
 
 .sandbox-content {
