@@ -32,17 +32,18 @@ function ViewModel() {
     self.setCurrentImage = function(gifInfo) {
         self.currentGif(gifInfo.link);
     };
-
-    self.endsWith = function(str, suffix) {
-        return str.indexOf(suffix, str.length - suffix.length) !== -1;
-    }
 };
 
 // make sure mathjax is called after each new character input
 // in the text area; displays math real time
-$("#sandbox-textarea").keyup(function () {
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+$("#sandbox-textarea").on('keyup', function () {
+    setTimeout(refreshOutputStyle, 1000);
 });
+
+function refreshOutputStyle() {
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+};
 
 vm = new ViewModel();
 ko.applyBindings(vm);
