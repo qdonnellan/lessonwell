@@ -1,19 +1,3 @@
-html, 
-body {
-  font-size: 12pt;
-  font-family: 'Lato', sans-serif;
-}
-
-h1, h2, h3, h4, h5 {
-  font-family: 'Neuton', serif;
-}
-
-h1 { font-size: 2.5em; }
-h2 { font-size: 2em}
-h3 { font-size: 1.8em}
-h4 { font-size: 1.6em}
-p { font-size: 1em; }
-
 .modal-footer {
   border: none !important
 }
@@ -33,7 +17,7 @@ p { font-size: 1em; }
 
 #sandbox-textarea {
   width:50%;
-  height:100%; 
+  height:100%;
 
   font-size: 1.2em;
   box-sizing: border-box;         /* For IE and modern versions of Chrome */
@@ -49,7 +33,7 @@ p { font-size: 1em; }
   padding-bottom: 50px;
   padding-right: 5px;
   font-size: 1.2em;
-  background-color: #eff0f4; 
+  background-color: #eff0f4;
 }
 
 .sandbox {
@@ -299,19 +283,8 @@ p { font-size: 1em; }
   font-size: 4em
 }
 
-
-
 .lesson-content {
-  font-weight: 300;
   margin-bottom: 100px;
-  font-size: 1em
-}
-
-@media (min-width: 768px) {
-  .lesson-content {
-    font-weight: 300;
-    font-size: 1.2em;
-  }
 }
 
 .notification-icon {
@@ -343,53 +316,6 @@ pre {
 .navbar {
   border-bottom: 1px solid #111
 }
-.marketing-div .jumbotron h1 {
-  font-size: 3em;
-  font-family: 'Ubuntu', sans-serif ;
-  color: #ffffff !important;
-  font-weight: 700;
-}
-
-.marketing-div .jumbotron .lead {
-  font-size: 1.5em
-}
-
-.marketing-div .jumbotron .sub-lead {
-  font-size: 1em;
-  padding-bottom: 50px
-}
-
-.marketing-div .jumbotron .btn {
-  font-size: 1em;
-  width: 100%;
-  margin-bottom:10px;
-}
-
-@media (min-width: 768px){
-  .marketing-div .jumbotron h1 {
-    font-size: 6em;
-  }
-
-  .marketing-div .jumbotron .lead {
-    font-size: 2.1em
-  }
-  .marketing-div .jumbotron .sub-lead {
-    font-size: 1.5em;
-    padding-bottom: 50px
-  }
-  .marketing-div .jumbotron .btn {
-    font-size: 1em;
-    width: auto;
-    margin-bottom:0 !important;
-  }
-}
-
-.marketing-div .jumbotron h1 > span {
-  font-weight: 300;
-  color: #0099ff;
-}
-
-
 
 .marketing-div  .jumbotron, .front-jumbo {
   position: relative;
@@ -401,22 +327,22 @@ pre {
   background: #a90329; /* Old browsers */
   /* Note: This gradient may render differently in browsers that don't support the unprefixed gradient syntax */
 
-  /* IE10 Consumer Preview */ 
+  /* IE10 Consumer Preview */
   background-image: -ms-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
 
-  /* Mozilla Firefox */ 
+  /* Mozilla Firefox */
   background-image: -moz-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
 
-  /* Opera */ 
+  /* Opera */
   background-image: -o-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
 
-  /* Webkit (Safari/Chrome 10) */ 
+  /* Webkit (Safari/Chrome 10) */
   background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0, #00092E), color-stop(1, #0B5254));
 
-  /* Webkit (Chrome 11+) */ 
+  /* Webkit (Chrome 11+) */
   background-image: -webkit-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
 
-  /* W3C Markup, IE10 Release Preview */ 
+  /* W3C Markup, IE10 Release Preview */
   background-image: linear-gradient(to top right, #00092E 0%, #0B5254 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
@@ -424,36 +350,6 @@ pre {
           box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
 }
 
-
-
-.marketing-highlights {
-  margin-top: 50px;
-}
-
-.marketing-highlights h1 {
-  font-weight: 400;
-  font-size: 3em
-}
-
-.marketing-highlights .lead {
-  font-size: 2em;
-  margin: 0px;
-}
-
-.marketing-highlights .sub-lead {
-  font-size: 1.8em;
-  color: #0099ff;
-  font-weight: 700;
-  margin: 0px
-}
-
-.marketing-highlights .sub-sub-lead {
-  font-size: 1.5em
-}
-
-.marketing-highlights {
-  padding-bottom:100px;
-}
 
 .marketing-side {
   padding: 10px;
@@ -557,22 +453,22 @@ pre {
 
 /* Adsense responsive ads */
 
-.lessonwell-bottom-responsive { 
-  width: 320px; 
-  height: 50px; 
+.lessonwell-bottom-responsive {
+  width: 320px;
+  height: 50px;
 }
 
-@media(min-width: 500px) { 
-  .lessonwell-bottom-responsive { 
-    width: 468px; 
-    height: 60px; 
-  } 
+@media(min-width: 500px) {
+  .lessonwell-bottom-responsive {
+    width: 468px;
+    height: 60px;
+  }
 }
 @media(min-width: 1000px) {
- .lessonwell-bottom-responsive { 
-  width: 728px; 
-  height: 90px; 
-  } 
+ .lessonwell-bottom-responsive {
+  width: 728px;
+  height: 90px;
+  }
 }
 
 #course-standards {
@@ -597,7 +493,7 @@ pre {
 
 .flex-video.widescreen { padding-bottom: 57.25%; }
 .flex-video.vimeo { padding-top: 0; }
- 
+
 .flex-video iframe,
 .flex-video object,
 .flex-video embed {
@@ -611,5 +507,3 @@ pre {
   .flex-video { padding-top: 0; }
 }
 /* END Copyright (c) 2011 ZURB, http://www.zurb.com/ ---------------------------------*/
-
-
