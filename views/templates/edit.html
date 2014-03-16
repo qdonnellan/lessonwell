@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="sandbox">
+    <div class="sandbox-header col-sm-12">
+        <div class="col-sm-6">
+            <ol class="breadcrumb breadcrumb-arrow">
+                <li><a href="#edit" data-bind="click: editButtonClicked"><i class="fa fa-home fa-lg"></i></a></li>
+                <li data-bind="if: courseActive"><a href="#course" data-bind="click: courseButtonClicked">Course</a></li>
+                <li data-bind="if: unitActive"><a href="#unit" data-bind="click: unitButtonClicked">Unit</a></li>
+                <li data-bind="if: lessonActive"><a href="#lesson" data-bind="click: lessonButtonClicked">Lesson</a></li>
+                <span data-bind="ifnot: newContent"><button class="btn btn-info" data-bind="text: newButtonText, click: initNewContent"></button></span>
+                <span data-bind="if: newContent">
+                    A new <span data-bind="text: child_content_type"></span>
+                <span>
+            </ol>
+        </div>
+        <div data-bind="if: lessonActive">
+            <form class="form-inline text-right col-sm-6">
+                <div class="form-group">
+                    <label>Title:</label>
+                    <input 
+                        type="text" 
+                        class="form-control"
+                        placeholder="lesson name"
+                        >
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div data-bind="if: content_type() == 'lesson'">
+        <div class="sandbox-content">
+            <textarea  data-bind="value: sandboxInput, valueUpdate: 'afterkeydown'" id="sandbox-textarea" class="col-sm-6 form-control"></textarea>
+            <div id="sandbox-output" class="col-sm-6" data-bind="html: sandboxOutput"></div>
+        </div>
+    </div>
+    <div data-bind="if: content_type() == 'course'">
+        <div class="edit-course-content col-lg-12">
+            <h1>Edit Course</h1>
+        </div>
+    </div>
+    <div data-bind="if: newContent">
+        {% include 'edit_divs/new_content.html' %}
+    </div>
+</div>
+
+
+<script src="/js/knockout-3.0.0.js"></script> 
+<script src='/js/markdown.js'></script>
+<script src="/js/format.js"></script>
+<script src="/js/edit-content.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
+{% endblock %}
