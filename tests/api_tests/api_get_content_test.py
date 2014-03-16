@@ -14,23 +14,36 @@ class GetContentTest(TestBase):
     test get requests to the api for content
     '''
 
-    def create_sample_course_framework(self, num_courses, num_units, num_lessons):
+    def create_sample_course_framework(self,num_courses,num_units,num_lessons):
         '''
-        create a user, courses, units, and lessons for the purpose of testing the api
+        create a user, courses, units, and lessons
+        for the purpose of testing the api
         '''
         user = self.create_and_return_local_user()
         for course in range(num_courses):
-            new_content(title='Foo Course %s' % course, body='bar', contentType='course', parentKEY = user.key)
-        
+            new_content(
+                title='Foo Course %s' % course,
+                body='bar',
+                contentType='course',
+                parentKEY = user.key)
+
         courses = get_all_content(parentKEY = user.key, contentType = 'course')
         for course in courses:
             for unit in range(num_units):
-                new_content(title='Foo Unit %s' % course, body='bar', contentType='unit', parentKEY = course.key)
+                new_content(
+                    title='Foo Unit %s' % course,
+                    body='bar',
+                    contentType='unit',
+                    parentKEY = course.key)
 
         units = get_all_content(parentKEY = course.key, contentType = 'unit')
         for unit in units:
             for lesson in range(num_lessons):
-                new_content(title='Foo Lesson %s' % lesson, body='bar', contentType='lesson', parentKEY = unit.key)
+                new_content(
+                    title='Foo Lesson %s' % lesson,
+                    body='bar',
+                    contentType='lesson',
+                    parentKEY = unit.key)
 
 
     def test_that_get_public_course_is_a_json_response(self):
@@ -52,10 +65,10 @@ class GetContentTest(TestBase):
 
     def test_get_public_course(self):
         '''
-        test api response for a request of a publically available course 
+        test api response for a request of a publically available course
         at /api/content/{{userID}}/{{courseID}}
 
-        we'll first create a bunch of course material, then we'll determine the id
+        we'll first create a bunch of course material, then we'll determine id
         of the first user and their first course that was generated
         '''
         self.create_sample_course_framework(1,1,1)
@@ -76,46 +89,44 @@ class GetContentTest(TestBase):
         non-authenticated means not logged into google
         '''
         author = self.create_and_return_local_user()
-        course_id = self.create_sample_course(user = author, privacy = 'private')
-        response = self.testapp.get('/api/content/%s/%s' % (author.key.id(), course_id), status = 401)
+        course_id = self.create_sample_course(
+            user = author,
+            privacy = 'private')
+        response = self.testapp.get(
+            '/api/content/%s/%s' % (author.key.id(), course_id),
+            status = 401)
         self.assertEqual(response.status_int, 401)
 
     def test_non_authorized_get_private_course(self):
         '''
-        attempt to fetch a private course from an authenticated but non-approved user
+        attempt to fetch a private course from authenticated/non-approved user
         '''
         author = self.create_and_return_local_user()
-        course_id = self.create_sample_course(user = author, privacy = 'private')
+        course_id = self.create_sample_course(
+            user = author,
+            privacy = 'private')
         self.create_google_user()
-        response = self.testapp.get('/api/content/%s/%s' % (author.key.id(), course_id), status = 401)
+        response = self.testapp.get(
+            '/api/content/%s/%s' % (author.key.id(), course_id),
+            status = 401)
         self.assertEqual(response.status_int, 401)
 
     def test_authorized_get_private_course(self):
-        self.create_google_user(user_id='123', email_address='foo@gmail.com')
+        self.create_google_user(
+            user_id='123',
+            email_address='foo@gmail.com')
         author = self.create_and_return_local_user()
-        course_id = self.create_sample_course(user = author, privacy = 'private')
+        course_id = self.create_sample_course(
+            user = author,
+            privacy = 'private')
         course = get_course(author.key.id(), course_id)
         Approval(
-            googleID='123', 
-            email='foo@gmail.com', 
-            formalName='Sam Max', 
+            googleID='123',
+            email='foo@gmail.com',
+            formalName='Sam Max',
             status='approved',
             parent=course.key
             ).put()
-        response = self.testapp.get('/api/content/%s/%s' % (author.key.id(), course_id))
+        response = self.testapp.get(
+            '/api/content/%s/%s' % (author.key.id(), course_id))
         self.assertEqual(response.status_int, 200)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
