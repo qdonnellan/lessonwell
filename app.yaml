@@ -5,6 +5,9 @@ api_version: 1
 threadsafe: true
 
 handlers:
+- url: /bootflat
+  static_dir: public/bootflat
+
 - url: /css
   static_dir: public/css
 
