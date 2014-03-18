@@ -1,12 +1,9 @@
 from google.appengine.ext import ndb
 
 class Content(ndb.Model):
-    '''
-    content is either a course, unit or Lesson
-
-    Lessons have Unit parents, Units have Course parents, Courses have appUser parents
-    '''
-    
+    """
+    content is either a course, unit or lesson
+    """
     title = ndb.StringProperty(required = True)
     body = ndb.TextProperty(required = False)
     contentType = ndb.StringProperty(required = True)
