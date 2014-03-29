@@ -36,6 +36,7 @@ function ViewModel() {
     })
     self.sandboxOutput = ko.computed(function() {
         var input_str = self.sandboxInput();
+        // requires 'format.js'
         return formatInput(input_str);
     });
 
