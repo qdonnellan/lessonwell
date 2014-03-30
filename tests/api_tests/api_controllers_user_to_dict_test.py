@@ -3,15 +3,15 @@ from models.user import User
 from api.api_controllers.user_to_dict import user_to_dict
 
 class UserToDictTest(TestBase):
-    '''
+    """
     test the implementation of the user_to_dict
-    '''
+    """
 
     def test_simple_user_model_conversion(self):
-        '''
+        """
         create a simple user model, pass to user_to_dict()
         assert resulting dictionary is correct
-        '''
+        """
         sample_user = User(
             username='man',
             email='man@man.com',
