@@ -4,6 +4,14 @@ from models.curriculum import Curriculum
 def new_course(content):
     """
     create a new course entity; return the id of the new course
+
+    content should conform to:
+    content = {
+        'teacher' : (str or int, Required),
+        'title' : (string),
+        'body' : (string),
+        'private' : (boolean),
+    }
     """
     teacher_id = content['teacher']
     teacher = get_user(teacher_id)
