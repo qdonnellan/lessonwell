@@ -94,7 +94,14 @@ function ViewModel() {
     };
 
     self.saveNewContent = function() {
-        //do something
+        data = {
+            title : self.content_title(),
+            body : self.content_description(),
+        }
+        url = '/' + self.child_content_type()
+        $.post(url, data, function() {
+            // do something with the response maybe?
+        });
     };
 };
 
