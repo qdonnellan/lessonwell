@@ -1,7 +1,7 @@
 def user_to_dict(user):
-    '''
+    """
     return a dictionary object based on the user model passed
-    '''
+    """
 
     data = {}
 
