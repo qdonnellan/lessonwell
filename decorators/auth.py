@@ -18,9 +18,10 @@ def link_if_no_google_user(decorated_function):
     return check_current_user
 
 def abort_if_no_google_user(decorated_function):
-    '''
-    if the current_user is not authenticated to this app, abort with a 401 error
-    '''
+    """
+    if the current_user is not authenticated to this app, 
+    abort with a 401 error
+    """
     def check_current_user(self, *kw, **kwargs):
         current_user = users.get_current_user()
         if not current_user:
