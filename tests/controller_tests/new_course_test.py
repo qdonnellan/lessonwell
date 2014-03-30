@@ -1,6 +1,6 @@
 from tests.main_test_handler import TestBase
 from google.appengine.ext import ndb
-from controllers.new_curriculum import new_course
+from controllers.new_course import new_course
 
 from models.curriculum import Curriculum 
 
