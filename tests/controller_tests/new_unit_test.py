@@ -1,6 +1,7 @@
 from tests.main_test_handler import TestBase
 from google.appengine.ext import ndb
-from controllers.new_curriculum import new_course, new_unit
+from controllers.new_course import new_course
+from controllers.new_unit import new_unit
 
 from models.curriculum import Curriculum 
 
@@ -29,7 +30,7 @@ class NewUnitTest(TestBase):
         # check that the correct content properties were set
         self.assertEqual(unit.content['title'], 'foo unit')
         self.assertEqual(unit.content['body'], 'bla bla unit body')
-        # check tha thet correct inferred properties were set
+        # check that the correct inferred properties were set
         self.assertEqual(unit.content['course'], course_id)
         self.assertEqual(unit.content['teacher'], int(local_user.key.id()))
         self.assertEqual(unit.content_type, 'unit')
