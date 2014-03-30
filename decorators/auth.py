@@ -31,9 +31,9 @@ def abort_if_no_google_user(decorated_function):
     return check_current_user
 
 def local_user_required(decorated_function):
-    '''
+    """
     if no local user is present, the request is aborted
-    '''
+    """
     def check_for_local_user(self, *kw, **kwargs):
         try:
             current_user = users.get_current_user()
@@ -47,12 +47,11 @@ def local_user_required(decorated_function):
     return check_for_local_user
 
 def check_approval(decorated_function):
-    '''
+    """
     check if the current user is approved to view this course/unit/lesson
 
-    userID should be the first kw, kw[0]
-    courseID should be the second kw, kw[1]
-    '''
+    courseID should be the first kw, kw[0]
+    """
     def approve_or_deny(self,*kw,**kwargs):
         userID, courseID = kw[0], kw[1]
         try:
