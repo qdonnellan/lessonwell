@@ -5,9 +5,10 @@ from controllers.fetch_approval import get_approval_status_for_google_id
 from controllers.fetch_user import get_user_by_google_id
 
 def link_if_no_google_user(decorated_function):
-    '''
-    if the current_user is not authenticated to this app, redirect to the link page
-    '''
+    """
+    if the current_user is not authenticated to this app, 
+    redirect to the link page
+    """
     def check_current_user(self, *kw, **kwargs):
         current_user = users.get_current_user()
         if not current_user:
