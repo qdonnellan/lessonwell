@@ -51,9 +51,9 @@ class GetContentTest(TestBase):
 
     def test_that_get_public_course_is_a_json_response(self):
         """
-        assert that the response from /api/course/1 is a json response
+        assert that the response from /api/curriculum/1 is a json response
         """
-        response = self.testapp.get('/api/course/1')
+        response = self.testapp.get('/api/curriculum/1')
         self.assertEqual(response.status_int, 200)
         self.assertEqual(response.content_type, 'application/json')
 
@@ -61,7 +61,7 @@ class GetContentTest(TestBase):
         """
         an api request to a non-existing course should return an error message
         """
-        response = self.testapp.get('/api/course/91910191992')
+        response = self.testapp.get('/api/curriculum/91910191992')
         self.assertEqual(response.content_type, 'application/json')
         data = json.loads(response.body)
         self.assertIn('error', data)
@@ -69,7 +69,7 @@ class GetContentTest(TestBase):
     def test_get_public_course(self):
         """
         test api response for a request of a publically available course
-        at /api/course/{{courseID}}
+        at /api/curriculum{{courseID}}
 
         we'll first create a bunch of course material, then we'll determine 
         the id of the first user and their first course that was generated
@@ -79,7 +79,7 @@ class GetContentTest(TestBase):
         course_id = Curriculum.query(
             Curriculum.content_type == 'course'
             ).get().key.id()
-        response = self.testapp.get('/api/course/%s' % course_id)
+        response = self.testapp.get('/api/curriculum/%s' % course_id)
         self.assertEqual(response.status_int, 200)
 
         self.assertEqual(response.content_type, 'application/json')
@@ -102,7 +102,7 @@ class GetContentTest(TestBase):
             'private' : True,
             })
         response = self.testapp.get(
-            '/api/course/%s' % course_id,
+            '/api/curriculum/%s' % course_id,
             )
         data = json.loads(response.body)
         self.assertIn('error', data)
