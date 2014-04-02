@@ -2,21 +2,19 @@
     <li><a href="#edit" data-bind="click: editButtonClicked"><i class="fa fa-home fa-lg"></i></a></li>
     <li data-bind="if: courseActive"><a href="#course" data-bind="click: courseButtonClicked, text: current_course_title"></a></li>
     <li data-bind="if: unitActive"><a  href="#unit" data-bind=" click: unitButtonClicked, text: current_unit_title"></a></li>
-    <li data-bind="if: lessonActive"><a href="#lesson" data-bind="click: lessonButtonClicked">Lesson</a></li>
-    <span data-bind="ifnot: newContent">
-        <span data-bind="if: child_content_type() == 'lesson'">
+    <li data-bind="if: lessonActive && !newContent"><a href="#lesson" data-bind="click: lessonButtonClicked">Lesson</a></li>
+    <span data-bind="if: child_content_type() == 'lesson'">
+        <button 
+            class="btn btn-info" 
+            data-bind="text: newButtonText, click: initNewLesson">
+        </button>
+    </span>
+    <span data-bind="if: child_content_type()">
+        <span data-bind="ifnot: child_content_type() == 'lesson'">
             <button 
                 class="btn btn-info" 
-                data-bind="text: newButtonText, click: initNewLesson">
+                data-bind="text: newButtonText, click: initNewContent">
             </button>
-        </span>
-        <span data-bind="if: child_content_type()">
-            <span data-bind="ifnot: child_content_type() == 'lesson'">
-                <button 
-                    class="btn btn-info" 
-                    data-bind="text: newButtonText, click: initNewContent">
-                </button>
-            </span>
         </span>
     </span>
     <span data-bind="if: newContent">
