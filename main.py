@@ -12,9 +12,11 @@ from api.request_handlers.validate_username_api import ValidateUsernameAPI
 from api.request_handlers.user_api import UserAPI
 
 app = webapp2.WSGIApplication([
-    ('/api/course/(\w+)', CurriculumAPI), 
+    ('/api/curriculum/(\w+)', CurriculumAPI), 
+    ('/api/curriculum', CurriculumAPI), 
     ('/api/validate_username/(\w+)', ValidateUsernameAPI),
     ('/api/user/(\w+)', UserAPI),
+    ('/api/user', UserAPI),
     ('/success', SuccessPage),
     ('/sandbox', Sandbox),
     ('/about', AboutPage),
