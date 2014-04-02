@@ -127,22 +127,4 @@ class GetContentTest(TestBase):
         data = json.loads(response.body)
         self.assertIn('error', data)
 
-    def test_authorized_get_private_course(self):
-        self.create_google_user(
-            user_id='123',
-            email_address='foo@gmail.com')
-        author = self.create_and_return_local_user()
-        course_id = self.create_sample_course(
-            user = author,
-            privacy = 'private')
-        course = get_course(author.key.id(), course_id)
-        Approval(
-            googleID='123',
-            email='foo@gmail.com',
-            formalName='Sam Max',
-            status='approved',
-            parent=course.key
-            ).put()
-        response = self.testapp.get(
-            '/api/content/%s/%s' % (author.key.id(), course_id))
-        self.assertEqual(response.status_int, 200)
+
