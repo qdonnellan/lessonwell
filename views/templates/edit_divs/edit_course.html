@@ -1,0 +1,8 @@
+<div data-bind="foreach: current_units">
+    <a data-bind="
+        text: content.title, 
+        click: $parent.fetchUnit,
+        "
+        href="#edit_unit">
+    </a>
+</div> 
