@@ -20,6 +20,6 @@ def get_course_by_id(content_id):
     if content.content_type =='course':
         return content
     else:
-        course_id = content.content.course
+        course_id = content.content['course']
         course = ndb.Key('Curriculum', int(course_id)).get()
         return course
