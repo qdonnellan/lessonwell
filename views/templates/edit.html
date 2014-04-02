@@ -5,16 +5,7 @@
 <div class="sandbox">
     <div class="sandbox-header col-sm-12">
         <div class="col-sm-6">
-            <ol class="breadcrumb breadcrumb-arrow">
-                <li><a href="#edit" data-bind="click: editButtonClicked"><i class="fa fa-home fa-lg"></i></a></li>
-                <li data-bind="if: courseActive"><a href="#course" data-bind="click: courseButtonClicked">Course</a></li>
-                <li data-bind="if: unitActive"><a href="#unit" data-bind="click: unitButtonClicked">Unit</a></li>
-                <li data-bind="if: lessonActive"><a href="#lesson" data-bind="click: lessonButtonClicked">Lesson</a></li>
-                <span data-bind="ifnot: newContent"><button class="btn btn-info" data-bind="text: newButtonText, click: initNewContent"></button></span>
-                <span data-bind="if: newContent">
-                    A new <span data-bind="text: child_content_type"></span>
-                <span>
-            </ol>
+            {% include 'edit_divs/edit_breadcrumbs.html' %}
         </div>
         <div data-bind="if: lessonActive">
             <form class="form-inline text-right col-sm-6">
@@ -39,11 +30,12 @@
         </div>
     </div>
     <div data-bind="if: content_type() == 'course'">
-        <div class="edit-course-content col-lg-12">
-            <h1>Edit Course</h1>
-        </div>
+        {% include 'edit_divs/edit_course.html' %} 
     </div>
-    <div data-bind="if: newContent">
+    <div data-bind="ifnot: content_type() || newContent">
+        {% include 'edit_divs/course_list.html' %} 
+    </div>
+    <div data-bind="if: newContent && !lessonActive">
         {% include 'edit_divs/new_content.html' %}
     </div>
 </div>
