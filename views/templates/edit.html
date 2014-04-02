@@ -35,7 +35,7 @@
     <div data-bind="ifnot: content_type() || newContent">
         {% include 'edit_divs/course_list.html' %} 
     </div>
-    <div data-bind="if: newContent && !lessonActive">
+    <div data-bind="if: newContent">
         {% include 'edit_divs/new_content.html' %}
     </div>
 </div>
