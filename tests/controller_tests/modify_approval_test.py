@@ -31,7 +31,7 @@ class ModifyApprovalTest(TestBase):
         """
         self.create_new_approval()
         course = Curriculum.query().get()
-        self.assertIn('123', course.content['pending_approval'])
+        self.assertIn(123, course.content['pending_approval'])
 
 
 
