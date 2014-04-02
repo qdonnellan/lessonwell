@@ -104,6 +104,7 @@ function ViewModel() {
     self.initNewLesson = function() {
         self.sandboxInput('');
         self.content_type('lesson');
+        self.newContent(true);
     }
 
     self.fetchCourse = function(course) {
