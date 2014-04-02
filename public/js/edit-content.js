@@ -95,19 +95,60 @@ function ViewModel() {
     };
 
     self.initNewContent = function() {
-        self.sandboxInput('');
+        self.content_title('');
+        self.content_description('');
         self.newContent(true);
         self.courseButtonDisabled = ko.observable('disabled');
     };
 
+    self.initNewLesson = function() {
+        self.sandboxInput('');
+        self.content_type('lesson');
+    }
+
+    self.fetchCourse = function(course) {
+        var url = '/api/curriculum/' + course.id
+        $.getJSON(url, function (response) {
+            self.current_course_title(response.content.title);
+            self.current_course_id(response.id);
+            self.current_units(response.units);
+            self.courseButtonClicked() 
+        });
+    };
+
+    self.fetchUnit = function(unit) {
+        var url = '/api/curriculum/' + unit.id
+        $.getJSON(url, function (response) {
+            self.current_unit_title(response.content.title);
+            self.current_unit_id(response.id);
+            self.current_lessons(response.lessons);
+            self.unitButtonClicked() 
+        });
+    };
+
     self.saveNewContent = function() {
-        data = {
+        var data = {
             title : self.content_title(),
             body : self.content_description(),
-        }
-        url = '/' + self.child_content_type()
-        $.post(url, data, function() {
-            // do something with the response maybe?
+            content_type : self.child_content_type(),
+            course : self.current_course_id(),
+        };
+        $.post('/api/curriculum', data, function (response) {
+            if (data.content_type == 'course') {
+                self.fetchCourse(response);
+            }
+            else if (data.content_type == 'unit') {
+                self.fetchUnit(response);
+            }
+            self.updateTeacherCourses();
+        });
+        self.newContent(false);
+        self.content_type(self.child_content_type());
+    };
+
+    self.updateTeacherCourses = function() {
+        $.getJSON('/api/user', function (response){
+            vm.teacher_courses(response.courses);
         });
     };
 };
