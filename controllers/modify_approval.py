@@ -4,7 +4,7 @@ def new_approval_request(course, googleID, formalName, email):
 
     if approval instance already exists, do nothing
     """
-    googleID = str(googleID)
+    googleID = int(googleID)
     if googleID not in course.content['approved_students']:
         if googleID not in course.content['pending_approval']:
             course.content['pending_approval'].append(googleID)
@@ -14,7 +14,7 @@ def update_approval(course, googleID, status):
     """
     update the approval status for a particular googleID for a course
     """
-    googleID = str(googleID)
+    googleID = int(googleID)
     if status == 'delete':
         if googleID in course.content['approved_students']:
             course.content['approved_students'].remove(googleID)
