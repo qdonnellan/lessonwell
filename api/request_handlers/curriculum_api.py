@@ -33,3 +33,46 @@ class CurriculumAPI(APIHandler):
 
         self.write_json(data)
 
+    @local_user_required
+    def post(self, contentID=None):
+        """
+        handle the post request for the CurriculumAPI
+
+        if no contentID then assumption is new entity, else the assumption
+        is to edit an existing entity
+
+        acceptable params of the data sent in the post request include:
+
+        'content_type' : str
+        'title' : str
+        'body' : str
+        'private' : bool
+        """
+        try:
+            content_type = self.request.POST.get('content_type')
+            if content_type not in ['course', 'unit', 'lesson']:
+                raise TypeError('invalid content type')
+            googleID = users.get_current_user().user_id()
+
+            content = {}
+            
+            content['teacher'] = get_user_by_google_id(googleID).key.id()
+            content['title'] = self.request.POST.get('title')
+            content['body'] = self.request.POST.get('body')
+            content['private'] = self.request.POST.get('private')
+            if contentID is None:
+                if content_type == 'course':
+                    contentID = new_course(content)
+                if content_type == 'unit':
+                    content['course'] = self.request.POST.get('course')
+                    contentID = new_unit(content)
+
+            new_content = get_content_by_id(contentID)
+            data = content_to_dict(new_content)
+        except Exception as e:
+            data = {'error' : str(e)}
+
+        logging.info(data)
+        self.write_json(data)
+
+
