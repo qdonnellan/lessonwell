@@ -16,3 +16,4 @@ class User(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add = True)
     stripe_pub_key = ndb.StringProperty(required = False)
     stripe_access_token = ndb.StringProperty(required = False)
+    courses = ndb.JsonProperty(required = False)
