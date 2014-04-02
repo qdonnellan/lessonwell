@@ -6,6 +6,13 @@ function ViewModel() {
     self.courseButtonDisabled = ko.observable('');
     self.content_title = ko.observable('');
     self.content_description = ko.observable('');
+    self.teacher_courses = ko.observableArray([]);
+    self.current_course_title = ko.observable('');
+    self.current_course_id = ko.observable('');
+    self.current_units = ko.observableArray([]);
+    self.current_unit_title = ko.observable('');
+    self.current_unit_id = ko.observable('');
+    self.current_lessons = ko.observableArray([]);
 
     self.lessonActive = ko.computed(function() {
         if (self.content_type() == 'lesson') {return true;}
