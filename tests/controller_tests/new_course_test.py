@@ -1,7 +1,6 @@
 from tests.main_test_handler import TestBase
 from google.appengine.ext import ndb
 from controllers.new_course import new_course
-
 from models.curriculum import Curriculum 
 
 class NewCourseTest(TestBase):
@@ -54,6 +53,20 @@ class NewCourseTest(TestBase):
         content should be a JSON serializable dict!
         """
         self.assertRaises(Exception, new_course, 'badfas')
+
+    def test_that_new_course_shows_up_in_authors_course_list(self):
+        """
+        a new course should be appended to the author's course list
+        """
+        local_user = self.create_and_return_local_user()
+        content = {
+            'teacher' : int(local_user.key.id()),
+            'title' : 'foo course',
+            'body' : 'study hard, learn well, duh',
+        }
+        course_id = new_course(content)
+        self.assertIn(course_id, local_user.courses)
+
 
 
 
