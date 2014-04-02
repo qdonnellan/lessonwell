@@ -43,7 +43,7 @@ class FetchApprovalTest(TestBase):
         course = Curriculum.query().get()
         self.assertEqual(
             course.content['pending_approval'], 
-            ['1','2','3','4','5']
+            [1,2,3,4,5],
             )
 
 
