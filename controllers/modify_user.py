@@ -15,6 +15,7 @@ def new_user(username, formalName, email, googleID, stripeID=None):
         stripeID = stripeID,
         email = email,
         parent = None,
+        courses = [],
         )
     userObject.put()
     return userObject
