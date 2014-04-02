@@ -122,7 +122,7 @@ class GetContentTest(TestBase):
             })
         self.create_google_user()
         response = self.testapp.get(
-            '/api/course/%s' % course_id,
+            '/api/curriculum/%s' % course_id,
             )
         data = json.loads(response.body)
         self.assertIn('error', data)
