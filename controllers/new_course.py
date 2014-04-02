@@ -32,4 +32,13 @@ def new_course(content):
     content['passphrase'] = ''
     content['listed'] = False
     key = Curriculum(content_type = 'course', content = content).put()
+
+    if teacher.courses:
+        teacher.courses.append(int(key.id()))
+    else:
+        teacher.courses = [int(key.id())]
+    teacher.put()
+
     return int(key.id())
+
+
