@@ -126,6 +126,10 @@ function refreshOutputStyle() {
 vm = new ViewModel();
 ko.applyBindings(vm);
 
+$(document).ready(function() {
+    vm.updateTeacherCourses();
+});
+
 
 
 
