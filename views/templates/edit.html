@@ -23,11 +23,9 @@
             </form>
         </div>
     </div>
-    <div data-bind="if: content_type() == 'lesson'">
-        <div class="sandbox-content">
-            <textarea  data-bind="value: sandboxInput, valueUpdate: 'afterkeydown'" id="sandbox-textarea" class="col-sm-6 form-control"></textarea>
-            <div id="sandbox-output" class="col-sm-6" data-bind="html: sandboxOutput"></div>
-        </div>
+    <div class="sandbox-content" data-bind="visible: content_type() == 'lesson'">
+        <textarea  data-bind="value: sandboxInput, valueUpdate: 'afterkeydown'" id="sandbox-textarea" class="col-sm-6 form-control"></textarea>
+        <div id="sandbox-output" class="col-sm-6" data-bind="html: sandboxOutput"></div>
     </div>
     <div data-bind="if: content_type() == 'course'">
         {% include 'edit_divs/edit_course.html' %} 
