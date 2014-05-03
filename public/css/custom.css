@@ -1,5 +1,16 @@
+body, 
+html {
+  background-color: #F1F2F6;
+  height: 100%;
+}
+
 .modal-footer {
   border: none !important
+}
+
+.marketing-container {
+  padding-top: 50px;
+  padding-bottom: 100px;
 }
 
 .navbar-right {
@@ -15,14 +26,35 @@
   box-shadow: 0px 0px 5px #f6f6f6
 }
 
-#sandbox-textarea {
-  width:50%;
-  height:100%;
+.edit-lesson-div > div > textarea {
+  height: 100%;
   font-size: 1.2em;
+  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+  font-weight: 500;
   box-sizing: border-box;         /* For IE and modern versions of Chrome */
   -moz-box-sizing: border-box;    /* For Firefox                          */
   -webkit-box-sizing: border-box; /* For Safari                           */
 }
+
+.edit-lesson-div,
+.edit-lesson-div > div, 
+.edit-lesson-div > div > .panel {
+  height: 100% !important;
+}
+
+.edit-lesson-div > div > .panel {
+  overflow-y: scroll
+}
+
+.edit-lesson-div {
+  padding-top: 140px;
+  margin-top: -140px;
+}
+
+#save-lesson-button {
+  margin-top: -7px !important;
+}
+
 
 #sandbox-output {
   height: 100%;
@@ -34,10 +66,18 @@
   font-size: 1.2em;
 }
 
+
+.edit-page {
+  position: absolute;
+  width: 100%;
+  background-color: #F1F2F6;
+  height: 100%;
+}
+
 .sandbox {
   position: absolute;
   height: 100% !important;
-  width: 100%;
+  width: 100%; 
 }
 
 #sandbox-output pre {
@@ -52,20 +92,23 @@ pre code {
   padding: 0px !important;
 }
 
-.sandbox-header {
+.edit-header {
   background: #e6e9ed;
   border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
   height: 50px;
   padding-top: 7px;
+  margin-top: 50px;
   width: 100%;
 }
 
-.sandbox .breadcrumb > span > button {
-  margin-top: -2px !important;
+
+.edit-header .breadcrumb > span {
+  margin-left: 10px !important
 }
 
-.sandbox .breadcrumb > span {
-  margin-left: 10px !important
+.breadcrumb button {
+  margin-top: -2px;
 }
 
 .sandbox textarea {
@@ -100,27 +143,8 @@ pre code {
   padding-right: 10px
 }
 
-
 .shorthand-button > code {
   margin-left: 10px
-}
-
-.left-panel {
-  border-right: 1px solid #e5e5e5;
-  position: fixed;
-  left: 0;
-  top: 50px;
-  bottom: 0;
-  margin:0px;
-  padding:0px !important;
-  padding-top: 20px !important;
-  width: 250px;
-  color: #ccc;
-  font-size: 1em;
-  background-color: #fcfcfc;
-  overflow-x:hidden;
-  overflow-y:auto;
-
 }
 
 .navbar-brand {
@@ -140,151 +164,6 @@ pre code {
     padding-top: 50px;
   }
 }
-
-.left-panel .side-list {
-  width: 100%;
-  list-style: none;
-}
-
-.side-list {
-  padding: 0;
-  margin: 0;
-
-}
-
-.side-list > .active > a {
-  color: #000 !important;
-  font-weight: 400 !important;
-  border-left: 4px solid #0099ff !important
-}
-
-.side-list-active > li > a:hover, .side-list > .active > a:hover, .unit-active:hover, .lesson-link:hover {
-  color: #000 !important;
-  border-left: 4px solid #0099ff !important
-}
-
-
-.side-list > li > a {
-  display: block;
-  border-left: 4px solid #fcfcfc;
-  width: 250px;
-  margin: 0 !important;
-  padding: 0;
-  padding-bottom: 3px;
-  padding-top: 3px;
-  padding-left: 15px;
-  padding-right: 15px;
-  color: #555;
-  font-weight: 300;
-}
-
-.side-list > li > a > p, .side-list > li, .side-list > li > p, .side-list {
-  padding-bottom: 0px !important;
-  padding-top: 0px !important;
-  margin: 0px !important;
-}
-
-
-
-.side-list > li > a:hover {
-  text-decoration: none;
-  border-left: 4px solid #0099ff !important;
-  background-color: #fff;
-  color: #000;
-}
-
-.side-list > .active > a, .side-list > .active > a:hover {
-  border-left: 4px solid #0099ff !important
-}
-
-.side-list > .completed-step > a:hover {
-  border-left: 4px solid #fcfcfc !important;
-  background-color: #fcfcfc !important;
-  color: #555 !important;
-}
-
-.xs-page-header {
-  text-align: center;
-}
-
-.xs-header h1 {
-  font-size: 4em !important
-}
-
-.xs-header {
-  text-align: center;
-  padding-bottom: 50px
-}
-
-.xs-header .lead {
-  font-size: 2em
-}
-
-.mobile-unit-links {
-  padding-bottom: 50px
-}
-
-.mobile-unit-links > ul > li > a {
-  display: block;
-  color: #444;
-  font-size: 1.5em;
-  font-weight: 300;
-  border-bottom: 1px solid #e5e5e5;
-
-  margin: 0 !important;
-  padding: 10px;
-}
-
-.mobile-unit-links  span {
-  font-size: 0.8em !important;
-}
-
-.mobile-unit-links i {
-  font-size: 2em;
-  color: #999
-}
-
-.mobile-unit-links > ul > li > a:hover {
-  text-decoration: none;
-}
-
-.mobile-unit-links > ul > li {
-  text-decoration: none;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.mobile-unit-links > ul {
-  list-style: none;
-  width: 100%;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.course-link p {
-  padding-left: 9px
-}
-
-.unit-link p {
-  padding-left: 18px;
-}
-
-.lesson-link span, .lesson-link p {
-  padding-left: 27px;
-}
-
-.lesson-edit-link span, .lesson-edit-link p  {
-  padding-left: 36px;
-}
-
-.lesson-sub-edit-link span,  .lesson-sub-edit-link p {
-  padding-left: 45px;
-}
-
-.course-link i, .unit-link i, .lesson-link i {
-  color:#888;
-}
-
 
 .big-container {
   text-align: center;
@@ -334,47 +213,6 @@ pre {
 
 .navbar {
   border-bottom: 1px solid #111
-}
-
-.marketing-div  .jumbotron, .front-jumbo {
-  position: relative;
-  padding: 40px 0;
-  margin: 0;
-  color: #fff;
-  text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
-  background: #a90329; /* Old browsers */
-  /* Note: This gradient may render differently in browsers that don't support the unprefixed gradient syntax */
-
-  /* IE10 Consumer Preview */
-  background-image: -ms-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
-
-  /* Mozilla Firefox */
-  background-image: -moz-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
-
-  /* Opera */
-  background-image: -o-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
-
-  /* Webkit (Safari/Chrome 10) */
-  background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0, #00092E), color-stop(1, #0B5254));
-
-  /* Webkit (Chrome 11+) */
-  background-image: -webkit-linear-gradient(bottom left, #00092E 0%, #0B5254 100%);
-
-  /* W3C Markup, IE10 Release Preview */
-  background-image: linear-gradient(to top right, #00092E 0%, #0B5254 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-  -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
-     -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
-          box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
-}
-
-
-.marketing-side {
-  padding: 10px;
-  text-align: center;
-  background-color: #fcfcfc;
-  border: 1px solid #e5e5e5;
 }
 
 .center-button-div {
