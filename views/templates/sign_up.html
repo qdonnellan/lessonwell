@@ -1,77 +1,74 @@
 {% extends "base.html" %}
 
-
 {% block body %}
 
-<div class="container">
-    <div class="content-div col-md-12">
-        <div class="page-header">
-            <h1>Personal Information
-            <a href="http://www.stripe.com" target="_blank"><img src="/img/stripe_logo.png" class="pull-right"></a></h1>
+<div class="container marketing-container">
+    <div class="page-header">
+        <h1>Personal Information
+        <a href="http://www.stripe.com" target="_blank"><img src="/img/stripe_logo.png" class="pull-right"></a></h1>
+    </div>
+    <div class="col-md-8">
+        {% if error %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap!</strong> {{error}}
         </div>
-        <div class="col-md-8">
-            {% if error %}
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Oh snap!</strong> {{error}}
+        {% endif %}
+        <form class="form-horizontal" method="post" action = '', id="payment-form">
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="inputFormalname">Your Name</label>
+                <div class="col-lg-10">
+                    <input type="text" id="inputFormalname" name="formalName"  class="form-control">
+                </div>
             </div>
-            {% endif %}
-            <form class="form-horizontal" method="post" action = '', id="payment-form">
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="inputFormalname">Your Name</label>
-                    <div class="col-lg-10">
-                        <input type="text" id="inputFormalname" name="formalName"  class="form-control">
-                    </div>
+            <div class="form-group" data-bind="css: {'has-error': has_error, 'has-success': has_success}">
+                <label class="col-lg-2 control-label" for="inputUsername">Username</label>
+                <div class="col-lg-10">
+                    <input type="text" id="inputUsername" name="username" class="form-control" data-bind="value: username, valueUpdate: 'afterkeydown'">
+                    <span class="help-block" data-bind="if: error_msg">
+                        <span data-bind="text: error_msg"></span>
+                    </span>
                 </div>
-                <div class="form-group" data-bind="css: {'has-error': has_error, 'has-success': has_success}">
-                    <label class="col-lg-2 control-label" for="inputUsername">Username</label>
-                    <div class="col-lg-10">
-                        <input type="text" id="inputUsername" name="username" class="form-control" data-bind="value: username, valueUpdate: 'afterkeydown'">
-                        <span class="help-block" data-bind="if: error_msg">
-                            <span data-bind="text: error_msg"></span>
-                        </span>
-                    </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label  col-lg-2" for="disabledInput">Email</label>
+                <div class="col-lg-10">
+                    <input class="input form-control" id="disabledInput" type="text" placeholder = "{{google_users_api.get_current_user().email()}}" disabled>
+                    <span class="help-block">Your Google Account; we will only use this email to contact you if we have important information or issues concerning your account. We also use your email to help us identify your payment information with <strong>stripe</strong>. We will never spam you, or give your email to anyone else. </span>
                 </div>
-                <div class="form-group">
-                    <label class="control-label  col-lg-2" for="disabledInput">Email</label>
-                    <div class="col-lg-10">
-                        <input class="input form-control" id="disabledInput" type="text" placeholder = "{{google_users_api.get_current_user().email()}}" disabled>
-                        <span class="help-block">Your Google Account; we will only use this email to contact you if we have important information or issues concerning your account. We also use your email to help us identify your payment information with <strong>stripe</strong>. We will never spam you, or give your email to anyone else. </span>
-                    </div>
-                </div>
+            </div>
 
-                <div class="form-group" data-bind="css: {'has-error': has_error}">
-                    <label class="control-label  col-lg-2" for="subscribeButton">Subscribe</label>
-                    <div class="col-lg-10">
-                        <div data-bind="ifnot: error_msg">
-                            <script
-                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="{{stripe_publish_key}}"
-                                data-image="/img/lessonwell_square.png"
-                                data-name="lessonwell"
-                                data-label='Enter Payment Information and Subscribe'
-                                data-panel-label='Subscribe'
-                                data-description="$10 Monthly Subscription"
-                                data-amount="1000"
-                                data-email="{{google_users_api.get_current_user().email()}}">
-                            </script>
-                            <span class="help-block">By submitting this information you acknowledge that you have read, and agree to abide by, the lessonwell <a href="/tos" target="_blank">Terms of Service</a></span>
-                        </div>
-                        <div class="help-block" data-bind="if: has_error">
-                            You must fix the errors above before you can proceed
-                        </div>
+            <div class="form-group" data-bind="css: {'has-error': has_error}">
+                <label class="control-label  col-lg-2" for="subscribeButton">Subscribe</label>
+                <div class="col-lg-10">
+                    <div data-bind="ifnot: error_msg">
+                        <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="{{stripe_publish_key}}"
+                            data-image="/img/lessonwell_square.png"
+                            data-name="lessonwell"
+                            data-panel-label="Subscribe"
+                            data-description="$10 Monthly Subscription"
+                            data-allow-remember-me="false"
+                            data-amount="1000"
+                            data-email="{{google_users_api.get_current_user().email()}}">
+                        </script>
+                        <span class="help-block">By submitting this information you acknowledge that you have read, and agree to abide by, the lessonwell <a href="/tos" target="_blank">Terms of Service</a></span>
+                    </div>
+                    <div class="help-block" data-bind="if: has_error">
+                        You must fix the errors above before you can proceed
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    free trial end date: <strong>{{trialEnd}}</strong>
-                </div>
-                <div class="panel-body">
-                    After this date your card will be charged <strong>${{planAmount}} per month</strong> unless you cancel your subscription. <span class="muted">You may cancel at anytime. Plans are pro-rated; you only pay for what you use (if you cancel 5 days after the free trial is up, you only pay for 5 days). If you cancel before the end of your free trial, your card will not be charged.</span>
-                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                free trial end date: <strong>{{trialEnd}}</strong>
+            </div>
+            <div class="panel-body">
+                After this date your card will be charged <strong>${{planAmount}} per month</strong> unless you cancel your subscription. <span class="muted">You may cancel at anytime. Plans are pro-rated; you only pay for what you use (if you cancel 5 days after the free trial is up, you only pay for 5 days). If you cancel before the end of your free trial, your card will not be charged.</span>
             </div>
         </div>
     </div>
