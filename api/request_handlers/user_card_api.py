@@ -27,6 +27,9 @@ class UserCardAPI(APIHandler):
         """
         change the card on file
         """
-        card_info = self.request.POST.get('stripeToken')
-        change_card(card_info)
-        self.redirect('/edit')
+        try:
+            card_info = self.request.POST.get('stripeToken')
+            change_card(card_info)
+            self.redirect('/edit')
+        except:
+            self.write_json({'error' : 'there was an error processing your request'})
