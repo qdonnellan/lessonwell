@@ -1,4 +1,3 @@
-
 from fetch_user import get_user
 from models.curriculum import Curriculum
 from fetch_curriculum import get_content_by_id
