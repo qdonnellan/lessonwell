@@ -4,7 +4,7 @@
 
 {% set googleUser = google_users_api.get_current_user() %}
 
-<div class="content-div container">
+<div class="container marketing-container">
     <div class="col-md-8 col-md-offset-2">
         <div class="page-header text-center">
             <h1>{% if googleUser %}Confirm{% else %}Link{% endif %} Google Account</h1>
@@ -32,6 +32,5 @@
         </div> 
         {% endif %}   
     </div>
-</div>
-
+</div>      
 {% endblock %}
