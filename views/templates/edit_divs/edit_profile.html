@@ -16,8 +16,8 @@
                     <a data-bind="click: $parent.fetchCourse" href="#edit_course" class="btn btn-default pull-right">Edit</a>
                     <p><strong data-bind="text: content.title"></strong></p>
                     <p class="text-muted" data-bind="text: content.body"></p>
-                    
-                </li> 
+
+                </li>
             </ul>
         </div>
     </div>
@@ -52,32 +52,23 @@
                             <textarea class="form-control" rows="5" data-bind="event: {keypress: profileChange}" placeholder="write something about yourself!"></textarea>
                         </div>
                     </div>
-                    <!--<div class="form-group">
-                        <label class="col-sm-3 control-label">Email</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="text" placeholder="{{localUser.email}}" disabled >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Username</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="{{localUser.username}}" disabled>
-                        </div>
-                    </div>-->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Pay Whatever You Want</label>
                         <div class="col-sm-9">
                             <select class="form-control">
                               <option>Free</option>
+                              <option>$1 per month</option>
                               <option>$2 per month</option>
                               <option>$5 per month</option>
                               <option>$10 per month</option>
                               <option>$20 per month</option>
+                              <option>$50 per month</option>
+                              <option>$100 per month</option>
                             </select>
                             <span class="help-block">Change this anytime you want! Payments are pro-rated, so you only pay for the number of days spent at each pay level. Make sure to click the <strong>save changes</strong> button at the top!</span>
                         </div>
                     </div>
-                    
+
                 </form>
 
                 <form class="form-horizontal" method="post" action="/api/user_card">
@@ -108,5 +99,3 @@
         </div>
     </div>
 </div>
-
-
