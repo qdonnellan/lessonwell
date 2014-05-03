@@ -1,0 +1,16 @@
+<div class="col-sm-6">
+    <textarea data-bind="value: sandboxInput, valueUpdate: 'afterkeydown', event: {keypress: lessonChange}" class="col-sm-12 form-control" placeholder="type your lesson in this box"></textarea>
+</div>
+<div class="col-sm-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Your lesson
+            <button class="btn btn-info pull-right" id="save-lesson-button" data-bind="click: saveLesson, enable: contentChangesDetected">save lesson</button>
+        </div>
+        <div class="panel-body" data-bind="html: sandboxOutput"></div>
+    </div>
+</div>
+
+
+
+
