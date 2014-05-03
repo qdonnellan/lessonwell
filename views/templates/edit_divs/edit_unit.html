@@ -1,0 +1,45 @@
+<div class="container" data-bind="ifnot: newContent">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>
+                    <span data-bind="text: current_unit_title"></span>
+                    <button class="btn btn-info pull-right" data-bind="click: initNewContent">new lesson</button>
+                </h5>
+            </div>
+            <ul class="list-group" data-bind="foreach: current_lessons">
+                <li class="list-group-item">
+                    <a data-bind="click: $parent.fetchLesson" href="#edit_lesson" class="btn btn-default pull-right">Edit</a>
+                    <p><strong data-bind="text: content.title"></strong></p>
+                    <p class="text-muted" data-bind="text: content.body"></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>
+                    Unit Settings
+                    <button class="btn btn-primary pull-right" data-bind="enable: contentChangesDetected, click: saveChangesToContent">save changes</button>
+                </h5>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Title</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" data-bind="value: content_title, event: {keypress: contentChange}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Description</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="5" data-bind="event: {keypress: contentChange}, text: content_description" placeholder="briefly describe your course"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
