@@ -1,16 +1,12 @@
 <div class="col-sm-6">
-    <textarea data-bind="value: sandboxInput, valueUpdate: 'afterkeydown', event: {keypress: lessonChange}" class="col-sm-12 form-control" placeholder="type your lesson in this box"></textarea>
+    <textarea data-bind="value: current_lesson_body, valueUpdate: 'afterkeydown', event: {keypress: lessonChange}" class="col-sm-12 form-control" placeholder="type your lesson in this box" id="lesson-textarea"></textarea>
 </div>
 <div class="col-sm-6">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            Your lesson
-            <button class="btn btn-info pull-right" id="save-lesson-button" data-bind="click: saveLesson, enable: contentChangesDetected">save lesson</button>
+        <div class="btn-group pull-right" id="lesson-panel-btn-group">
+            <button class="btn btn-default" type="button" disabled>Formatted Lesson</button>
+            <button class="btn btn-info" id="save-lesson-button" data-bind="click: saveLesson, enable: contentChangesDetected">save lesson</button>
         </div>
-        <div class="panel-body" data-bind="html: sandboxOutput"></div>
+        <div class="panel-body" data-bind="html: formatted_lesson" id="formatted-lesson"></div>
     </div>
 </div>
-
-
-
-
