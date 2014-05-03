@@ -9,6 +9,7 @@ from controllers.new_unit import new_unit
 from controllers.new_lesson import new_lesson
 from controllers.modify_curriculum import modify_content
 import logging
+import re
 
 class CurriculumAPI(APIHandler):
     """
@@ -18,7 +19,7 @@ class CurriculumAPI(APIHandler):
     @check_approval
     def get(self, contentID):
         """
-        handle the get request for the CurriculumAPI, 
+        handle the get request for the CurriculumAPI,
         exceptions are caught and passed in the 'error' param
         """
         try:
@@ -30,6 +31,12 @@ class CurriculumAPI(APIHandler):
                     unit = get_content_by_id(unit_id)
                     unit_list.append(content_to_dict(unit))
                 data['units'] = unit_list
+            if content.content_type == 'unit':
+                lesson_list = []
+                for lesson_id in content.content['lessons']:
+                    lesson = get_content_by_id(lesson_id)
+                    lesson_list.append(content_to_dict(lesson))
+                data['lessons'] = lesson_list
         except Exception as e:
             data = {'error' : str(e)}
 
@@ -57,12 +64,13 @@ class CurriculumAPI(APIHandler):
             googleID = users.get_current_user().user_id()
 
             content = {}
-            
+
             content['teacher'] = get_user_by_google_id(googleID).key.id()
             if content_type == 'lesson':
-                # the first line of the lesson body IS the title 
+                # the first line of the lesson body IS the title
                 body = self.request.POST.get('body')
-                content['title'] = body.splitlines()[0]
+                title = body.splitlines()[0]
+                content['title'] = re.sub('^#+', '', title)
             else:
                 content['title'] = self.request.POST.get('title')
             content['body'] = self.request.POST.get('body')
@@ -86,5 +94,3 @@ class CurriculumAPI(APIHandler):
             data = {'error' : str(e)}
         logging.info(data)
         self.write_json(data)
-
-
