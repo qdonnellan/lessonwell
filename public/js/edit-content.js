@@ -1,14 +1,13 @@
 function ViewModel() {
     var self = this;
 
-    self.sandboxInput = ko.observable('');
     self.content_type = ko.observable(null);
     self.newContent = ko.observable(false);
     self.content_id = ko.observable('');
     self.content_title = ko.observable('');
     self.content_description = ko.observable('');
     self.teacher_courses = ko.observableArray([]);
-    self.current_course_title = ko.observable(''); 
+    self.current_course_title = ko.observable('');
     self.current_course_description = ko.observable('');
     self.current_course_id = ko.observable('');
     self.current_units = ko.observableArray([]);
@@ -16,6 +15,9 @@ function ViewModel() {
     self.current_unit_description = ko.observable('');
     self.current_unit_id = ko.observable('');
     self.current_lessons = ko.observableArray([]);
+    self.current_lesson_title = ko.observable('');
+    self.current_lesson_body = ko.observable('');
+    self.current_lesson_id = ko.observable(null);
     self.formal_name = ko.observable('');
     self.profileChangesDetected = ko.observable(false);
     self.contentChangesDetected = ko.observable(false);
@@ -47,7 +49,7 @@ function ViewModel() {
         else if (self.content_type() == 'course') {return true}
         else {return false}
     });
-    
+
     self.child_content_type = ko.computed(function() {
         if (self.content_type() == 'course') { return 'unit'}
         else if (self.content_type() == 'unit') {return 'lesson'}
@@ -58,8 +60,8 @@ function ViewModel() {
     self.newButtonText = ko.computed(function() {
         return 'new ' + self.child_content_type();
     })
-    self.sandboxOutput = ko.computed(function() {
-        var input_str = self.sandboxInput();
+    self.formatted_lesson = ko.computed(function() {
+        var input_str = self.current_lesson_body();
         // requires 'format.js'
         return formatInput(input_str);
     });
@@ -69,19 +71,19 @@ function ViewModel() {
     // each instructional gif should be 800 x 400 (or the same ratio, 2 x 1)
     self.instructionalGifs = ko.observableArray([
         {
-            'name':'Headers', 
+            'name':'Headers',
             'link': '/img/instructional_gifs/headers.gif',
         },
         {
-            'name':'Lists', 
+            'name':'Lists',
             'link': '/img/instructional_gifs/lists.gif'
         },
         {
-            'name':'Bold/Italic', 
+            'name':'Bold/Italic',
             'link': ''
         },
         {
-            'name':'Youtube', 
+            'name':'Youtube',
             'link': ''
         },
 
@@ -138,14 +140,15 @@ function ViewModel() {
     };
 
     self.initNewLesson = function() {
-        self.sandboxInput('');
+        self.current_lesson_body('');
         self.content_type('lesson');
         self.newContent(false);
         self.lessonMode(true);
+        self.current_lesson_id(null);
     }
 
     self.fetchCourse = function(course) {
-        var url = '/api/curriculum/' + course.id
+        var url = '/api/curriculum/' + course.id;
         $.getJSON(url, function (response) {
             self.current_course_title(response.content.title);
             self.content_title(response.content.title);
@@ -153,7 +156,7 @@ function ViewModel() {
             self.content_description(response.content.body);
             self.current_course_id(response.id);
             self.current_units(response.units);
-            self.courseButtonClicked() 
+            self.courseButtonClicked()
         });
     };
 
@@ -164,13 +167,35 @@ function ViewModel() {
         });
     };
 
+    self.updateUnitLessons = function(unit_id) {
+        var url = '/api/curriculum/' + unit_id;
+        $.getJSON(url, function (response) {
+            self.current_lessons(response.lessons);
+        });
+    };
+
     self.fetchUnit = function(unit) {
-        var url = '/api/curriculum/' + unit.id
+        var url = '/api/curriculum/' + unit.id;
         $.getJSON(url, function (response) {
             self.current_unit_title(response.content.title);
             self.current_unit_id(response.id);
+            self.current_unit_description(response.content.body);
+            self.content_description(response.content.body);
             self.current_lessons(response.lessons);
-            self.unitButtonClicked() 
+            self.unitButtonClicked()
+        });
+    };
+
+    self.fetchLesson = function(lesson) {
+        var url = '/api/curriculum/' + lesson.id;
+        $.getJSON(url, function (response) {
+            self.current_lesson_title(response.content.title);
+            self.current_lesson_body(response.content.body);
+            self.current_lesson_id(response.id);
+            self.lessonMode(true);
+            self.newContent(false);
+            self.content_type('lesson');
+            refreshOutputStyle();
         });
     };
 
@@ -181,8 +206,7 @@ function ViewModel() {
             content_type = 'lesson';
         }
         if (content_type == 'lesson') {
-            body = self.sandboxInput();
-            content_type = self.content_type();
+            body = self.current_lesson_body();
         }
         var data = {
             title : self.content_title(),
@@ -199,8 +223,21 @@ function ViewModel() {
     };
 
     self.saveLesson = function() {
-        self.saveNewContent();
-        self.contentChangesDetected(false);
+        if (self.current_lesson_id() == null) {
+            self.saveNewContent();
+            self.contentChangesDetected(false);
+        }
+        else {
+            var data = {
+                body : self.current_lesson_body(),
+                content_type : 'lesson',
+            };
+            var url = '/api/curriculum/' + self.current_lesson_id();
+            $.post(url, data, function (response) {
+                self.fetchAndUpdateContent(response);
+                self.contentChangesDetected(false);
+            });
+        }
     };
 
     self.saveChangesToContent = function() {
@@ -254,6 +291,10 @@ function ViewModel() {
             self.fetchUnit(response);
             self.updateCourseUnits(response.content.course);
         }
+        else if (content_type == 'lesson') {
+            self.fetchLesson(response);
+            self.updateUnitLessons(response.content.unit);
+        }
         // wait 1 second for NDB consistency, then update
         setTimeout(function() {
             self.updateTeacher();
@@ -264,8 +305,8 @@ function ViewModel() {
 
 // make sure mathjax is called after each new character input
 // in the text area; displays math real time
-$("#sandbox-textarea").on('keyup', function () {
-    setTimeout(refreshOutputStyle, 1000);
+$("#lesson-textarea").on('keyup', function () {
+    setTimeout(refreshOutputStyle(), 1000);
 });
 
 function refreshOutputStyle() {
@@ -279,9 +320,5 @@ ko.applyBindings(vm);
 $(document).ready(function() {
     vm.updateTeacher();
     vm.updateCard();
+    refreshOutputStyle();
 });
-
-
-
-
-
