@@ -2,42 +2,28 @@
 
 {% block body %}
 
-<div class="sandbox">
-    <div class="sandbox-header col-sm-12">
+<div class="edit-page">
+    <div class="edit-header col-sm-12">
         <div class="col-sm-6">
             {% include 'edit_divs/edit_breadcrumbs.html' %}
         </div>
-        <div data-bind="if: lessonActive">
-            <form class="form-inline text-right col-sm-6">
-                <div class="form-group">
-                    <label>Title:</label>
-                    <input 
-                        type="text" 
-                        class="form-control"
-                        placeholder="lesson name"
-                        >
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-success">Save</button>
-                </div>
-            </form>
-        </div>
     </div>
-    <div class="sandbox-content" data-bind="visible: content_type() == 'lesson'">
-        <textarea  data-bind="value: sandboxInput, valueUpdate: 'afterkeydown'" id="sandbox-textarea" class="col-sm-6 form-control"></textarea>
-        <div id="sandbox-output" class="col-sm-6" data-bind="html: sandboxOutput"></div>
+    <div data-bind="visible: lessonMode" class="edit-lesson-div">
+        {% include 'edit_divs/edit_lesson.html' %}
     </div>
     <div data-bind="if: content_type() == 'course'">
         {% include 'edit_divs/edit_course.html' %} 
     </div>
-    <div data-bind="ifnot: content_type() || newContent">
-        {% include 'edit_divs/course_list.html' %} 
+    <div data-bind="if: content_type() == 'unit'">
+        {% include 'edit_divs/edit_unit.html' %} 
     </div>
-    <div data-bind="if: newContent && !lessonActive">
+    <div data-bind="ifnot: content_type() || newContent">
+        {% include 'edit_divs/edit_profile.html' %} 
+    </div>
+    <div data-bind="if: newContent">
         {% include 'edit_divs/new_content.html' %}
     </div>
 </div>
-
 
 <script src="/js/knockout-3.0.0.js"></script> 
 <script src='/js/markdown.js'></script>
