@@ -10,8 +10,7 @@
             <ul class="list-group" data-bind="foreach: current_lessons">
                 <li class="list-group-item">
                     <a data-bind="click: $parent.fetchLesson" href="#edit_lesson" class="btn btn-default pull-right">Edit</a>
-                    <p><strong data-bind="text: content.title"></strong></p>
-                    <p class="text-muted" data-bind="text: content.body"></p>
+                    <p data-bind="text: content.title"></p>
                 </li>
             </ul>
         </div>
@@ -35,7 +34,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Description</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="5" data-bind="event: {keypress: contentChange}, text: content_description" placeholder="briefly describe your course"></textarea>
+                            <textarea class="form-control" rows="5" data-bind="event: {keypress: contentChange}, value: content_description" placeholder="briefly describe your course"></textarea>
                         </div>
                     </div>
                 </form>
