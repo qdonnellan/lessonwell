@@ -6,6 +6,8 @@ from google.appengine.api import users
 from controllers.fetch_user import get_user_by_google_id
 from controllers.new_course import new_course
 from controllers.new_unit import new_unit
+from controllers.new_lesson import new_lesson
+from controllers.modify_curriculum import modify_content
 import logging
 
 class CurriculumAPI(APIHandler):
@@ -57,7 +59,12 @@ class CurriculumAPI(APIHandler):
             content = {}
             
             content['teacher'] = get_user_by_google_id(googleID).key.id()
-            content['title'] = self.request.POST.get('title')
+            if content_type == 'lesson':
+                # the first line of the lesson body IS the title 
+                body = self.request.POST.get('body')
+                content['title'] = body.splitlines()[0]
+            else:
+                content['title'] = self.request.POST.get('title')
             content['body'] = self.request.POST.get('body')
             content['private'] = self.request.POST.get('private')
             if contentID is None:
@@ -66,12 +73,17 @@ class CurriculumAPI(APIHandler):
                 if content_type == 'unit':
                     content['course'] = self.request.POST.get('course')
                     contentID = new_unit(content)
+                if content_type == 'lesson':
+                    content['unit'] = self.request.POST.get('unit')
+                    contentID = new_lesson(content)
+
+            else:
+                modify_content(content, contentID)
 
             new_content = get_content_by_id(contentID)
             data = content_to_dict(new_content)
         except Exception as e:
             data = {'error' : str(e)}
-
         logging.info(data)
         self.write_json(data)
 
