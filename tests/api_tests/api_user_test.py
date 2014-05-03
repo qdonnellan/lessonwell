@@ -41,7 +41,8 @@ class GetUserAPITest(TestBase):
         response = self.testapp.get('/api/user/%s' % user_id)
         user_data = json.loads(response.body)
         user_courses = user_data['courses']
-        self.assertIn(str(course_id), user_courses)
+        first_course = user_courses[0]
+        self.assertEqual(course_id, first_course['id'])
 
     def test_fetch_current_user(self):
         """

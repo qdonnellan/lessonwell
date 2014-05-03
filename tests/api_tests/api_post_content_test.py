@@ -55,6 +55,37 @@ class PostContentTest(TestBase):
         self.assertIn('error', response_data)
         self.assertIn('invalid content type',response_data['error'])
 
+    def test_create_new_course_then_modify_same_course(self):
+        """
+        create a new course then modify it 
+        """
+        self.create_google_user(user_id = '123')
+        author = self.create_and_return_local_user(googleID = '123')
+        data = {
+            'title' : 'foo', 
+            'body' : 'bar', 
+            'content_type' : 'course',
+            }
+        response = self.testapp.post('/api/curriculum', data)
+        self.assertEqual(Curriculum.query().count(), 1)
+        response_data = json.loads(response.body)
+        course_id = response_data['id']
+
+        # now update the title and send another request
+        data['title'] = 'updated foo'
+        new_response = self.testapp.post(
+            '/api/curriculum/%s' % course_id, 
+            data
+            )
+        new_response_data = json.loads(response.body)
+        self.assertNotIn('error', new_response_data)
+        self.assertEqual(Curriculum.query().count(), 1)
+        db_course = Curriculum.query().get()
+        self.assertEqual(db_course.content['title'], 'updated foo')
+
+
+
+
 
 
 
