@@ -1,8 +1,45 @@
-<div data-bind="foreach: current_units">
-    <a data-bind="
-        text: content.title, 
-        click: $parent.fetchUnit,
-        "
-        href="#edit_unit">
-    </a>
-</div> 
+<div class="container" data-bind="ifnot: newContent">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>
+                    <span data-bind="text: current_course_title"></span>
+                    <button class="btn btn-info pull-right" data-bind="click: initNewContent">new unit</button>
+                </h5>
+            </div>
+            <ul class="list-group" data-bind="foreach: current_units">
+                <li class="list-group-item">
+                    <a data-bind="click: $parent.fetchUnit" href="#edit_unit" class="btn btn-default pull-right">Edit</a>
+                    <p><strong data-bind="text: content.title"></strong></p>
+                    <p class="text-muted" data-bind="text: content.body"></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>
+                    Course Settings
+                    <button class="btn btn-primary pull-right" data-bind="enable: contentChangesDetected, click: saveChangesToContent">save changes</button>
+                </h5>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Title</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" data-bind="value: content_title, event: {keydown: contentChange}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Description</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="5" data-bind="event: {keydown: contentChange}, value: content_description" placeholder="briefly describe your course"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
