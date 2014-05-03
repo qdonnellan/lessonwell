@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Course List
+                    <a class="btn btn-info pull-right" data-bind="click: initNewContent">new course</a>
+                </h5>
+            </div>
+            <ul class="list-group" data-bind="ifnot: teacher_courses">
+                <li class="list-group-item">
+                    You have no courses yet!
+                </li>
+            </ul>
+            <ul class="list-group" data-bind="foreach: teacher_courses">
+                <li class="list-group-item">
+                    <a data-bind="click: $parent.fetchCourse" href="#edit_course" class="btn btn-default pull-right">Edit</a>
+                    <p><strong data-bind="text: content.title"></strong></p>
+                    <p class="text-muted" data-bind="text: content.body"></p>
+                    
+                </li> 
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>
+                    Personal Info
+                    <button class="btn btn-primary pull-right" data-bind="enable: profileChangesDetected">save changes</button>
+                </h5>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Link to Profile</label>
+                        <div class="col-sm-9">
+                            <code>
+                                www.lessonwell.com/{{localUser.username}}
+                            </code>
+                            <span class="help-block">Share this link with your students</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" data-bind="value: formal_name, event: {keypress: profileChange}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">About</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="5" data-bind="event: {keypress: profileChange}" placeholder="write something about yourself!"></textarea>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" placeholder="{{localUser.email}}" disabled >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Username</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="{{localUser.username}}" disabled>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Pay Whatever You Want</label>
+                        <div class="col-sm-9">
+                            <select class="form-control">
+                              <option>Free</option>
+                              <option>$2 per month</option>
+                              <option>$5 per month</option>
+                              <option>$10 per month</option>
+                              <option>$20 per month</option>
+                            </select>
+                            <span class="help-block">Change this anytime you want! Payments are pro-rated, so you only pay for the number of days spent at each pay level. Make sure to click the <strong>save changes</strong> button at the top!</span>
+                        </div>
+                    </div>
+                    
+                </form>
+
+                <form class="form-horizontal" method="post" action="/api/user_card">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Card on File</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" data-bind="attr: {placeholder: last_four }" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="{{stripe_publish_key}}"
+                                data-image="/img/lessonwell_square.png"
+                                data-name="lessonwell"
+                                data-panel-label="Update Card"
+                                data-description="Update Payment Information"
+                                data-allow-remember-me="false"
+                                data-label="Update Credit Card"
+                                data-email="{{google_users_api.get_current_user().email()}}">
+                            </script>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
