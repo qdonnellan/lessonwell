@@ -10,6 +10,7 @@ from views.teacher.edit_content import EditContent
 from api.request_handlers.curriculum_api import CurriculumAPI
 from api.request_handlers.validate_username_api import ValidateUsernameAPI
 from api.request_handlers.user_api import UserAPI
+from api.request_handlers.user_card_api import UserCardAPI
 
 app = webapp2.WSGIApplication([
     ('/api/curriculum/(\w+)', CurriculumAPI), 
@@ -17,6 +18,7 @@ app = webapp2.WSGIApplication([
     ('/api/validate_username/(\w+)', ValidateUsernameAPI),
     ('/api/user/(\w+)', UserAPI),
     ('/api/user', UserAPI),
+    ('/api/user_card', UserCardAPI),
     ('/success', SuccessPage),
     ('/sandbox', Sandbox),
     ('/about', AboutPage),
