@@ -1,0 +1,33 @@
+<div class="col-sm-8 col-sm-offset-2">
+    <div class="panel panel-default">
+        <ul class="list-group visible-xs">
+            <a data-bind="click: userButtonClicked" href="#" class="list-group-item">
+                <p class="list-group-item-text">
+                    <small>
+                        <strong data-bind="text: teacher_name"></strong>
+                        <span class="text-muted pull-right">back to profile</span>
+                    </small>
+                </p>
+            </a>
+            <a data-bind="click: courseButtonClicked" href="#" class="list-group-item">
+                <p class="list-group-item-text">
+                    <small>
+                        <strong data-bind="text: current_course_title"></strong>
+                        <span class="text-muted pull-right">back to course</span>
+                    </small>
+                </p>
+            </a>
+            <a data-bind="click: unitButtonClicked" href="#" class="list-group-item active">
+                <p class="list-group-item-text">
+                    <small>
+                        <strong data-bind="text: current_unit_title"></strong>
+                        <span class="pull-right">back to unit</span>
+                    </small>
+                </p>
+            </a>
+        </ul>
+        <div class="panel-body formatted-lesson">
+            <div class="formatted-lesson" data-bind="html: formatted_lesson"></div>
+        </div>
+    </div>
+</div>

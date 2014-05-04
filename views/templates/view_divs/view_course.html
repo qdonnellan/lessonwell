@@ -1,0 +1,26 @@
+<div class="col-sm-8 col-sm-offset-2">
+    <div class="panel panel-default">
+        <ul class="list-group visible-xs">
+            <a data-bind="click: userButtonClicked" href="#" class="list-group-item active">
+                <p class="list-group-item-text">
+                    <small>
+                        <strong data-bind="text: teacher_name"></strong>
+                        <span class="pull-right">back to profile</span>
+                    </small>
+                </p>
+            </a>
+        </ul>
+        <div class="panel-body formatted-lesson">
+            <div class="text-center">
+                <h2 data-bind="text: current_course_title"></h2>
+                <p class="lead" data-bind="text: current_course_description"></p>
+            </div>
+        </div>
+        <ul class="list-group formatted-lesson" data-bind="foreach: current_units">
+            <a data-bind="click: $parent.fetchUnit" href="#" class="list-group-item">
+                <h4 class="list-group-item-heading" data-bind="text: content.title"></h4>
+                <p class="list-group-item-text text-muted" data-bind="text: content.body"></p>
+            </a>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="col-sm-8 col-sm-offset-2">
+    <div class="panel panel-default formatted-lesson">
+        <div class="panel-body">
+            <div class="text-center">
+                <h2><span data-bind="text: teacher_name"></span>'s Profile</h2>
+                <p class="lead" data-bind="text: teacher_bio"></p>
+            </div>
+        </div>
+        <ul class="list-group" data-bind="foreach: teacher_courses">
+            <a data-bind="click: $parent.fetchCourse" href="#" class="list-group-item">
+                <h3 class="list-group-item-heading" data-bind="text: content.title"></h4>
+                <p class="list-group-item-text text-muted" data-bind="text: content.body"></p>
+            </a>
+        </ul>
+    </div>
+</div>

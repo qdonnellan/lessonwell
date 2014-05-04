@@ -1,0 +1,6 @@
+<ol class="breadcrumb breadcrumb-arrow">
+    <li><a href="#profile" data-bind="click: userButtonClicked">{{localUser.username}}</a></li>
+    <li data-bind="visible: courseActive"><a href="#course" data-bind="click: courseButtonClicked, text: current_course_title"></a></li>
+    <li data-bind="visible: unitActive"><a  href="#unit" data-bind=" click: unitButtonClicked, text: current_unit_title"></a></li>
+    <li data-bind="visible: lessonActive"><a href="#lesson" data-bind="click: lessonButtonClicked, text: current_lesson_title"></a></li>
+</ol>
