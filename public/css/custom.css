@@ -1,6 +1,6 @@
 body,
 html {
-  background-color: #F1F2F6;
+  background-color: #F1F2F6 !important;
   height: 100%;
 }
 
@@ -29,8 +29,7 @@ html {
 .edit-lesson-div > div > textarea {
   height: 100%;
   font-size: 1.2em;
-  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-  font-weight: 500;
+  font-family: 'Inconsolata' !important;
   box-sizing: border-box;         /* For IE and modern versions of Chrome */
   -moz-box-sizing: border-box;    /* For Firefox                          */
   -webkit-box-sizing: border-box; /* For Safari                           */
@@ -55,19 +54,27 @@ html {
   margin: 2px !important;
 }
 
-#formatted-lesson {
+.formatted-lesson p {
     font-family: 'Lato', sans-serif !important;
-    font-size: 16pt;
+    font-size: 1.4em;
+
 }
 
-#formatted-lesson h1,
-#formatted-lesson h2,
-#formatted-lesson h3,
-#formatted-lesson h4,
-#formatted-lesson h5 {
-    font-family: 'Neuton', serif;
+.formatted-lesson .lead {
+    font-size: 1.6em;
 }
 
+.formatted-lesson h1,
+.formatted-lesson h2,
+.formatted-lesson h3,
+.formatted-lesson h4,
+.formatted-lesson h5 {
+    font-family: 'Lora', serif;
+}
+
+.list-group-item-heading {
+    font-size: 1.6em !important;
+}
 
 .edit-page {
   position: absolute;
@@ -76,16 +83,26 @@ html {
   height: 100%;
 }
 
-#formatted-lesson > pre > code {
+@media (max-width: 768px) {
+  .profile-page .panel {
+    margin-top: 60px !important;
+  }
+}
+
+code {
+    font-family: 'Inconsolata' !important;
+}
+
+.formatted-lesson > pre > code {
+    font-family: 'Inconsolata' !important;
     padding: 0px !important;
     margin: 0px !important;
-    font-size: 1.2em;
+    font-size: 1.4em;
 }
 
-#formatted-lesson > pre {
+.formatted-lesson > pre {
     background-color: #f8f8f8 !important;
 }
-
 
 .edit-header {
   background: #e6e9ed;
