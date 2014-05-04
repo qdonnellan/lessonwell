@@ -1,28 +1,30 @@
 {% extends "base.html" %}
 
-
 {% block body %}
-    <div class="container">
-        <h1>{{teacher.formalName}}</h1>
-        <p class="lead">{{teacher.tagline}}</p>
-        <div>
-            {% if teacher.username == localUser.username %}
-                <a href="/new_course" class="btn btn-primary btn-lg"><i class="icon-plus"></i> New Course</a>               
-                <a href="/edit_profile" class="btn btn-success btn-lg">
-                    <i class="icon-edit"></i> Edit your Account
-                </a>
-            {% endif %}     
-        </div>  
-        <div>
-            <p class="user-profile">
-            {% if bio %}
-                {{bio | safe}}
-            {% else %}
-                {% if teacher.username == localUser.username %}
-                    You don't have anything in your bio yet, <a href="/edit_profile">edit your profile</a> to add an awesome description of yourself!
-                {% endif %}
-            {% endif %}
-            </p>
-        </div>      
+
+<div class="profile-page">
+    <div class="edit-header col-sm-12 hidden-xs">
+        <div class="col-sm-6">
+            {% include 'view_divs/view_breadcrumbs.html' %}
+        </div>
     </div>
+    <div data-bind="if: content_type() == 'user'">
+        {% include 'view_divs/view_user.html' %}
+    </div>
+    <div data-bind="if: content_type() == 'course'">
+        {% include 'view_divs/view_course.html' %}
+    </div>
+    <div data-bind="if: content_type() == 'unit'">
+        {% include 'view_divs/view_unit.html' %}
+    </div>
+    <div data-bind="if: content_type() == 'lesson'">
+        {% include 'view_divs/view_lesson.html' %}
+    </div>
+</div>
+
+<script src="/js/knockout-3.0.0.js"></script>
+<script src='/js/markdown.js'></script>
+<script src="/js/format.js"></script>
+<script src="/js/profile.js"></script>
+<script type="text/javascript" src="/js/highlight.min.js"></script>
 {% endblock %}
