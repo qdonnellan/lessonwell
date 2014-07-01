@@ -19,14 +19,14 @@ class editProfile(ProtectedHandler):
   def get(self):
     self.verify()
     localCustomer = auth.localCustomer()
-    if self.localUser.user.stripeID != '':        
+    if self.localUser.user.stripeID != '':
       invoice = stripe.Invoice.upcoming(customer=self.localUser.user.stripeID, api_key = api_key) #useless when donation is disabled
       credit = int(invoice.starting_balance+invoice.total)  #useless when donation is disabled
       formatCredit = "%1.2f"  % abs(credit/100)  #useless when donation is disabled
-      self.render('edit_profile.html', 
-        localCustomer = localCustomer, 
+      self.render('edit_profile.html',
+        localCustomer = localCustomer,
         datetime = datetime,
-        credit = credit, 
+        credit = credit,
         user = self.localUser,
         left_panel = True,
         formatCredit = formatCredit,  #useless when donation is disabled
@@ -45,18 +45,16 @@ class editProfile(ProtectedHandler):
     else:
       pic = self.request.get('pic')
       bio = self.request.get('bio')
-      formalName = self.request.get('formalName')
-      tagline = self.request.get('tagline')
+      formalName = self.request.get('formalName
       success = editUser(
-        pic = pic, 
-        bio = bio, 
-        formalName = formalName, 
-        tagline = tagline,
+        pic = pic,
+        bio = bio,
+        formalName = formalName,
         localUser = self.localUser,)
-      if success:                
+      if success:
         self.redirect('/%s' % self.localUser.username)
       else:
-        self.redirect('/edit_profile?error= something went wrong, try again')        
+        self.redirect('/edit_profile?error= something went wrong, try again')
 
 class editCourse(blobstore_handlers.BlobstoreUploadHandler, ProtectedHandler):
   def get(self, courseID = None):
@@ -64,7 +62,7 @@ class editCourse(blobstore_handlers.BlobstoreUploadHandler, ProtectedHandler):
     try:
       edit_url = '/new_course'
       course_image = None
-      course = getContent(self.localUser.user.key, courseID)            
+      course = getContent(self.localUser.user.key, courseID)
       if course is not None:
         edit_url = '/edit_course/%s' % courseID
         if course.blobs is not None:
@@ -77,14 +75,14 @@ class editCourse(blobstore_handlers.BlobstoreUploadHandler, ProtectedHandler):
       else:
         access_amount = None
         current_standards = None
-      status = verifyCourseLoad(self.localUser, course)            
-      self.render('edit_course.html', 
+      status = verifyCourseLoad(self.localUser, course)
+      self.render('edit_course.html',
         course = course,
-        course_image = course_image, 
-        status = status, 
+        course_image = course_image,
+        status = status,
         customer = verifyCustomer(self.localUser.user),
-        approved_users = approved_users(course), 
-        amount_error = self.request.get('amount_error'), 
+        approved_users = approved_users(course),
+        amount_error = self.request.get('amount_error'),
         access_amount = access_amount,
         connect_url = connectUrl(self.localUser),
         current_standards = current_standards,
@@ -102,16 +100,16 @@ class editCourse(blobstore_handlers.BlobstoreUploadHandler, ProtectedHandler):
     course = getContent(self.localUser.user.key, courseID)
     if 'save_changes' in self.request.POST:
       title = self.request.get('courseName')
-      body = self.request.get('description')            
+      body = self.request.get('description')
       course_privacy = self.request.get('course_privacy')
       course_listed = self.request.get('course_listed')
       courseID = addOrEditContent(
-        title = title, 
-        body = body[:200], 
-        parentKEY = self.localUser.user.key, 
-        contentType = 'course', 
-        content = course, 
-        privacy = course_privacy, 
+        title = title,
+        body = body[:200],
+        parentKEY = self.localUser.user.key,
+        contentType = 'course',
+        content = course,
+        privacy = course_privacy,
         listed = course_listed)
 
       image_file = self.get_uploads()
@@ -147,9 +145,9 @@ class editUnit(ProtectedHandler):
     try:
       course = getContent(self.localUser.user.key, courseID)
       unit = getContent(course.key, unitID)
-      self.render('edit_unit.html', 
-        course = course, 
-        unit = unit, 
+      self.render('edit_unit.html',
+        course = course,
+        unit = unit,
         status = verifyUnitLoad(self.localUser, course, unit),
         user = self.localUser,
         left_panel = True)
@@ -178,10 +176,10 @@ class editLesson(blobstore_handlers.BlobstoreUploadHandler, ProtectedHandler):
       else:
         edit_url = '/edit_lesson/course%s/%s/%s?panel=attach' % (courseID, unitID, lessonID)
 
-      self.render('edit_lesson.html', 
-        course = course, 
-        unit = unit, 
-        lesson = lesson, 
+      self.render('edit_lesson.html',
+        course = course,
+        unit = unit,
+        lesson = lesson,
         user = self.localUser,
         status = verifyLessonLoad(self.localUser, unit, lesson),
         course_standards = get_standards(self.localUser.user.key, courseID),
@@ -189,7 +187,7 @@ class editLesson(blobstore_handlers.BlobstoreUploadHandler, ProtectedHandler):
         upload_url = blobstore.create_upload_url(edit_url),
         left_panel = True,
         )
-    except Exception as e:            
+    except Exception as e:
       self.redirect('/%s?error=%s' % (self.localUser.username, e))
 
   def post(self, courseID, unitID, lessonID = None):
@@ -211,5 +209,5 @@ class editLesson(blobstore_handlers.BlobstoreUploadHandler, ProtectedHandler):
       if blob_file not in [None, '', []]:
         blob_info = blob_file[0]
         edit_blobs({'lesson_attachment' : str(blob_info.key())}, unit.key, lessonID)
-        
+
       self.redirect('/edit_lesson/course%s/%s/%s?panel=attach' % (courseID, unitID, lessonID))

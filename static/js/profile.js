@@ -17,6 +17,7 @@ function ViewModel() {
     self.current_lesson_id = ko.observable(null);
     self.teacher_name = ko.observable('');
     self.teacher_bio = ko.observable('');
+    self.teacher_username = ko.observable('');
 
     self.lessonActive = ko.computed(function() {
         if (self.content_type() == 'lesson') {return true;}
@@ -48,24 +49,34 @@ function ViewModel() {
         return formatInput(input_str);
     });
 
+    self.activateTab = function(tab) {
+        $('#curriculum-tabs').find('li').removeClass('active');
+        var tab_id = "#" + tab + '-tab';
+        $(tab_id).addClass('active');
+    }
+
     self.userButtonClicked = function() {
         self.content_type('user');
         self.content_id(null);
+        self.activateTab('user');
     };
 
     self.courseButtonClicked = function() {
         self.content_type('course');
         self.content_id(self.current_course_id());
+        self.activateTab('course');
     };
 
     self.unitButtonClicked = function() {
         self.content_type('unit');
         self.content_id(self.current_unit_id());
+        self.activateTab('unit');
     };
 
     self.lessonButtonClicked = function() {
         self.content_type('lesson');
         self.content_id(self.current_lesson_id());
+        self.activateTab('unit');
     };
 
     self.fetchCourse = function(course) {
@@ -102,10 +113,18 @@ function ViewModel() {
     };
 
     self.updateTeacher = function() {
-        $.getJSON('/api/user', function (response){
+        var teacher_data = $('#teacher-data').data();
+        var teacher = teacher_data.teacher;
+        var teacher_id = teacher_data.teacherid;
+        url = '/api/users/' + teacher_id;
+        $.getJSON(url, function (response){
             self.teacher_courses(response.courses);
             self.teacher_name(response.formal_name);
             self.teacher_bio(response.bio);
+            self.teacher_username(response.username);
+        }).done(function(){
+            $(".loading-profile-page").hide();
+            $(".profile-page").show();
         });
     };
 };

@@ -1,14 +1,18 @@
 <div class="container">
     <div>
         {% include 'view_divs/view_breadcrumbs.html' %}
-        <div class="formatted-lesson col-sm-8">
+        <div class="formatted-lesson col-sm-9">
             <h1 data-bind="text: current_unit_title"></h2>
             <p data-bind="text: current_unit_description"></p>
         </div>
-        <div class="right-sidebar col-sm-4">
+        <div class="right-sidebar col-sm-3">
             <ul class="list-group">
                 <a class="list-group-item active">
-                    <h4 class="list-group-item-heading">Lessons</h4>
+                    <h4 class="list-group-item-heading">
+                        <span data-bind="text: current_unit_title"></span>
+                        <br>
+                        <small>Lessons</small>
+                    </h4>
                 </a>
                 <!-- ko foreach: current_lessons -->
                 <a class="list-group-item" href="#" data-bind="click: $parent.fetchLesson">

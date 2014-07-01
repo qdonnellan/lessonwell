@@ -8,17 +8,17 @@ from stripeHandlers import api_key
 
 class localUser():
 	# used for controlling the page style given a user state
-	def __init__(self):		
+	def __init__(self):
 		self.exists = False
 		self.username = None
 		self.formalName = None
 		self.email = ''
 		self.bio = ''
 		self.logoffURL = ''
-		self.courses= []		
+		self.courses= []
 		current_google_user = users.get_current_user()
-		self.logonURL = users.create_login_url('/')		
-		if current_google_user is not None:			
+		self.logonURL = users.create_login_url('/')
+		if current_google_user is not None:
 			user = getUserByGoogleID(current_google_user.user_id())
 			if user is not None:
 				self.username = user.username
@@ -27,12 +27,11 @@ class localUser():
 				self.email = user.email
 				self.formalName = user.formalName
 				self.exists = True
-				self.tagline = user.tagline
 				self.user = user
 				self.logoffURL = users.create_logout_url('/')
 				self.courses = getAllContent(user.key, "course")
-				self.pending = detectRequests(user) 
-				
+				self.pending = detectRequests(user)
+
 class localCustomer():
 	def __init__(self):
 		self.localUser = localUser()

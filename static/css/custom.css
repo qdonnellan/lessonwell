@@ -1,7 +1,41 @@
 body,
 html {
-  background-color: #F1F2F6 !important;
   height: 100%;
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+#top-bar-green {
+  position: absolute;
+  background-color: #37BC9B;
+  height: 7px;
+  width: 100%;
+  z-index: 999;
+}
+
+.right-sidebar {
+    padding-top: 20px;
+}
+
+.right-sidebar .list-group-item.active {
+    background-color: #434A54;
+    border: none;
+}
+
+.right-sidebar .list-group-item.active:hover {
+  background-color: #434A54;
+}
+
+.curriculum-breadcrumbs .btn-group {
+    margin-left: -15px !important;
+    padding-left: 0px !important;
+}
+
+.curriculum-breadcrumbs .btn-link {
+    color: #37BC9B;
+}
+
+.curriculum-breadcrumbs .btn-link:hover {
+    color: #967ADC
 }
 
 .modal-footer {
@@ -46,37 +80,16 @@ html {
 }
 
 .edit-lesson-div {
-  padding-top: 140px;
-  margin-top: -140px;
+  padding-top: 100px;
+  margin-top: -100px;
 }
 
 #lesson-panel-btn-group {
   margin: 2px !important;
 }
 
-.formatted-lesson p {
-    font-family: 'Lato', sans-serif !important;
-    font-size: 1.4em;
-
-}
-
-.formatted-lesson .lead {
-    font-size: 1.6em;
-}
-
-.formatted-lesson h1,
-.formatted-lesson h2,
-.formatted-lesson h3,
-.formatted-lesson h4,
-.formatted-lesson h5 {
-    font-family: 'Lora', serif;
-}
-
-.list-group-item-heading {
-    font-size: 1.6em !important;
-}
-
 .edit-page {
+  padding-top: 7px;
   position: absolute;
   width: 100%;
   background-color: #F1F2F6;
@@ -93,16 +106,21 @@ code {
     font-family: 'Inconsolata' !important;
 }
 
-.formatted-lesson > pre > code {
+.formatted-lesson p {
+    font-size: 1.6em;
+}
+
+#lesson-div > pre > code {
     font-family: 'Inconsolata' !important;
     padding: 0px !important;
     margin: 0px !important;
     font-size: 1.4em;
 }
 
-.formatted-lesson > pre {
+.formatted-lesson pre {
     background-color: #f8f8f8 !important;
 }
+
 
 .edit-header {
   background: #e6e9ed;
@@ -110,7 +128,6 @@ code {
   margin-bottom: 20px;
   height: 50px;
   padding-top: 7px;
-  margin-top: 50px;
   width: 100%;
 }
 
@@ -182,6 +199,25 @@ code {
 
 .lesson-content {
   margin-bottom: 100px;
+}
+
+.loading-profile-page {
+  padding-top: 200px;
+}
+
+.loading-profile-page h1 {
+  color: #37BC9B;
+}
+
+.mobile-curriculum-links {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .profile-page .tabs-below {
+    margin-bottom: 40px;
+  }
 }
 
 

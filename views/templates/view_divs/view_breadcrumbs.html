@@ -1,6 +1,34 @@
-<ol class="breadcrumb breadcrumb-arrow">
-    <li><a href="#profile" data-bind="click: userButtonClicked">{{localUser.username}}</a></li>
-    <li data-bind="visible: courseActive"><a href="#course" data-bind="click: courseButtonClicked, text: current_course_title"></a></li>
-    <li data-bind="visible: unitActive"><a  href="#unit" data-bind=" click: unitButtonClicked, text: current_unit_title"></a></li>
-    <li data-bind="visible: lessonActive"><a href="#lesson" data-bind="click: lessonButtonClicked, text: current_lesson_title"></a></li>
-</ol>
+<div class="curriculum-breadcrumbs">
+    <button class="btn btn-link" data-bind="click: userButtonClicked">
+        <span data-bind="text: teacher_name"></span>
+    </button>
+    <div class="btn-group">
+        <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            <span><i class="fa fa-bars"></i></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+    <span data-bind="visible: (content_type()=='course' || content_type()=='unit' || content_type() == 'lesson')">
+        <button class="btn btn-link" data-bind="click: courseButtonClicked">
+            <span data-bind="text: current_course_title"></span>
+        </button>
+    </span>
+    <span data-bind="visible: (content_type()=='unit' || content_type() == 'lesson')">
+        <i class="text-muted fa fa-angle-double-right"></i>
+        <button class="btn btn-link" data-bind="click: unitButtonClicked">
+            <span data-bind="text: current_unit_title"></span>
+        </button>
+    </span>
+    <span data-bind="visible: (content_type() == 'lesson')">
+        <i class="text-muted fa fa-angle-double-right"></i>
+        <button class="btn btn-link">
+            <span data-bind="text: current_lesson_title"></span>
+        </button>
+    </span>
+</div>

@@ -1,30 +1,41 @@
-import webapp2
-from views.public.front_page import FrontPage
-from views.public.about_page import AboutPage
-from views.public.sign_up_page import SignUpPage
-from views.public.sandbox import Sandbox
-from views.public.link_google_account_page import LinkGoogleAccountPage
-from views.teacher.success_page import SuccessPage
-from views.teacher.profile_page import ProfilePage
-from views.teacher.edit_content import EditContent
-from api.request_handlers.curriculum_api import CurriculumAPI
-from api.request_handlers.validate_username_api import ValidateUsernameAPI
-from api.request_handlers.user_api import UserAPI
-from api.request_handlers.user_card_api import UserCardAPI
+from flask import Flask
+from flask.ext.restful import Api
+from views.public.front import FrontPage
+from views.public.link import LinkPage
+from views.public.signup import SignUpPage
+from views.public.success import SuccessPage
+from views.teacher.profile import ProfilePage
+from views.teacher.edit_content import EditContentPage
+from api.users import UsersAPI
+from api.card import CardAPI
+from api.curriculum import CurriculumAPI
 
-app = webapp2.WSGIApplication([
-    ('/api/curriculum/(\w+)', CurriculumAPI), 
-    ('/api/curriculum', CurriculumAPI), 
-    ('/api/validate_username/(\w+)', ValidateUsernameAPI),
-    ('/api/user/(\w+)', UserAPI),
-    ('/api/user', UserAPI),
-    ('/api/user_card', UserCardAPI),
-    ('/success', SuccessPage),
-    ('/sandbox', Sandbox),
-    ('/about', AboutPage),
-    ('/sign_up', SignUpPage),
-    ('/link', LinkGoogleAccountPage), 
-    ('/edit', EditContent),
-    ('/(\w+)', ProfilePage),
-    ('.*', FrontPage),
-    ],debug=False)
+app = Flask(__name__)
+rest_api = Api(app)
+
+# the main application routes
+app.add_url_rule('/', view_func=FrontPage.as_view('front'))
+app.add_url_rule('/link', view_func=LinkPage.as_view('link'))
+app.add_url_rule('/signup', view_func=SignUpPage.as_view('signup'))
+app.add_url_rule('/success', view_func=SuccessPage.as_view('success'))
+app.add_url_rule('/edit', view_func=EditContentPage.as_view('edit'))
+app.add_url_rule('/<username>', view_func=ProfilePage.as_view('profile'))
+
+# the restful API routes
+rest_api.add_resource(
+    UsersAPI, 
+    '/api/users', 
+    '/api/users/<user_id>'
+    )
+
+rest_api.add_resource(
+    CurriculumAPI, 
+    '/api/curriculum',
+    '/api/curriculum/<content_id>'
+    )
+
+rest_api.add_resource(
+    CardAPI, 
+    '/api/card')
+
+

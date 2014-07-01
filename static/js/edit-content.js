@@ -1,6 +1,7 @@
 function ViewModel() {
     var self = this;
 
+    self.teacher_id = ko.observable('');
     self.content_type = ko.observable(null);
     self.newContent = ko.observable(false);
     self.content_id = ko.observable('');
@@ -22,6 +23,7 @@ function ViewModel() {
     self.profileChangesDetected = ko.observable(false);
     self.contentChangesDetected = ko.observable(false);
     self.bio = ko.observable('');
+    self.plan = ko.observable('');
     self.lessonMode = ko.observable(false);
     self.last_four_raw = ko.observable(null);
     self.last_four = ko.computed(function() {
@@ -254,15 +256,35 @@ function ViewModel() {
     };
 
     self.updateTeacher = function() {
-        $.getJSON('/api/user', function (response){
+        var teacher_data = $('#teacher-data').data();
+        var teacher = teacher_data.teacher;
+        self.teacher_id(teacher_data.teacherid);
+        var url = '/api/users/' + self.teacher_id;
+        $.getJSON(url, function (response){
             self.teacher_courses(response.courses);
-            self.formal_name(response.formal_name);
-            self.bio(response.bio);
+            self.formal_name(teacher.formalName);
+            self.bio(teacher.bio);
+        });
+    };
+
+    self.saveChangesToTeacher = function() {
+        var data = {
+            formalName : self.formal_name(),
+            bio : self.bio(),
+            plan : self.plan(),
+        }
+        $.ajax({
+            url:  '/api/users/' + self.teacher_id(),
+            type: 'PUT', 
+            data: data, 
+            success: function(response) {
+                //something should probably go here...
+            }
         });
     };
 
     self.updateCard = function() {
-        $.getJSON('/api/user_card', function (response){
+        $.getJSON('/api/card', function (response){
             self.last_four_raw(response.last4);
         });
     };

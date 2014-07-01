@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block marketing_div%}
+
+<div class="jumbotron front-jumbo">
+    <div class="container" >
+        {% if alert %}
+        <div class="alert alert-error span7 offset2">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Oh snap! </strong>{{alert.errorMsg}}
+        </div>
+        {% endif %}
+        <h1 class="brand">lesson<span>well</span></h1>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">              
+                <p class="lead">Put your lessons on the web</p>
+                <p class="sub-lead">You type the content, we make it look great for your students on any phone, tablet, or computer they have</p>
+            </div>
+        </div>
+        <p>
+            {% if username %}
+                <a href="/{{username}}" class="btn btn-primary btn-lg">View Your Profile</a>
+            {% endif %}
+            <a href="/sign_up" class="btn btn-success btn-lg">Start Today for Free</a>
+            
+        </p>
+    </div>
+</div>
+
+<div class="container marketing-highlights">
+    <div class="col-lg-8">
+        <h1>No complications, just your lessons</h1>
+        <p class='lead'>Stop wasting time with complicated teacher websites, or "feature rich" content management systems. </p>
+        <p class='lead sub-lead'>Create a course. Type lessons. That's it. </p>
+        <p class='lead sub-sub-lead'><strong>lessonwell</strong> automatically formats your lessons to look great on any device, leaving you to spend time doing what you do best: writing awesome lessons</p>
+    </div>
+
+    <div class="col-lg-4 marketing-side">
+        <h1>FREE</h1>
+        <p class="lead sub-sub-lead"><strong>lessonwell</strong> is free to use, and only takes seconds to set up</p>
+        <p class="center-button-div">
+        <a href="/sign_up" class="btn btn-lg btn-warning">Start Today</a>
+        </p>
+    </div>
+    
+</div>
+
+{% endblock %}

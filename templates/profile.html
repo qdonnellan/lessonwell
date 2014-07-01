@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<meta id="teacher-data" data-teacher="{{teacher}}" data-teacherID="{{teacher.key.id()}}">
+<div class="profile-page" style="display: none">
+    <div data-bind="if: content_type() == 'user'">
+        {% include 'view_divs/view_user.html' %}
+    </div>
+    <div data-bind="if: content_type() == 'course'">
+        {% include 'view_divs/view_course.html' %}
+    </div>
+    <div data-bind="if: content_type() == 'unit'">
+        {% include 'view_divs/view_unit.html' %}
+    </div>
+    <div data-bind="if: content_type() == 'lesson'">
+        {% include 'view_divs/view_lesson.html' %}
+    </div>
+</div>
+<div class="loading-profile-page text-center">
+    <h1><i class="fa fa-circle-o-notch fa-spin"></i></h1>
+    <p class="lead">Loading...</p>
+</div>
+
+<script type="text/javascript" src="{{url_for('static', filename='js/knockout-3.0.0.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/markdown.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/format.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/profile.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/highlight.min.js')}}"></script>
+{% endblock %}

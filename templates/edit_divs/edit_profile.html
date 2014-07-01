@@ -26,7 +26,7 @@
             <div class="panel-heading">
                 <h5>
                     Personal Info
-                    <button class="btn btn-primary pull-right" data-bind="enable: profileChangesDetected">save changes</button>
+                    <button class="btn btn-primary pull-right" data-bind="enable: profileChangesDetected, click: saveChangesToTeacher">save changes</button>
                 </h5>
             </div>
             <div class="panel-body">
@@ -35,7 +35,7 @@
                         <label class="col-sm-3 control-label">Link to Profile</label>
                         <div class="col-sm-9">
                             <code>
-                                www.lessonwell.com/{{localUser.username}}
+                                www.lessonwell.com/{{user.username}}
                             </code>
                             <span class="help-block">Share this link with your students</span>
                         </div>
@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">About</label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="5" data-bind="event: {keypress: profileChange}" placeholder="write something about yourself!"></textarea>
+                            <textarea class="form-control" rows="5" data-bind="event: {keypress: profileChange}, value: bio" placeholder="write something about yourself!"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -84,7 +84,7 @@
                             <script
                                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                 data-key="{{stripe_publish_key}}"
-                                data-image="/img/lessonwell_square.png"
+                                data-image="{{url_for('static', filename='img/lessonwell_square.png')}}"
                                 data-name="lessonwell"
                                 data-panel-label="Update Card"
                                 data-description="Update Payment Information"

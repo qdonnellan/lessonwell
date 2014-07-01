@@ -13,10 +13,7 @@ function ViewModel() {
             return 'username may only contain letters and numbers';
         }
         else {
-            $.getJSON('/api/validate_username/' + self.username(), function (response){
-                self.server_msg(response.error);
-            });
-            return self.server_msg()
+            return false
         }
     });
     self.has_error = ko.computed(function() {
