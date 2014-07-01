@@ -2,11 +2,9 @@
 
 {% block body %}
 <meta id="teacher-data" data-teacher="{{user}}" data-teacherid="{{user.key.id()}}">
-<div class="edit-page">
+<div class="edit-page" style="display: none">
     <div class="edit-header col-sm-12">
-        <div class="col-sm-6">
-            {% include 'edit_divs/edit_breadcrumbs.html' %}
-        </div>
+        {% include 'edit_divs/edit_breadcrumbs.html' %}
     </div>
     <div data-bind="visible: lessonMode" class="edit-lesson-div">
         {% include 'edit_divs/edit_lesson.html' %}
@@ -24,10 +22,14 @@
         {% include 'edit_divs/new_content.html' %}
     </div>
 </div>
+<div class="loading-edit-page text-center">
+    <h1><i class="fa fa-circle-o-notch fa-spin"></i></h1>
+    <p class="lead">Loading...</p>
+</div>
 
 <script src="{{url_for('static', filename='js/knockout-3.0.0.js')}}"></script> 
 <script src="{{url_for('static', filename='js/markdown.js')}}"></script>
 <script src="{{url_for('static', filename='js/format.js')}}"></script>
 <script src="{{url_for('static', filename='js/edit-content.js')}}"></script>
-<script "{{url_for('static', filename='js/highlight.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/highlight.min.js')}}"></script>
 {% endblock %}

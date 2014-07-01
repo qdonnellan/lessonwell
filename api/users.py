@@ -3,6 +3,7 @@ from models.user import User
 from google.appengine.ext import ndb
 from controllers.modify_user import edit_user
 from api.api_controllers.user_to_dict import user_to_dict
+import logging
 
 class UsersAPI(Resource):
     """
@@ -18,6 +19,7 @@ class UsersAPI(Resource):
                 return {'message':'user does not exist'}, 400
             else:
                 return user_to_dict(user)
+
         else:
             all_users = User.query()
             user_list = []

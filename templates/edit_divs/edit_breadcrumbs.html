@@ -1,14 +1,72 @@
-<ol class="breadcrumb breadcrumb-arrow">
-    <li><a href="#edit" data-bind="click: editButtonClicked">{{user.username}}</a></li>
-    <li data-bind="visible: courseActive"><a href="#course" data-bind="click: courseButtonClicked, text: current_course_title"></a></li>
-    <li data-bind="visible: unitActive"><a  href="#unit" data-bind=" click: unitButtonClicked, text: current_unit_title"></a></li>
-    <li data-bind="visible: lessonActive && !newContent"><a href="#lesson" data-bind="click: lessonButtonClicked">Lesson</a></li>
-    <span data-bind="visible: newContent">
-        <span data-bind="if: lessonActive">
-            A new lesson!
-        </span>
-        <span data-bind="ifnot: lessonActive">
-            A new <span data-bind="text: child_content_type()"></span>!
-        </span>
-    </span>
-</ol>
+<div class="tabbable tabs-below">
+    <ul id="curriculum-tabs" class="nav nav-tabs">
+        <!-- dropdown for teacher and their courses -->
+        <li class="dropdown active" id="profile-tab">
+            <a href="#user" class="dropdown-toggle" data-toggle="dropdown">
+                <span>{{ user.username }}</span>
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a href="#user" data-bind="click: editButtonClicked, text: formal_name"></a>
+                </li>
+                <li class="divider"></li>
+                <!-- ko foreach: teacher_courses -->
+                <li>
+                    <a href="#" tabindex="-1" data-toggle="tab" data-bind="text: content.title, click: $parent.fetchCourse">
+                    </a>
+                </li>
+                <!-- /ko -->
+            </ul>
+        </li>
+        <!-- end teacher dropdown -->
+
+        <!-- dropdown for active course and its units -->
+        <li class="dropdown" id="course-tab" data-bind="visible: courseActive" >
+            <a href="#course" class="dropdown-toggle" data-toggle="dropdown">
+                <span data-bind="text: current_course_title"></span>
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a href="#course" data-bind="click: courseButtonClicked, text: current_course_title"></a>
+                </li>
+                <li class="divider"></li>
+                <!-- ko foreach: current_units -->
+                <li>
+                    <a href="#" tabindex="-1" data-toggle="tab" data-bind="text: content.title, click: $parent.fetchUnit">
+                    </a>
+                </li>
+                <!-- /ko -->
+            </ul>
+        </li>
+        <!-- end course dropdown -->
+
+        <!-- dropdown for active unit and its lessons -->
+        <li class="dropdown" id="unit-tab" data-bind="visible: unitActive" id="unit-tab">
+            <a href="#unit" class="dropdown-toggle" data-toggle="dropdown">
+                <span data-bind="text: current_unit_title"></span>
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a href="#unit" data-bind="click: unitButtonClicked, text: current_unit_title"></a>
+                </li>
+                <li class="divider"></li>
+                <!-- ko foreach: current_lessons -->
+                <li>
+                    <a href="#" tabindex="-1" data-toggle="tab" data-bind="text: content.title, click: $parent.fetchLesson">
+                    </a>
+                </li>
+                <!-- /ko -->
+            </ul>
+        </li>
+        <!-- end unit dropdown -->
+        <li class="pull-right">
+            <a href="/{{ user.username }}">
+                <i class="fa fa-mail-reply text-green"></i>
+                Back to profile
+            </a>
+        </li>
+    </ul>
+</div>

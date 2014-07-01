@@ -95,11 +95,18 @@ function ViewModel() {
         self.currentGif(gifInfo.link);
     };
 
+    self.activateTab = function(tab) {
+        $('#curriculum-tabs').find('li').removeClass('active');
+        var tab_id = "#" + tab + '-tab';
+        $(tab_id).addClass('active');
+    }
+
     self.editButtonClicked = function() {
         self.content_type(null);
         self.newContent(false);
         self.lessonMode(false);
         self.contentChangesDetected(false);
+        self.activateTab('profile');
     };
 
     self.courseButtonClicked = function() {
@@ -110,6 +117,7 @@ function ViewModel() {
         self.newContent(false);
         self.lessonMode(false);
         self.contentChangesDetected(false);
+        self.activateTab('course');
     };
 
     self.unitButtonClicked = function() {
@@ -120,6 +128,7 @@ function ViewModel() {
         self.newContent(false);
         self.lessonMode(false);
         self.contentChangesDetected(false);
+        self.activateTab('unit');
     };
 
     self.lessonButtonClicked = function() {
@@ -127,6 +136,7 @@ function ViewModel() {
         self.newContent(false);
         self.lessonMode(true);
         self.contentChangesDetected(false);
+        self.activateTab('unit');
     };
 
     self.initNewContent = function() {
@@ -259,11 +269,14 @@ function ViewModel() {
         var teacher_data = $('#teacher-data').data();
         var teacher = teacher_data.teacher;
         self.teacher_id(teacher_data.teacherid);
-        var url = '/api/users/' + self.teacher_id;
+        var url = '/api/users/' + teacher_data.teacherid;
         $.getJSON(url, function (response){
             self.teacher_courses(response.courses);
-            self.formal_name(teacher.formalName);
-            self.bio(teacher.bio);
+            self.formal_name(response.formal_name);
+            self.bio(response.bio);
+        }).done(function(){
+            $(".loading-edit-page").hide();
+            $(".edit-page").show();
         });
     };
 
@@ -328,7 +341,7 @@ function ViewModel() {
 // make sure mathjax is called after each new character input
 // in the text area; displays math real time
 $("#lesson-textarea").on('keyup', function () {
-    setTimeout(refreshOutputStyle(), 1000);
+    refreshOutputStyle();
 });
 
 function refreshOutputStyle() {
@@ -344,3 +357,4 @@ $(document).ready(function() {
     vm.updateCard();
     refreshOutputStyle();
 });
+
