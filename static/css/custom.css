@@ -4,6 +4,10 @@ html {
   font-family: 'Open Sans', sans-serif !important;
 }
 
+.text-green {
+  color: #37BC9B;
+}
+
 #top-bar-green {
   position: absolute;
   background-color: #37BC9B;
@@ -23,19 +27,6 @@ html {
 
 .right-sidebar .list-group-item.active:hover {
   background-color: #434A54;
-}
-
-.curriculum-breadcrumbs .btn-group {
-    margin-left: -15px !important;
-    padding-left: 0px !important;
-}
-
-.curriculum-breadcrumbs .btn-link {
-    color: #37BC9B;
-}
-
-.curriculum-breadcrumbs .btn-link:hover {
-    color: #967ADC
 }
 
 .modal-footer {
@@ -92,7 +83,6 @@ html {
   padding-top: 7px;
   position: absolute;
   width: 100%;
-  background-color: #F1F2F6;
   height: 100%;
 }
 
@@ -110,24 +100,23 @@ code {
     font-size: 1.6em;
 }
 
-#lesson-div > pre > code {
+.formatted-lesson pre {
+  background-color: #eee;
+}
+
+#lesson-div > pre > code,
+.formatted-lesson pre code {
     font-family: 'Inconsolata' !important;
     padding: 0px !important;
     margin: 0px !important;
     font-size: 1.4em;
+    background-color: #eee;
 }
-
-.formatted-lesson pre {
-    background-color: #f8f8f8 !important;
-}
-
 
 .edit-header {
   background: #e6e9ed;
   border-bottom: 1px solid #ccc;
   margin-bottom: 20px;
-  height: 50px;
-  padding-top: 7px;
   width: 100%;
 }
 
@@ -201,17 +190,23 @@ code {
   margin-bottom: 100px;
 }
 
-.loading-profile-page {
+.loading-profile-page, 
+.loading-edit-page {
   padding-top: 200px;
 }
 
-.loading-profile-page h1 {
+.loading-profile-page h1, 
+.loading-edit-page h1 {
   color: #37BC9B;
 }
 
 .mobile-curriculum-links {
   margin-top: 15px;
   margin-bottom: 20px;
+}
+
+.profile-page {
+  padding-top: 7px;
 }
 
 @media (min-width: 768px) {
