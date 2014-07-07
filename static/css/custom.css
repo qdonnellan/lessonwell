@@ -79,7 +79,7 @@ html {
   margin: 2px !important;
 }
 
-.edit-page {
+.edit-page, .profile-page {
   padding-top: 7px;
   position: absolute;
   width: 100%;
@@ -113,14 +113,15 @@ code {
     background-color: #eee;
 }
 
-.edit-header {
+.edit-header, .view-header {
   background: #e6e9ed;
   border-bottom: 1px solid #ccc;
   margin-bottom: 20px;
   width: 100%;
 }
 
-.edit-header .breadcrumb > span {
+.edit-header .breadcrumb > span,
+.view-header .breadcrumb > span, {
   margin-left: 10px !important
 }
 
@@ -190,13 +191,11 @@ code {
   margin-bottom: 100px;
 }
 
-.loading-profile-page, 
-.loading-edit-page {
+.loading-page {
   padding-top: 200px;
 }
 
-.loading-profile-page h1, 
-.loading-edit-page h1 {
+.loading-page h1 {
   color: #37BC9B;
 }
 
@@ -204,18 +203,6 @@ code {
   margin-top: 15px;
   margin-bottom: 20px;
 }
-
-.profile-page {
-  padding-top: 7px;
-}
-
-@media (min-width: 768px) {
-  .profile-page .tabs-below {
-    margin-bottom: 40px;
-  }
-}
-
-
 
 /* Got this snippet of code to handle embedding youtube videos: */
 /* BEGIN Copyright (c) 2011 ZURB, http://www.zurb.com/ ---------------------------------*/

@@ -13,10 +13,11 @@
         {% if not googleUser %}
 
         <p class="lead">We use Google authentication for sign-in/sign-out in an effort to make your password management easier and more secure. Once you've linked your account, anytime you log into Google, you'll be logged into this website automatically.</p>
+        <p class="lead">If your school or business uses Google Apps (for example, you have a Google Drive account issued by your school), you can use that account to log in as well!</p>
         <p class="lead">If you don't have a Google Account, you can <a href="https://accounts.google.com/SignUp" target="_blank">create one for free</a></p>
         <div class="text-center">
             <a href="{{google_users_api.create_login_url('/link')}}" class="btn btn-primary btn-lg">
-                <i class="icon-link"></i> Link Google Account
+                <i class="fa fa-google"></i> Link Google Account
             </a>
         </div>
 

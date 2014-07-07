@@ -3,7 +3,7 @@ from controllers.fetch_user import get_user_by_google_id
 from stripe_keys import api_key
 import stripe
 
-def get_user_card():
+def get_customer():
     """
     return card information for the current user
     """
@@ -17,11 +17,8 @@ def get_user_card():
     stripeID = local_user.stripeID
     customer = stripe.Customer.retrieve(stripeID)
     # return the first card from the customer's card list
-
-    data = {}
-    data['card'] = customer.cards.data[0]
     
-    return customer.cards.data[0]
+    return customer
 
 
 

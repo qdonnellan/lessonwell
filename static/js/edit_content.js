@@ -1,3 +1,3 @@
 require(['./common'], function (common) {
-    require(['app/profile']);
+    require(['app/edit_content']);
 });

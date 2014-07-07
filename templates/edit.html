@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
+{% block randomjs %}
+<script data-main="static/js/edit_content" src="static/js/lib/require.js"></script>
+{% endblock %}
+
 {% block body %}
 <meta id="teacher-data" data-teacher="{{user}}" data-teacherid="{{user.key.id()}}">
-<div class="edit-page" style="display: none">
+<div class="edit-page content-page" style="display: none">
     <div class="edit-header col-sm-12">
         {% include 'edit_divs/edit_breadcrumbs.html' %}
     </div>
@@ -15,21 +19,15 @@
     <div data-bind="if: content_type() == 'unit'">
         {% include 'edit_divs/edit_unit.html' %} 
     </div>
-    <div data-bind="ifnot: content_type() || newContent">
+    <div data-bind="ifnot: content_type() != 'user' || newContent">
         {% include 'edit_divs/edit_profile.html' %} 
     </div>
     <div data-bind="if: newContent">
         {% include 'edit_divs/new_content.html' %}
     </div>
 </div>
-<div class="loading-edit-page text-center">
+<div class="loading-page text-center">
     <h1><i class="fa fa-circle-o-notch fa-spin"></i></h1>
     <p class="lead">Loading...</p>
 </div>
-
-<script src="{{url_for('static', filename='js/knockout-3.0.0.js')}}"></script> 
-<script src="{{url_for('static', filename='js/markdown.js')}}"></script>
-<script src="{{url_for('static', filename='js/format.js')}}"></script>
-<script src="{{url_for('static', filename='js/edit-content.js')}}"></script>
-<script src="{{url_for('static', filename='js/highlight.min.js')}}"></script>
 {% endblock %}

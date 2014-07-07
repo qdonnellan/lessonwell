@@ -1,14 +1,14 @@
 <div class="tabbable tabs-below">
     <ul id="curriculum-tabs" class="nav nav-tabs">
         <!-- dropdown for teacher and their courses -->
-        <li class="dropdown active" id="profile-tab">
+        <li class="dropdown active" id="user-tab">
             <a href="#user" class="dropdown-toggle" data-toggle="dropdown">
                 <span>{{ user.username }}</span>
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li>
-                    <a href="#user" data-bind="click: editButtonClicked, text: formal_name"></a>
+                    <a href="#user" data-bind="click: userButtonClicked, text: teacher_name"></a>
                 </li>
                 <li class="divider"></li>
                 <!-- ko foreach: teacher_courses -->
