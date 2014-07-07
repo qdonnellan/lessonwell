@@ -25,7 +25,14 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
             }
         });
 
-        self.newButtonText = ko.computed(function() {
+        self.updateCustomer = function () {
+            $.get('/api/customer', function(response) {
+                self.last_four_raw(response.customer.cards.data[0].last4);
+                self.subscription(response.customer.subscriptions.data[0]);
+            });
+        };  
+
+        self.newButtonText = ko.computed( function() {
             return 'new ' + self.child_content_type();
         });
 

@@ -3,10 +3,8 @@ from models.user import User
 from google.appengine.ext import ndb
 from controllers.modify_user import edit_user
 from controllers.fetch_user import get_user_by_google_id
-from controllers.stripe_controllers.get_customer import get_customer
 from api.api_controllers.user_to_dict import user_to_dict
 from google.appengine.api import users
-import logging
 
 class UsersAPI(Resource):
     """
@@ -23,10 +21,6 @@ class UsersAPI(Resource):
             else:
                 google_user = users.get_current_user()
                 data = user_to_dict(user)
-                if google_user:
-                    current_user = get_user_by_google_id(google_user.user_id())
-                    if current_user.key.id() == user.key.id():
-                        data['customer'] = get_customer()
                 return data
 
         else:

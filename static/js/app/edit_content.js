@@ -7,6 +7,7 @@ define(
 
     $(document).ready(function() {
         vm.activateSpecificContent();
+        vm.updateCustomer();
     });
 
     $("#lesson-textarea").on('keyup', function () {

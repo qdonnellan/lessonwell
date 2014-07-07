@@ -49,13 +49,20 @@ define(
         };
                 
         self.editButtonLink = ko.computed(function() {
-            var curriculum_id = self.getParameterByName('curriculum_id');
-            if (curriculum_id) {
-                return '/edit?curriculum_id=' + curriculum_id;
+            if (self.content_id()) {
+                return '/edit?curriculum_id=' + self.content_id();
             } else {
                 return '/edit'
             }
         });
+
+        self.publicViewLink = ko.computed(function() {
+            if (self.content_id()) {
+                return '/' + self.teacher_username() + '?curriculum_id=' + self.content_id();
+            } else {
+                return '/' + self.teacher_username();
+            }
+        })
 
         self.lessonActive = ko.computed(function() {
             if (self.content_type() == 'lesson') {return true;}
@@ -206,10 +213,6 @@ define(
                 self.teacher_name(response.formal_name);
                 self.teacher_bio(response.bio);
                 self.teacher_username(response.username);
-                if (response.customer) {
-                    self.last_four_raw(response.customer.cards.data[0].last4);
-                    self.subscription(response.customer.subscriptions.data[0]);
-                }
             }).done(function(){
                 $(".loading-page").hide();
                 $(".content-page").show();

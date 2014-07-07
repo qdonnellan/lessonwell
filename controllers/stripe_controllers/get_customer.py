@@ -5,7 +5,7 @@ import stripe
 
 def get_customer():
     """
-    return card information for the current user
+    return customer information for the current user
     """
 
     stripe.api_key = api_key
@@ -16,7 +16,6 @@ def get_customer():
 
     stripeID = local_user.stripeID
     customer = stripe.Customer.retrieve(stripeID)
-    # return the first card from the customer's card list
     
     return customer
 
