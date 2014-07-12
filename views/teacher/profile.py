@@ -1,7 +1,8 @@
 from flask.views import MethodView
-from controllers.fetch_user import get_user_by_username
+from controllers.fetch_user import get_user_by_username, get_active_user
 from flask import render_template
-import logging
+from google.appengine.api import users
+
 
 class ProfilePage(MethodView):
     """
@@ -13,4 +14,9 @@ class ProfilePage(MethodView):
         get request displays the teacher's profile page
         """
         teacher = get_user_by_username(username)
-        return render_template('profile.html', teacher = teacher)
+        return render_template(
+            'profile.html', 
+            teacher = teacher,
+            active_user = get_active_user(),
+            google_users_api = users,
+            )

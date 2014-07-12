@@ -1,6 +1,7 @@
 from flask.views import MethodView
 from flask import render_template
 from google.appengine.api import users
+from controllers.fetch_user import get_active_user
 
 class LinkPage(MethodView):
     """
@@ -14,5 +15,6 @@ class LinkPage(MethodView):
         """
         return render_template(
             'link.html', 
-            google_users_api = users
+            google_users_api = users, 
+            active_user = get_active_user(),
             )

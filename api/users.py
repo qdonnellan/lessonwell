@@ -3,8 +3,11 @@ from models.user import User
 from google.appengine.ext import ndb
 from controllers.modify_user import edit_user
 from controllers.fetch_user import get_user_by_google_id
+from controllers.validation import validate_username
 from api.api_controllers.user_to_dict import user_to_dict
 from google.appengine.api import users
+from controllers.modify_user import new_user
+from controllers.stripe_controllers.new_customer import new_customer
 
 class UsersAPI(Resource):
     """
@@ -36,7 +39,27 @@ class UsersAPI(Resource):
         """
         a post request is a NEW user
         """
-        return {'message' : 'not implemented yet!'}
+        parser = reqparse.RequestParser()
+        parser.add_argument('formalName', type=str)
+        parser.add_argument('username', type=str)
+        args = parser.parse_args()
+        try: 
+            email = users.get_current_user().email()
+            validate_username(args['username'])
+            user = new_user(
+                username = args['username'], 
+                formalName = args['formalName'], 
+                email = email,
+                googleID = users.get_current_user().user_id()
+                )
+            if not user:
+                raise NameError('There was a problem creating your user account, please try again')
+            new_customer(email, user)
+
+        except Exception as e:
+            return {"error" : str(e) }
+        else:
+            return {"success" : "user successfully created"}
 
     def put(self, user_id):
         """
@@ -44,7 +67,6 @@ class UsersAPI(Resource):
         """
         parser = reqparse.RequestParser()
         parser.add_argument('formalName', type=str)
-        parser.add_argument('stripeID', type=str)
         parser.add_argument('bio', type=str)
         #parser.add_argument('plan', type=str)
         args = parser.parse_args()
@@ -54,7 +76,6 @@ class UsersAPI(Resource):
         else:
             if args['formalName']: user.formalName = args['formalName']
             if args['bio']: user.bio = args['bio']
-            if args['stripeID']: user.stripeID = args['stripeID']
             user.put()
             return user_to_dict(user)
 

@@ -1,0 +1,36 @@
+
+<div class="progress-div hidden-xs">
+    <div class="col-xs-3 text-center">
+        {% if current_progress == 12 %}
+            <strong>1. Link Google Account</strong>
+        {% else %} 
+            <span class="text-muted">1. Link Google Account</span>
+        {% endif %}
+    </div>
+    <div class="col-xs-3 text-center">
+        {% if current_progress == 38 %}
+            <strong>2. Confirm Google Account</strong>
+        {% else %} 
+            <span class="text-muted">2. Confirm Google Account</span>
+        {% endif %}
+    </div>
+    <div class="col-xs-3 text-center text-muted">
+        {% if current_progress == 63 %}
+            <strong>3. Personal Information</strong>
+        {% else %} 
+            <span class="text-muted">3. Personal Information</span>
+        {% endif %}
+    </div>
+    <div class="col-xs-3 text-center text-muted">
+        {% if current_progress == 100 %}
+            <strong>Success!</strong>
+        {% else %} 
+            <span class="text-muted">Success</span>
+        {% endif %}
+    </div>
+    <div class="col-xs-12">
+        <div class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="{{current_progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{current_progress}}%;"></div>
+        </div>
+    </div>
+</div>

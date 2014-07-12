@@ -6,7 +6,7 @@ requirejs.config({
         knockout: 'lib/knockout-3.0.0',
         highlight: 'lib/highlight.pack',
         markdown: 'lib/markdown',
-        formatLesson: 'lib/format_lesson'
+        formatLesson: 'lib/format_lesson',
     },
     shim : {
         "markdown": {

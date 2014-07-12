@@ -36,6 +36,14 @@ define(
         self.subscription = ko.observable(null);
         self.last_four_raw = ko.observable(null);
 
+        self.teacher_name_computed = ko.computed(function () {
+            if ( self.teacher_name() ) {
+                return self.teacher_name();
+            } else {
+                return self.teacher_username();
+            }
+        });
+
         self.getParameterByName = function(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

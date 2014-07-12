@@ -2,6 +2,10 @@
 
 {% block body %}
 <div class="content-div container">
+
+    {% set current_progress = 100 %}
+    {% include 'progress_bar.html' %}
+
     <div class="col-md-8 col-md-offset-2">
         <div class="page-header text-center">
             <h1>Welcome</h1>

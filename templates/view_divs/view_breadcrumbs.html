@@ -1,14 +1,18 @@
 <div class="tabbable tabs-below hidden-xs">
     <ul id="curriculum-tabs" class="nav nav-tabs">
+        <li class="logo">
+            <a href="/">l<span>w</span></a>
+        </li>
+
         <!-- dropdown for teacher and their courses -->
         <li class="dropdown active" id="user-tab">
             <a href="#user" class="dropdown-toggle" data-toggle="dropdown">
-                <span data-bind="text: teacher_name"></span>
+                <span data-bind="text: teacher_name_computed"></span>
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li>
-                    <a href="#user" data-bind="click: userButtonClicked, text: teacher_name"></a>
+                    <a href="#user" data-bind="click: userButtonClicked, text: teacher_name_computed"></a>
                 </li>
                 <li class="divider"></li>
                 <!-- ko foreach: teacher_courses -->
@@ -43,7 +47,7 @@
         <!-- end course dropdown -->
 
         <!-- dropdown for active unit and its lessons -->
-        <li class="dropdown" id="unit-tab" data-bind="visible: (content_type()=='unit' || content_type() == 'lesson')" id="unit-tab">
+        <li class="dropdown" id="unit-tab" data-bind="visible: (content_type()=='unit' || content_type() == 'lesson')">
             <a href="#unit" class="dropdown-toggle" data-toggle="dropdown">
                 <span data-bind="text: current_unit_title"></span>
                 <i class="fa fa-caret-down"></i>
@@ -62,9 +66,19 @@
             </ul>
         </li>
         <!-- end unit dropdown -->
-        <li class="pull-right">
-            <a data-bind="attr: {href: editButtonLink}"><i class="fa fa-pencil text-green"></i> Edit</a>
-        </li>
+
+        {% include './user_dropdown.html' %}
+
+        {% if active_user %}
+            {% if active_user.username == teacher.username %}
+                <li class="pull-right">
+                    <a data-bind="attr: {href: editButtonLink}">
+                        <i class="fa fa-pencil text-green"></i> 
+                        Edit
+                    </a>
+                </li>
+            {% endif %}
+        {% endif %}
     </ul>
 </div>
 <div class="visible-xs mobile-curriculum-links">

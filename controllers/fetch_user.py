@@ -1,5 +1,6 @@
 from models.user import User
 from google.appengine.ext import ndb
+from google.appengine.api import users
 
 def get_user_by_username(username):
     """
@@ -21,3 +22,15 @@ def get_user(userID):
     """
     user = ndb.Key(User, int(userID)).get()
     return user
+
+def get_active_user():
+    """
+    return the active user or None if there is None
+    """
+    active_user = None
+    current_google_user = users.get_current_user()
+    if current_google_user:
+        active_user = get_user_by_google_id(current_google_user.user_id())
+    return active_user
+
+

@@ -8,6 +8,48 @@ html {
   color: #37BC9B;
 }
 
+.front-header {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.front-brand {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 5em;
+}
+
+.front-logo {
+  background-color: #37BC9B;
+  height: 200px;
+  width: 250px;
+  display: inline-block;
+  text-align: center;
+  font-family: 'Meddon', sans-serif ;
+  font-size: 100px;
+  padding-top: 25px;
+  color: #fff;
+}
+
+.logo {
+  padding-top: 0px !important;
+  height: 1em;
+  background-color: #37BC9B;
+}
+
+.logo a {
+  font-family: 'Meddon', sans-serif ;
+  color: #fff !important;
+  font-size: 2em;
+  padding: 0 10px 0 10px !important;
+  background-color: #37BC9B;
+  border-radius: 0 !important;
+}
+
+.logo a:hover {
+  color: #37BC9B !important;
+}
+
+
 #top-bar-green {
   position: absolute;
   background-color: #37BC9B;
@@ -153,8 +195,12 @@ code {
   margin-left: 10px
 }
 
+.brand {
+  font-family: 'Molle', sans-serif ;
+}
+
 .navbar-brand {
-  font-family: 'Ubuntu', sans-serif ;
+  font-family: 'Meddon', sans-serif ;
   color: #ffffff !important;
   font-weight: 700;
   font-size: 2em
@@ -202,6 +248,17 @@ code {
 .mobile-curriculum-links {
   margin-top: 15px;
   margin-bottom: 20px;
+}
+
+#user-dropdown {
+  width: 200px;
+}
+
+.public-tab-bar {
+  margin-right: 10px;
+}
+.public-tab-bar .nav-tabs {
+  background-color: #ffffff !important;
 }
 
 /* Got this snippet of code to handle embedding youtube videos: */
