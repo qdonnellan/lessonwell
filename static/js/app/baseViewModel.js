@@ -35,6 +35,23 @@ define(
 
         self.subscription = ko.observable(null);
         self.last_four_raw = ko.observable(null);
+        self.course_passphrase = ko.observable('');
+
+        self.is_private = ko.observable(true);
+
+        self.unlocked_courses = ko.observableArray([]);
+
+        /*self.locked = ko.computed(function () {
+            if ( !self.is_private() ) {
+                return false;
+            } else if ( self.current_course_id() in self.unlocked_courses() ){
+                return false;
+            } else {
+                return true;
+            }
+        });*/
+        
+        self.locked = ko.observable(true);
 
         self.teacher_name_computed = ko.computed(function () {
             if ( self.teacher_name() ) {
@@ -43,6 +60,7 @@ define(
                 return self.teacher_username();
             }
         });
+
 
         self.getParameterByName = function(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -162,6 +180,7 @@ define(
             self.current_units(response_object.units);
             self.content_title(response_object.content.title);
             self.content_description(response_object.content.body);
+            self.is_private(response_object.is_private);
         };
 
         self.fetchUnit = function(unit) {
@@ -169,7 +188,7 @@ define(
                 self.populateCurrentUnit(response);
             }).done(function () {
                 self.unitButtonClicked();
-            });
+            }); 
         };
 
         self.populateContent = function(content_object, content_type) {
@@ -215,6 +234,7 @@ define(
             var teacher_data = $('#teacher-data').data();
             var teacher = teacher_data.teacher;
             var teacher_id = teacher_data.teacherid;
+            self.teacher_id(teacher_id);
             url = '/api/users/' + teacher_id;
             $.getJSON(url, function (response){
                 self.teacher_courses(response.courses);
@@ -229,6 +249,7 @@ define(
 
         self.activateSpecificContent = function() {
             var curriculum_id = self.getParameterByName('curriculum_id');
+            self.newContent(false);
             if (curriculum_id) {
                 var url = '/api/curriculum/' + curriculum_id;
                 $.getJSON(url, function (response) {

@@ -1,7 +1,8 @@
 <div class="container">
-    <div>
+
+    <div data-bind="ifnot: locked">
         <div class="formatted-lesson col-sm-9">
-            <h1 data-bind="text: current_course_title"></h2>
+            <h1 data-bind="text: current_course_title"></h1>
             <p data-bind="text: current_course_description"></p>
         </div>
         <div class="right-sidebar col-sm-3">
@@ -17,5 +18,8 @@
                 <!-- /ko -->
             </ul>
         </div>
+    </div>
+    <div data-bind="if: locked">
+        COURSE IS LOCKED
     </div>
 </div>

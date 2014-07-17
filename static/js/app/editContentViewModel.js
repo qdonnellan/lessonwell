@@ -5,23 +5,35 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
         // editContentViewModel inherits from the baseViewModel
         ko.utils.extend( self, new baseViewModel() );
 
+        
+        self.customer_loaded = ko.observable(false);
         self.plan = ko.observable('');
         self.last_four = ko.computed(function() {
-            if (!self.last_four_raw()) {
+            if (self.last_four_raw() === null ) {
                 return 'loading...';
+            } else if (self.last_four_raw() === false) {
+                return 'No card on file';
             }
             else {
                 return '****  ****  ****  ' + self.last_four_raw();
             }
         });
 
-        self.trial_end = ko.computed(function() {
+        self.trial_active = ko.computed(function() {
             if (self.subscription() && self.subscription().status == 'trialing') {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        self.trial_end = ko.computed(function() {
+            if ( self.trial_active() ) {
                 d = new Date(0);
                 d.setUTCSeconds(self.subscription().trial_end);
                 return d.toDateString();
             } else {
-                return null
+                return null;
             }
         });
 
@@ -36,9 +48,15 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
         self.updateCustomer = function () {
             $.get('/api/customer', function(response) {
                 if (response.customer) {
-                    self.last_four_raw(response.customer.cards.data[0].last4);
+                    if (response.customer.cards.total_count > 0) {
+                        self.last_four_raw(response.customer.cards.data[0].last4);
+                    } else {
+                        self.last_four_raw(false);
+                    }
                     self.subscription(response.customer.subscriptions.data[0]);  
-                } 
+                }
+            }).done( function () {
+                self.customer_loaded(true);
             });
         };  
 
@@ -109,10 +127,17 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
         };
 
         self.saveChangesToContent = function() {
+            if ( self.content_type() == 'course' ) {
+                passphrase = self.course_passphrase();
+            } else {
+                passphrase = '';
+            }
+
             var data = {
                 title : self.content_title(),
                 body : self.content_description(),
                 content_type : self.content_type(),
+                passphrase : passphrase
             };
             var url = '/api/curriculum/' + self.content_id();
             $.post(url, data, function (response) {
@@ -146,8 +171,13 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
                 type: 'PUT', 
                 data: data, 
                 success: function(response) {
-                    //something should probably go here...
+                    // something on success maybe?
+                },
+                fail: function(response) {
+                    // you failure!
                 }
+            }).done(function () {
+                self.profileChangesDetected(false);
             });
         };
 

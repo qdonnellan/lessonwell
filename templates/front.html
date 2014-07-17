@@ -11,8 +11,11 @@
             <p class='lead'>Automatically styled and organized lessons that look great on all your students' devices</p>
             <p class="lead">
                 <a href="/sandbox" class="btn btn-default btn-lg">See How It Works</a>
-                <a href="/link" class="btn btn-info btn-lg">Start For Free</a>
-
+                {% if active_user %}
+                    <a href="/{{ active_user.username }}" class="btn btn-info btn-lg">Go to your Profile</a>
+                {% else %}
+                    <a href="/link" class="btn btn-info btn-lg">Start For Free</a>
+                {% endif %}
             </p>
         </div>
     </div>

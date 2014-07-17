@@ -52,24 +52,53 @@
                             <textarea class="form-control" rows="5" data-bind="event: {keypress: profileChange}, value: teacher_bio" placeholder="write something about yourself!"></textarea>
                         </div>
                     </div>
+                    <!-- ko if: customer_loaded -->
+                    <div class="form-group" data-bind="if: trial_active">
+                        <label class="col-sm-3 control-label">Free Trial</label>
+                        <div class="col-sm-9">
+                            <div class="alert alert-success" role="alert">
+                                <p><strong>Free Trial Active!</strong></p>
+                                <p>Trial end date: 
+                                    <span data-bind="text: trial_end"></span>
+                                </p>
+                                <p>After this date you will need to have a credit card on file to continue using lessonwell. If you enter card information before this date you will not be charged until your trial has expired.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+
+                    <!-- ko ifnot: customer_loaded -->
+                    <div class="form-group text-center">
+                        <div class="col-sm-9 col-sm-offset-2">
+                            <h3>
+                                <i class="fa fa-circle-o-notch fa-spin text-green"></i>
+                            </h3>
+                            <p>Loading Customer Info...</p>
+                        </div>
+                    </div>
+                    <!-- /ko -->
 
                 </form>
 
-                <form class="form-horizontal" method="post" action="/api/user_card">
+                <form class="form-horizontal" data-bind="visible: customer_loaded" method="POST" action="/api/card">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Card on File</label>
+                        <label class="col-sm-3 control-label">Card</label>
                         <div class="col-sm-9">
+                            <p>Active cards will be charged $10/month on a pro-rated basis. To learn more about how the lessonwell subscription works,
+                                <a href="/subscriptions" target="_blank">
+                                    click here <i class="fa fa-external-link"></i> 
+                                </a> 
+                            </p>
                             <input type="text" class="form-control" data-bind="attr: {placeholder: last_four }" disabled>
                         </div>
                     </div>
-                    <!--<h1 data-bind="text: trial_end"></h1>-->
                     <div class="form-group" >
                         <label class="col-sm-3 control-label"></label>
                         <div class="col-sm-9">
                             <script
                                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="{{stripe_publish_key}}"
-                                data-image="{{url_for('static', filename='img/lessonwell_square.png')}}"
+                                data-key="{{ stripe_publish_key }}"
+                                data-image="/lessonwell_square.png"
                                 data-name="lessonwell"
                                 data-panel-label="Update Card"
                                 data-description="Update Payment Information"
@@ -80,6 +109,7 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

@@ -10,6 +10,10 @@ handlers:
   static_files: static/img/lessonwell_square.png
   upload: static/img/lessonwell_square.png
 
+- url: /lessonwell_square.png
+  static_files: static/img/lessonwell_square.png
+  upload: static/img/lessonwell_square.png
+
 - url: .*  
   script: main.app
 

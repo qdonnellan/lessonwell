@@ -20,3 +20,9 @@ class CardAPI(Resource):
             except Exception as e:
                 data = {'error' : str(e)}
             return data
+
+    def post(self):
+        """
+        handle changes to the user card (always through stripe)
+        """
+        return {"status" : "under development"}

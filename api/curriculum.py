@@ -30,6 +30,7 @@ class CurriculumAPI(Resource):
                 for unit_id in content.content['units']:
                     unit = get_content_by_id(unit_id)
                     unit_list.append(content_to_dict(unit))
+
                 data['units'] = unit_list
             if content.content_type == 'unit':
                 lesson_list = []
@@ -48,13 +49,6 @@ class CurriculumAPI(Resource):
 
         if no content_id then assumption is new entity, else the assumption
         is to edit an existing entity
-
-        acceptable params of the data sent in the post request include:
-
-        'content_type' : str
-        'title' : str
-        'body' : str
-        'private' : bool
         """
         if not users.get_current_user():
             return {'error': 'you must be logged in'}, 401
@@ -67,6 +61,7 @@ class CurriculumAPI(Resource):
             parser.add_argument('private', type=str)
             parser.add_argument('course', type=str)
             parser.add_argument('unit', type=str)
+            parser.add_argument('passphrase', type=str)
             args = parser.parse_args()
             try:
                 content = {}
@@ -85,6 +80,7 @@ class CurriculumAPI(Resource):
                     content['title'] = args['title']
                 content['body'] = args['body']
                 content['private'] = args['private']
+                content['passphrase'] = args['passphrase']
                 if not content_id:
                     if content_type == 'course':
                         content_id = new_course(content)

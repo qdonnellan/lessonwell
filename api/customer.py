@@ -13,4 +13,4 @@ class CustomerAPI(Resource):
             return 401
         else:
             customer = get_customer()
-            return customer
+            return {'customer' : customer}
