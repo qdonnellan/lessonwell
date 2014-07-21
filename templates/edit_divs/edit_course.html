@@ -7,6 +7,11 @@
                     <button class="btn btn-info pull-right" data-bind="click: initNewContent">new unit</button>
                 </h5>
             </div>
+            <ul class="list-group" data-bind="if: no_units">
+                <li class="list-group-item">
+                    This course has no units yet!
+                </li>
+            </ul>
             <ul class="list-group" data-bind="foreach: current_units">
                 <li class="list-group-item">
                     <a data-bind="click: $parent.fetchUnit" href="#edit_unit" class="btn btn-default pull-right">Edit</a>
@@ -36,13 +41,6 @@
                         <label class="col-sm-3 control-label">Description</label>
                         <div class="col-sm-9">
                             <textarea class="form-control" rows="5" data-bind="event: {keydown: contentChange}, value: content_description" placeholder="briefly describe your course"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Privacy</label>
-                        <div class="col-sm-9">
-                            <p class="text-muted">Set a passphase which will protect your course from unwanted visitors. If no passphrase is set, or you delete your exsiting passphrase, your course will be publicly accessible.</p>
-                            <input type="text" class="form-control" data-bind="value: course_passphrase, event: {keydown: contentChange}" placeholder="no passphrase set">
                         </div>
                     </div>
                 </form>

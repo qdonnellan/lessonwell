@@ -13,11 +13,6 @@ def modify_content(modified_content, content_id):
     if 'body' in modified_content:
         content_object.content['body'] = modified_content['body']
 
-    if 'passphrase' in modified_content:
-        passphrase = modified_content['passphrase']
-        if passphrase and passphrase != '':
-            content_object.content['passphrase'] = passphrase
-
     content_object.put()
     return content_id
     

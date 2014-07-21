@@ -15,6 +15,13 @@
                     <p data-bind="text: content.body"></p>
                 </a>
                 <!-- /ko -->
+
+                <!-- ko if: no_courses -->
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Empty!</h4>
+                    <p>This teacher hasn't published any courses yet, please come back later...</p>
+                </li>
+                <!-- /ko -->
             </ul>
         </div>
     </div>

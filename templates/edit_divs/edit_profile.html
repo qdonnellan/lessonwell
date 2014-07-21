@@ -6,7 +6,7 @@
                     <a class="btn btn-info pull-right" data-bind="click: initNewContent">new course</a>
                 </h5>
             </div>
-            <ul class="list-group" data-bind="ifnot: teacher_courses">
+            <ul class="list-group" data-bind="if: no_courses">
                 <li class="list-group-item">
                     You have no courses yet!
                 </li>
@@ -35,7 +35,7 @@
                         <label class="col-sm-3 control-label">Link to Profile</label>
                         <div class="col-sm-9">
                             <code>
-                                www.lessonwell.com/{{user.username}}
+                                www.lessonwell.com/{{active_user.username}}
                             </code>
                             <span class="help-block">Share this link with your students</span>
                         </div>

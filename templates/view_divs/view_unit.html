@@ -18,6 +18,13 @@
                     <h4 data-bind="text: content.title" class="list-group-item-heading"></h4>
                 </a>
                 <!-- /ko -->
+
+                <!-- ko if: no_lessons -->
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Empty!</h4>
+                    <p>This unit doens't have any lessons yet...</p>
+                </li>
+                <!-- /ko -->
             </ul>
         </div>
     </div>

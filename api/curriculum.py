@@ -61,7 +61,6 @@ class CurriculumAPI(Resource):
             parser.add_argument('private', type=str)
             parser.add_argument('course', type=str)
             parser.add_argument('unit', type=str)
-            parser.add_argument('passphrase', type=str)
             args = parser.parse_args()
             try:
                 content = {}
@@ -80,7 +79,6 @@ class CurriculumAPI(Resource):
                     content['title'] = args['title']
                 content['body'] = args['body']
                 content['private'] = args['private']
-                content['passphrase'] = args['passphrase']
                 if not content_id:
                     if content_type == 'course':
                         content_id = new_course(content)

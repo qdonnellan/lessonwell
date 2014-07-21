@@ -1,6 +1,5 @@
 <div class="container">
-
-    <div data-bind="ifnot: locked">
+    <div>
         <div class="formatted-lesson col-sm-9">
             <h1 data-bind="text: current_course_title"></h1>
             <p data-bind="text: current_course_description"></p>
@@ -16,10 +15,13 @@
                     <p data-bind="text: content.body"></p>
                 </a>
                 <!-- /ko -->
+                <!-- ko if: no_units -->
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Empty!</h4>
+                    <p>This course doens't have any units yet...</p>
+                </li>
+                <!-- /ko -->
             </ul>
         </div>
-    </div>
-    <div data-bind="if: locked">
-        COURSE IS LOCKED
     </div>
 </div>

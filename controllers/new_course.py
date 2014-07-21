@@ -29,7 +29,6 @@ def new_course(content):
     content['approved_students'] = []
     content['pending_approval'] = []
     content['units'] = []
-    content['passphrase'] = ''
     content['listed'] = False
     key = Curriculum(content_type = 'course', content = content).put()
 

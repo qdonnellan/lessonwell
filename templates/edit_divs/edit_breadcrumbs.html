@@ -7,7 +7,7 @@
         <!-- dropdown for teacher and their courses -->
         <li class="dropdown active" id="user-tab">
             <a href="#user" class="dropdown-toggle" data-toggle="dropdown">
-                <span>{{ user.username }}</span>
+                <span>{{ active_user.username }}</span>
                 <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -65,6 +65,9 @@
                 <!-- /ko -->
             </ul>
         </li>
+
+        {% include './user_dropdown.html' %}
+
         <!-- end unit dropdown -->
         <li class="pull-right">
             <a data-bind="attr: { href: publicViewLink }">

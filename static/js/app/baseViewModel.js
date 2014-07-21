@@ -35,23 +35,6 @@ define(
 
         self.subscription = ko.observable(null);
         self.last_four_raw = ko.observable(null);
-        self.course_passphrase = ko.observable('');
-
-        self.is_private = ko.observable(true);
-
-        self.unlocked_courses = ko.observableArray([]);
-
-        /*self.locked = ko.computed(function () {
-            if ( !self.is_private() ) {
-                return false;
-            } else if ( self.current_course_id() in self.unlocked_courses() ){
-                return false;
-            } else {
-                return true;
-            }
-        });*/
-        
-        self.locked = ko.observable(true);
 
         self.teacher_name_computed = ko.computed(function () {
             if ( self.teacher_name() ) {
@@ -59,6 +42,26 @@ define(
             } else {
                 return self.teacher_username();
             }
+        });
+
+
+        // helpers for absence/presence of content
+        self.no_courses = ko.computed(function () {
+            var count = 0;
+            for ( x in self.teacher_courses() ) { count += 1 }
+            if (count == 0) { return true } else { return false }
+        });
+
+        self.no_units = ko.computed(function () {
+            var count = 0;
+            for ( x in self.current_units() ) { count += 1 }
+            if (count == 0) { return true } else { return false }
+        });
+
+        self.no_lessons = ko.computed(function () {
+            var count = 0;
+            for ( x in self.current_lessons() ) { count += 1 }
+            if (count == 0) { return true } else { return false }
         });
 
 
@@ -179,8 +182,7 @@ define(
             self.current_course_id(response_object.id);
             self.current_units(response_object.units);
             self.content_title(response_object.content.title);
-            self.content_description(response_object.content.body);
-            self.is_private(response_object.is_private);
+            self.content_description(response_object.content.body);x
         };
 
         self.fetchUnit = function(unit) {

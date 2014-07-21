@@ -37,14 +37,11 @@
                 </li>
                 <li class="divider"></li>
                 <!-- ko foreach: current_units -->
-                <li data-bind="ifnot: $parent.locked">
+                <li>
                     <a href="#" tabindex="-1" data-toggle="tab" data-bind="text: content.title, click: $parent.fetchUnit">
                     </a>
                 </li>
                 <!-- /ko -->
-                <li data-bind="if: locked">
-                    <a>Course is Locked</a>
-                </li>
             </ul>
         </li>
         <!-- end course dropdown -->

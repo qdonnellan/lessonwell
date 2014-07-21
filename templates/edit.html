@@ -2,10 +2,13 @@
 
 {% block randomjs %}
 <script data-main="static/js/edit_content" src="static/js/lib/require.js"></script>
+
+<script src="/static/js/lib/rangyinputs_jquery.min.js"></script>
+<script src="/static/js/lib/qselection.js"></script>
 {% endblock %}
 
 {% block body %}
-<meta id="teacher-data" data-teacherid="{{user.key.id()}}">
+<meta id="teacher-data" data-teacherid="{{ active_user.key.id() }}">
 <div class="edit-page content-page" style="display: none">
     <div class="edit-header col-sm-12">
         {% include 'edit_divs/edit_breadcrumbs.html' %}
@@ -22,7 +25,7 @@
     <div data-bind="if: profileActive()">
         {% include 'edit_divs/edit_profile.html' %} 
     </div>
-    <div data-bind="if: newContent() " id="new-content-div">
+    <div data-bind="visible: newContent() " id="new-content-div">
         {% include 'edit_divs/new_content.html' %}
     </div>
 </div>

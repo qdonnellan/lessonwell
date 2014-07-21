@@ -7,6 +7,11 @@
                     <button class="btn btn-info pull-right" data-bind="click: initNewContent">new lesson</button>
                 </h5>
             </div>
+            <ul class="list-group" data-bind="if: no_lessons">
+                <li class="list-group-item">
+                    This unit has no lessons yet!
+                </li>
+            </ul>
             <ul class="list-group" data-bind="foreach: current_lessons">
                 <li class="list-group-item">
                     <a data-bind="click: $parent.fetchLesson" href="#edit_lesson" class="btn btn-default pull-right">Edit</a>

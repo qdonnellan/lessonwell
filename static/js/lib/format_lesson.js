@@ -1,16 +1,18 @@
-define(['markdown'], function (markdown) {
+define(function (markdown) {
+
+    var marked = require('marked');
 
     return {
         formatInput : function(input_str) {
-            links = input_str.match(/\bhttps?[:][\/][\/]\S*\b/g);
-            if (links) {
-                for (var i = 0; i < links.length; i++) {
-                    var link = links[i];
-                    input_str = input_str.replace(link, formatLink(link));
-                }
-            }
+            //links = input_str.match(/\bhttps?[:][\/][\/]\S*\b/g);
+            //if (links) {
+            //    for (var i = 0; i < links.length; i++) {
+            //        var link = links[i];
+            //        input_str = input_str.replace(link, formatLink(link));
+            //    }
+            //}
             //remove the link placeholder
-            input_str = input_str.replace(new RegExp('::LINK::PLACEHOLDER::', 'g'), 'http');
+            //input_str = input_str.replace(new RegExp('::LINK::PLACEHOLDER::', 'g'), 'http');
 
             equations = input_str.match(/\$\$?(.*?)\$\$?/g);
             if (equations) {
@@ -24,7 +26,7 @@ define(['markdown'], function (markdown) {
                 }
             }
 
-            post_markdown_str = markdown.toHTML(input_str);
+            post_markdown_str = marked(input_str);
 
             // remove the math placeholder in math equation now that markdown is over!
             post_markdown_str = post_markdown_str.replace(/::MATH::UNDERSCORE::PLACEHOLDER::/g, '_');
