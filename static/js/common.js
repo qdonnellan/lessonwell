@@ -7,6 +7,7 @@ requirejs.config({
         highlight: 'lib/highlight.pack',
         marked: 'lib/marked',
         formatLesson: 'lib/format_lesson',
+        rangyinputs: 'lib/rangyinputs_jquery.min'
     },
     shim : {
         "marked": {

@@ -72,6 +72,7 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
             }
             else {
                 self.newContent(true);
+                $("#new-content-div").show();
                 self.lessonMode(false);
             }
         };
@@ -79,7 +80,7 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
         self.initNewLesson = function() {
             self.current_lesson_body('');
             self.content_type('lesson');
-            self.newContent(false);
+            self.newContent(null);
             self.lessonMode(true);
             self.current_lesson_id(null);
         };
@@ -104,7 +105,7 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
             $.post('/api/curriculum', data, function (response) {
                 self.fetchAndUpdateContent(response);
             });
-            self.newContent(false);
+            self.newContent(null);
             self.content_type(content_type);
         };
 

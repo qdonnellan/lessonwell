@@ -73,7 +73,7 @@ class CurriculumAPI(Resource):
                 content['teacher'] = get_user_by_google_id(googleID).key.id()
                 if content_type == 'lesson':
                     # the first line of the lesson body IS the title
-                    title = args['body'].splitlines()[0]
+                    title = args['body'].strip().splitlines()[0]
                     content['title'] = re.sub('^#+', '', title)
                 else:
                     content['title'] = args['title']

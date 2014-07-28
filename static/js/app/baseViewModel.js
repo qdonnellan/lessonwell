@@ -28,7 +28,7 @@ define(
         self.teacher_id = ko.observable('');
         self.teacher_courses = ko.observableArray([]);
 
-        self.newContent = ko.observable(false);
+        self.newContent = ko.observable(null);
         self.profileChangesDetected = ko.observable(false);
         self.contentChangesDetected = ko.observable(false);
         self.lessonMode = ko.observable(false);
@@ -120,7 +120,7 @@ define(
         self.formatted_lesson = ko.computed(function() {
             var input_str = self.current_lesson_body();
             return formatLesson.formatInput(input_str);
-        });
+        }).extend({ notify: 'always' });
 
         self.activateTab = function(tab) {
             $('#curriculum-tabs').find('li').removeClass('active');
@@ -132,7 +132,7 @@ define(
             self.content_type('user');
             self.content_id(null);
             self.activateTab('user');
-            self.newContent(false);
+            self.newContent(null);
             self.lessonMode(false);
             self.contentChangesDetected(false);
         };
@@ -143,7 +143,7 @@ define(
             self.content_title(self.current_course_title());
             self.content_description(self.current_course_description());
             self.activateTab('course');
-            self.newContent(false);
+            self.newContent(null);
             self.lessonMode(false);
             self.contentChangesDetected(false);
         };
@@ -154,7 +154,7 @@ define(
             self.content_title(self.current_unit_title());
             self.content_description(self.current_unit_description());
             self.activateTab('unit');
-            self.newContent(false);
+            self.newContent(null);
             self.lessonMode(false);
             self.contentChangesDetected(false);
         };
@@ -163,7 +163,7 @@ define(
             self.content_type('lesson');
             self.content_id(self.current_lesson_id());
             self.activateTab('unit');
-            self.newContent(false);
+            self.newContent(null);
             self.lessonMode(true);
             self.contentChangesDetected(false);
         };
@@ -251,7 +251,7 @@ define(
 
         self.activateSpecificContent = function() {
             var curriculum_id = self.getParameterByName('curriculum_id');
-            self.newContent(false);
+            self.newContent(null);
             if (curriculum_id) {
                 var url = '/api/curriculum/' + curriculum_id;
                 $.getJSON(url, function (response) {

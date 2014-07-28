@@ -2,9 +2,6 @@
 
 {% block randomjs %}
 <script data-main="static/js/edit_content" src="static/js/lib/require.js"></script>
-
-<script src="/static/js/lib/rangyinputs_jquery.min.js"></script>
-<script src="/static/js/lib/qselection.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -25,7 +22,7 @@
     <div data-bind="if: profileActive()">
         {% include 'edit_divs/edit_profile.html' %} 
     </div>
-    <div data-bind="visible: newContent() " id="new-content-div">
+    <div data-bind="visible: newContent" id="new-content-div" style="display: none">
         {% include 'edit_divs/new_content.html' %}
     </div>
 </div>
