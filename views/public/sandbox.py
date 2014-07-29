@@ -1,11 +1,12 @@
-from views.main_view_handler import ViewHandler
+from flask.views import MethodView
+from flask import render_template
+from controllers.fetch_user import get_active_user
+from google.appengine.api import users
 
-class Sandbox(ViewHandler):
-    '''
-    the request handler for the sandbox page
-    '''
+class SandboxPage(MethodView):
     def get(self):
-        '''
-        handle the get request for the sandbox page
-        '''
-        self.render('sandbox.html')
+        return render_template(
+            'sandbox.html', 
+            active_user = get_active_user(),
+            google_users_api = users,
+            )

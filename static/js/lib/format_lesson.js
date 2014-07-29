@@ -50,6 +50,10 @@ define(function (markdown) {
             post_markdown_str = post_markdown_str.replace(/::MATH::UNDERSCORE::PLACEHOLDER::/g, '_');
             post_markdown_str = post_markdown_str.replace(/::MATH::ASTERISKS::PLACEHOLDER::/g, '*');
 
+            // make images responsive!
+            post_markdown_str = post_markdown_str.replace(/<img/g, "<img class='img-responsive'");
+
+
             return post_markdown_str;
         }
     };

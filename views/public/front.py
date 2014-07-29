@@ -3,7 +3,6 @@ from flask import render_template
 from controllers.fetch_user import get_active_user
 from google.appengine.api import users
 
-
 class FrontPage(MethodView):
     def get(self):
         return render_template(

@@ -133,6 +133,10 @@ html {
 }
 
 @media (max-width: 768px) {
+  .profile-page {
+    padding-top: 0px;
+  }
+
   .profile-page .panel {
     margin-top: 60px !important;
   }
@@ -250,7 +254,8 @@ code {
 }
 
 .mobile-curriculum-links {
-  margin-top: 15px;
+  margin-top: 7px;
+  padding-top: 15px;
   margin-bottom: 20px;
 }
 
