@@ -53,27 +53,43 @@
                         </div>
                     </div>
                     <!-- ko if: customer_loaded -->
-                    <div class="form-group" data-bind="if: trial_active">
-                        <label class="col-sm-3 control-label">Free Trial</label>
-                        <div class="col-sm-9">
-                            <div class="alert alert-success" role="alert">
-                                <p><strong>Free Trial Active!</strong></p>
-                                <p>Trial end date: 
-                                    <span data-bind="text: trial_end"></span>
+                    <div data-bind="ifnot: sponsored">
+                        <div class="form-group" data-bind="if: trial_active">
+                            <label class="col-sm-3 control-label">Free Trial</label>
+                            <div class="col-sm-9">
+                                <div class="alert alert-success" role="alert">
+                                    <p><strong>Free Trial Active!</strong></p>
+                                    <p>Trial end date: 
+                                        <span data-bind="text: trial_end"></span>
+                                    </p>
+                                    <p>After this date you will need to have a credit card on file <strong>or recieve sponsorship</strong> to continue using lessonwell. If you enter card information before this date you will not be charged until your trial has expired.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Sponsor</label>
+                            <div class="col-sm-9">
+                                <p class="text-muted">You currently do not have a sponsor</p>
+                                <p>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sponsorModal">
+                                        <strong>Request Sponsorship Now!</strong>
+                                    </button>
                                 </p>
-                                <p>After this date you will need to have a credit card on file <strong>or recieve sponsorship</strong> to continue using lessonwell. If you enter card information before this date you will not be charged until your trial has expired.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Sponsor</label>
-                        <div class="col-sm-9">
-                            <p class="text-muted">You currently do not have a sponsor</p>
-                            <p>
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sponsorModal">
-                                    <strong>Request Sponsorship Now!</strong>
-                                </button>
-                            </p>
+                    <div data-bind="if: sponsored">
+                        <div class="form-group" data-bind="if: trial_active">
+                            <label class="col-sm-3 control-label">Sponsored</label>
+                            <div class="col-sm-9">
+                                <div class="alert alert-success" role="alert">
+                                    <p><strong>Sponsorship Active</strong></p>
+                                    <p>Congratulations, you have been sponsored! For the next year you will be able to use lessonwell absolutely free!</p>
+                                    <p>Sponsorship end date: 
+                                        <strong data-bind="text: sponsor_end"></strong>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /ko -->
@@ -91,35 +107,37 @@
 
                 </form>
 
-                <form class="form-horizontal" data-bind="visible: customer_loaded" method="POST" action="/api/card">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Card</label>
-                        <div class="col-sm-9">
-                            <p>Active cards will be charged $10/month on a pro-rated basis. <strong>If you have a sponsor your card will not be charged!</strong>. To learn more about how the lessonwell subscription works,
-                                <a href="/subscriptions" target="_blank">
-                                    click here <i class="fa fa-external-link"></i> 
-                                </a> 
-                            </p>
-                            <input type="text" class="form-control" data-bind="attr: {placeholder: last_four }" disabled>
+                <div data-bind="ifnot: sponsored">
+                    <form class="form-horizontal" data-bind="visible: customer_loaded" method="POST" action="/api/card">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Card</label>
+                            <div class="col-sm-9">
+                                <p>Active cards will be charged $10/month on a pro-rated basis. <strong>If you have a sponsor your card will not be charged!</strong>. To learn more about how the lessonwell subscription works,
+                                    <a href="/subscriptions" target="_blank">
+                                        click here <i class="fa fa-external-link"></i> 
+                                    </a> 
+                                </p>
+                                <input type="text" class="form-control" data-bind="attr: {placeholder: last_four }" disabled>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group" >
-                        <label class="col-sm-3 control-label"></label>
-                        <div class="col-sm-9">
-                            <script
-                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="{{ stripe_publish_key }}"
-                                data-image="/lessonwell_square.png"
-                                data-name="lessonwell"
-                                data-panel-label="Update Card"
-                                data-description="Update Payment Information"
-                                data-allow-remember-me="false"
-                                data-label="Update Credit Card"
-                                data-email="{{google_users_api.get_current_user().email()}}">
-                            </script>
+                        <div class="form-group" >
+                            <label class="col-sm-3 control-label"></label>
+                            <div class="col-sm-9">
+                                <script
+                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="{{ stripe_publish_key }}"
+                                    data-image="/lessonwell_square.png"
+                                    data-name="lessonwell"
+                                    data-panel-label="Update Card"
+                                    data-description="Update Payment Information"
+                                    data-allow-remember-me="false"
+                                    data-label="Update Credit Card"
+                                    data-email="{{google_users_api.get_current_user().email()}}">
+                                </script>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
 
             </div>
         </div>

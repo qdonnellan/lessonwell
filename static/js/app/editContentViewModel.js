@@ -7,6 +7,20 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
 
         
         self.customer_loaded = ko.observable(false);
+
+        self.sponsored = ko.computed(function() {
+            var status = false;
+            if ( self.customer_loaded() ) {
+                var sub = self.subscription();
+                if ( sub && sub.discount ) {
+                    if ( sub.discount.coupon.id == 'sponsored' ) {
+                        status = true;
+                    }
+                }
+            }
+            return status;
+        });
+
         self.plan = ko.observable('');
         self.last_four = ko.computed(function() {
             if (self.last_four_raw() === null ) {
@@ -31,6 +45,16 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
             if ( self.trial_active() ) {
                 d = new Date(0);
                 d.setUTCSeconds(self.subscription().trial_end);
+                return d.toDateString();
+            } else {
+                return null;
+            }
+        });
+
+        self.sponsor_end = ko.computed(function() {
+            if ( self.sponsored() ) {
+                d = new Date(0);
+                d.setUTCSeconds(self.subscription().discount.end);
                 return d.toDateString();
             } else {
                 return null;
