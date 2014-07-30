@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container marketing-container">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="page-header text-center">
+            <h1>Sponsor This Teacher!</h1>
+            <h3>{{ teacher.formalName }}</h3>
+            <a class="btn btn-primary btn-block visible-xs" href="#sponsornow">
+                Sponsor Now!
+            </a>
+        </div>
+
+        <div class="col-md-8">
+            <p class="lead">This very awesome teacher is currently looking for a sponsor so that they can continue using lessonwell absolutely free. Help them out by sponsoring their subscription right now, it only takes a few seconds!</p>
+            <p class='lead'>Sponsorship is a <strong>one time payment</strong>  available at an <strong>over 25% discount</strong> from the regular price of $10/month.</p>
+            <p class='lead'>Once your payment has been submitted, this teacher will immediately begin to use lessonwell absolutely free for an entire year.</p>
+            <p>
+                <a class="btn btn-default hidden-xs" href="/{{ teacher.username }}" target="_blank">
+                    View Teacher's Profile
+                </a>
+            </p>
+           
+        </div>
+        <div class="col-md-4">
+            <div class="pricing" id="sponsornow">
+                <ul>
+                    <li class="unit price-primary">
+                        <div class="price-title">
+                            <h3>$89</h3>
+                            <p>per year</p>
+                        </div>
+                        <div class="price-body">
+                            <h4>1 Year Sponsorship</h4>
+                            <p>This teacher will recieve:</p>
+                            <ul>
+                                <li>Unlimited Courses</li>
+                                <li>Unlimited Lessons</li>
+                                <li>Free use of all features for an entire year</li>
+                            </ul>
+                        </div>
+                        <div class="price-foot">
+                            <form method="POST">
+                                <div class="form-group" >
+                                    <script
+                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="{{ stripe_publish_key }}"
+                                        data-image="/lessonwell_square.png"
+                                        data-name="lessonwell"
+                                        data-panel-label="Sponsor Now"
+                                        data-amount="8900"
+                                        data-description="Sponsorship: {{ teacher.formalName }}"
+                                        data-allow-remember-me="true"
+                                        data-label="Pay for Sponsorship"
+                                        >
+                                    </script>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

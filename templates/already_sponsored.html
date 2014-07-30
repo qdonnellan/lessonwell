@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container marketing-container">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="page-header text-center">
+            <h1>Already Sponsored!</h1>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2">
+            <p class="lead">We appreciate your desire to sponsor this teacher, but they already have an active sponsorship!</p>
+            <p class="text-center">
+                <a class="btn btn-info btn-lg hidden-xs" href="/{{ teacher.username }}" target="_blank">
+                    View Teacher's Profile
+                </a>
+            </p>
+           
+        </div>
+    </div>
+</div>
+
+{% endblock %}

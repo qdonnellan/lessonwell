@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container marketing-container">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="page-header text-center">
+            <h1>Sponsorship Successful!</h1>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2">
+            <p class="lead">Awesome, you have sponsored {{teacher.formalName}} for an entire year! Go you!</p>
+            <p class='lead'>You should be receiving an email confirming your payment soon. If you have any questions please email us anyitme at: <a href="mailto:sponsor@lessonwell.com">sponsor@lessonwell.com</a></p>
+            <p class="text-center">
+                <a class="btn btn-info btn-lg hidden-xs" href="/{{ teacher.username }}" target="_blank">
+                    View Teacher's Profile
+                </a>
+            </p>
+           
+        </div>
+    </div>
+</div>
+
+{% endblock %}

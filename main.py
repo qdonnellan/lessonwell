@@ -5,6 +5,7 @@ from views.public.link import LinkPage
 from views.public.signup import SignUpPage
 from views.public.success import SuccessPage
 from views.public.sandbox import SandboxPage
+from views.public.sponsor import SponsorPage
 from views.teacher.profile import ProfilePage
 from views.teacher.edit_content import EditContentPage
 from api.users import UsersAPI
@@ -22,6 +23,7 @@ app.add_url_rule('/signup', view_func=SignUpPage.as_view('signup'))
 app.add_url_rule('/success', view_func=SuccessPage.as_view('success'))
 app.add_url_rule('/edit', view_func=EditContentPage.as_view('edit'))
 app.add_url_rule('/sandbox', view_func=SandboxPage.as_view('sandbox'))
+app.add_url_rule('/sponsor/<username>', view_func=SponsorPage.as_view('sponsor'))
 app.add_url_rule('/<username>', view_func=ProfilePage.as_view('profile'))
 
 # the restful API routes
