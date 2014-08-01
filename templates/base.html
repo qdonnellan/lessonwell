@@ -1,59 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="a lesson platform for busy teachers">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="a lesson platform for busy teachers">
 
-    <link href = "{{url_for('static', filename='css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href = "{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href = "{{url_for('static', filename='css/custom.css')}}" rel="stylesheet">
-    <link href = "{{url_for('static', filename='css/bootflat.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
+        <link href = "{{url_for('static', filename='css/font-awesome.min.css')}}" rel="stylesheet">
+        <link href = "{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href = "{{url_for('static', filename='css/custom.css')}}" rel="stylesheet">
+        <link href = "{{url_for('static', filename='css/bootflat.min.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/github.min.css">
 
-    <script src="{{url_for('static', filename='js/lib/jquery-1.11.1.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/lib/jquery-1.11.1.min.js')}}"></script>
 
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Meddon' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Inconsolata:400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Meddon' rel='stylesheet' type='text/css'>
 
+        {% if mathjax %}
+          <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+              MathJax.Hub.Config({
+                TeX: {extensions: ["mhchem.js"]},
+                jax: ["input/TeX","output/HTML-CSS"],
+                tex2jax: {
+                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                    processEscapes: true,
+                },
+                "HTML-CSS": { availableFonts: ["TeX"] }
+              });
+          </script>
+        {% endif %}
+
+        {% block randomjs %} {% endblock %}
     
-    <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
-        MathJax.Hub.Config({
-          TeX: {extensions: ["mhchem.js"]},
-          jax: ["input/TeX","output/HTML-CSS"],
-          tex2jax: {
-              inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-              displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-              processEscapes: true,
-          },
-          "HTML-CSS": { availableFonts: ["TeX"] }
-        });
-    </script>
+        {% block stripe %}{% endblock %}
 
-    {% block randomjs %} {% endblock %}
-    
-    {% block stripe %}{% endblock %}
+        <title>lessonwell</title>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-39047640-1']);
+          _gaq.push(['_trackPageview']);
 
-    <title>lessonwell</title>
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-39047640-1']);
-      _gaq.push(['_trackPageview']);
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+        </script>
+    </head>
 
-    </script>
-  </head>
+    <body>
+        <div id="top-bar-green"></div>
+        {% block body %}{% endblock %}
 
-  <body>
-    <div id="top-bar-green"></div>
-      {% block body %}{% endblock %}
+
+        <div class="footer-container hidden-xs">
+            <div class="row">
+                <button class="btn btn-info col-sm-offset-1 about-button about-open"><i class="fa fa-chevron-circle-up"></i> About</button>
+                <button class="btn btn-info col-sm-offset-1 about-button about-close" style="display:none;"><i class="fa fa-chevron-circle-down"></i> About</button>
+            </div>
+            {% include 'footer.html' %}
+        </div>
+
 
     <script src="{{url_for('static', filename='js/lib/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/lib/footer_animate.js')}}"></script>
   </body>
 </html>

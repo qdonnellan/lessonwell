@@ -8,7 +8,7 @@ from controllers.stripe_controllers.sponsor_status import sponsored
 
 class SponsorPage(MethodView):
     """
-    the request handler for the profile page
+    the request handler for the sponsor page
     """
     
     def get(self, username):

@@ -129,7 +129,27 @@ html {
   padding-top: 7px;
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100%;}
+
+.footer-container {
+  position: fixed;
+  bottom: 0px;
+  height: 28px;
+  width: 100%;
+}
+
+.footer {
+  min-height: 300px;
+}
+
+.footer-container .about-button {
+  margin-bottom: -15px;
+}
+
+.footer-lw {
+  font-family: 'Meddon', sans-serif ;
+  font-size: 3em;
+  color: #37BC9B;
 }
 
 @media (max-width: 768px) {

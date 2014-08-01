@@ -54,6 +54,17 @@
                     </div>
                     <!-- ko if: customer_loaded -->
                     <div data-bind="ifnot: sponsored">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Sponsor</label>
+                            <div class="col-sm-9">
+                                <p class="text-muted">You currently do not have a sponsor</p>
+                                <p>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sponsorModal">
+                                        <strong>Request Sponsorship Now!</strong>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
                         <div class="form-group" data-bind="if: trial_active">
                             <label class="col-sm-3 control-label">Free Trial</label>
                             <div class="col-sm-9">
@@ -64,17 +75,6 @@
                                     </p>
                                     <p>After this date you will need to have a credit card on file <strong>or recieve sponsorship</strong> to continue using lessonwell. If you enter card information before this date you will not be charged until your trial has expired.</p>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Sponsor</label>
-                            <div class="col-sm-9">
-                                <p class="text-muted">You currently do not have a sponsor</p>
-                                <p>
-                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#sponsorModal">
-                                        <strong>Request Sponsorship Now!</strong>
-                                    </button>
-                                </p>
                             </div>
                         </div>
                     </div>

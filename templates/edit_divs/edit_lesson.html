@@ -6,10 +6,10 @@
 <div class="col-sm-6">
     <div class="row">
         <div class="col-sm-12">
-            <div class="btn-group pull-right" id="lesson-panel-btn-group">
-                <button class="btn btn-default" type="button" disabled>Formatted Lesson</button>
-                <button class="btn btn-info" id="save-lesson-button" data-bind="click: saveLesson, enable: contentChangesDetected">save lesson</button>
-            </div>
+            <span class="badge badge-danger" data-bind="if: contentChangesDetected">Changes detected, don't forget to save!</span>
+            <button class="btn btn-info pull-right" id="save-lesson-button" data-bind="click: saveLesson, enable: contentChangesDetected">
+                <i class="fa fa-save fa-lg"></i><strong> save lesson</strong>
+            </button>
         </div>
     </div>
     <div class="panel panel-default">

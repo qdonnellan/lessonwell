@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block randomjs %}
+<script data-main="static/js/administrator" src="static/js/lib/require.js"></script>
+{% endblock %}
+
+{% block body %}
+<meta id="stripe-data" data-pubkey="{{ stripe_pub_key }}" >
+
+<div class="container marketing-container">
+    <div class="page-header text-center">
+        <h1>Purchase Subscriptions</h1>
+        <p class="lead">Give your teachers a headstart by purchasing multiple, 1-year subscriptions of lessonwell at absolutely no cost to them. Each subscription will start when they are redeemed, not when you purchase them. </p>
+    </div>
+    <div>
+        <form method="POST" class="form-horizontal col-sm-8" role="form">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Your Email</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" data-bind="value: email, valueUpdate:'input'" placeholder="test@example.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Confirm Email</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" data-bind="value: email2, valueUpdate:'input'">
+                    <span class="text-danger" data-bind="ifnot: email_validated">Please confirm your email</span>
+                </div>
+                
+            </div>
+            <div class="form-group pricing-radios">
+                <label class="col-sm-4 control-label"></label>
+                <div class="col-sm-8">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <strong>5 subscriptions</strong>, $420 <br>
+                            <span class="text-muted">Monthly rate of $7 per teacher</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                            <strong>10 subscriptions</strong>, $720 <br>
+                            <span class="text-muted">Monthly rate of $6 per teacher</span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                            <strong>20 subscriptions</strong>, $960 <i class="fa fa-asterisk text-green"></i> 
+                            <strong><em class="text-green">Best Value</em></strong><br>
+                            <span class="text-muted">Monthly rate of $4 per teacher</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="col-sm-offset-4 col-sm-8">
+                    Once you have purchased your subscriptions, you will receive an email (at the above address) which will contain an activation code. You should give that activation code to each of your teachers. They may then use that code when they create an account, or after they have already created an account; their 1 year subscription will begin on the day they redeem the activation code.
+                </p>
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Checkout</label>
+
+                <div class="col-sm-8" data-bind="if: email_validated">
+                    <label>Please review your order above before purchasing.</label>
+                    <span data-bind="html: stripe_script"></span>
+                </div>
+                <div class="col-sm-8" data-bind="ifnot: email_validated">
+                    <span class="text-danger">You must confirm your email above before checkout</span>
+                </div>
+            </div>
+        </form>
+        <div class="col-sm-4">
+            <div class="alert alert-success">
+                <h4>Heads up!</h4>
+                <p>Each of your teachers will need a Google Account to access lessonwell. Please read about how we use Google Accounts to authenticate users before you complete your purchase.</p>
+                <p>
+                    <a href="#" class="btn btn-success">Google Account Use</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
