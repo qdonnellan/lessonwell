@@ -8,7 +8,7 @@ from controllers.fetch_user import get_user_by_google_id
 from controllers.new_course import new_course
 from controllers.new_unit import new_unit
 from controllers.new_lesson import new_lesson
-from controllers.modify_curriculum import modify_content
+from controllers.modify_curriculum import modify_content, delete_content
 import logging
 import re
 
@@ -99,3 +99,20 @@ class CurriculumAPI(Resource):
                 return {'error' : str(e)}, 500
             else:
                 return data
+
+    def delete(self, content_id):
+        """
+        delete the associated content
+        """
+        if not users.get_current_user():
+            return {'error': 'you must be logged in'}, 401
+        else:
+            try:
+                delete_content(content_id)
+            except Exception as e:
+                logging.info(e)
+                return {'error' : str(e)}, 500
+            else:
+                return 200
+
+

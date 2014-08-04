@@ -20,4 +20,5 @@ ProtectedNames = [
     'sponsor', 
     'administrator',
     'curriculum',
+    'subscriptions',
 ]

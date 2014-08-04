@@ -41,7 +41,15 @@
                 <label class="control-label  col-lg-2" for="disabledInput">Email</label>
                 <div class="col-lg-10">
                     <input class="input form-control" id="disabledInput" type="text" placeholder = "{{google_users_api.get_current_user().email()}}" disabled>
-                    <span class="help-block">Your Google Account; we will only use this email to contact you if we have important information or issues concerning your account.
+                    <span class="help-block">Your Google Account; we will only use this email to contact you if we have important information or issues concerning your account.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="inputSponsorCode">Sponsor Code</label>
+                <div class="col-lg-10">
+                    <input type="text" id="inputSponsorCode" name="sponsor_code"  class="form-control" data-bind="value: sponsor_code">
+                    <span class="help-block">If you have recieved a sponsor code from your administrator/supervisor, please use it here. You can also add a sponsor code after your account has already been created. </span>
                 </div>
             </div>
 

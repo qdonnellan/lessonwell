@@ -8,6 +8,8 @@ from api.api_controllers.user_to_dict import user_to_dict
 from google.appengine.api import users
 from controllers.modify_user import new_user
 from controllers.stripe_controllers.new_customer import new_customer
+from controllers.stripe_controllers.redeem import verify_code
+import logging
 
 class UsersAPI(Resource):
     """
@@ -42,9 +44,15 @@ class UsersAPI(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('formalName', type=str)
         parser.add_argument('username', type=str)
+        parser.add_argument('sponsorCode', type=str)
         args = parser.parse_args()
         try: 
             email = users.get_current_user().email()
+            sponsor_code = args['sponsorCode']
+            if sponsor_code and sponsor_code != '':
+                if not verify_code(sponsor_code):
+                    raise NameError('Invalid Sponsor Code')
+
             validate_username(args['username'])
             user = new_user(
                 username = args['username'], 
@@ -54,9 +62,13 @@ class UsersAPI(Resource):
                 )
             if not user:
                 raise NameError('There was a problem creating your user account, please try again')
-            new_customer(email, user)
-
+            new_customer(
+                email = email, 
+                user = user, 
+                coupon_code = sponsor_code
+            )
         except Exception as e:
+            logging.info(e)
             return {"error" : str(e) }
         else:
             return {"success" : "user successfully created"}

@@ -182,7 +182,7 @@ define(
             self.current_course_id(response_object.id);
             self.current_units(response_object.units);
             self.content_title(response_object.content.title);
-            self.content_description(response_object.content.body);x
+            self.content_description(response_object.content.body);
         };
 
         self.fetchUnit = function(unit) {

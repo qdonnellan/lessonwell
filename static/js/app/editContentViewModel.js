@@ -5,18 +5,24 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
         // editContentViewModel inherits from the baseViewModel
         ko.utils.extend( self, new baseViewModel() );
 
-        
         self.customer_loaded = ko.observable(false);
+        self.sponsor_code = ko.observable('');
+        self.sponsor_code_error = ko.observable(null);
+        self.customer = ko.observable(null);
+        self.coupon_applied = ko.observable(false);
+        self.delete_confirm = ko.observable('');
+        self.delete_help = ko.observable(false);
 
         self.sponsored = ko.computed(function() {
             var status = false;
-            if ( self.customer_loaded() ) {
-                var sub = self.subscription();
-                if ( sub && sub.discount ) {
-                    if ( sub.discount.coupon.id == 'sponsored' ) {
-                        status = true;
-                    }
+            var customer = self.customer();
+            if ( customer ) {
+                if (customer.discount) {
+                    status = true;
                 }
+            }
+            if ( self.coupon_applied() ) {
+                status = true;
             }
             return status;
         });
@@ -54,7 +60,7 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
         self.sponsor_end = ko.computed(function() {
             if ( self.sponsored() ) {
                 d = new Date(0);
-                d.setUTCSeconds(self.subscription().discount.end);
+                d.setUTCSeconds(self.customer().discount.end);
                 return d.toDateString();
             } else {
                 return null;
@@ -77,7 +83,8 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
                     } else {
                         self.last_four_raw(false);
                     }
-                    self.subscription(response.customer.subscriptions.data[0]);  
+                    self.customer(response.customer);
+                    self.subscription(response.customer.subscriptions.data[0]);
                 }
             }).done( function () {
                 self.customer_loaded(true);
@@ -221,6 +228,26 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
             return true;
         };
 
+        self.redeemCode = function() {
+            if ( self.sponsor_code() != '' ) {
+                $('#redeem-btn').prop('disabled', true);
+                $('#redeem-btn').html('<i class="fa fa-circle-o-notch fa-spin"></i>')
+                var data = {
+                    sponsor_code : self.sponsor_code()
+                };
+
+                $.post('/api/redeem', data, function(response) {
+                    if ( response.success ) {
+                        self.updateCustomer();
+                    } else {
+                        self.sponsor_code_error(true);
+                        $('#redeem-btn').prop('disabled', false);
+                        $('#redeem-btn').html('Redeem')
+                    }
+                });
+            }
+        };
+
         self.fetchAndUpdateContent = function(response) {
             var content_type = response.content_type;
             if (content_type == 'course') {
@@ -240,6 +267,19 @@ define(['./baseViewModel', 'knockout'], function (baseViewModel, ko) {
             setTimeout(function() {
                 self.updateTeacher();
             }, 1000);
+        };
+
+        self.deleteContent = function(response) {
+            if ( self.delete_confirm() == 'DELETE') {
+                $.ajax({
+                    url:  '/api/curriculum/' + self.content_id(),
+                    type: 'DELETE'
+                }).done(function() {
+                    window.location.replace('/edit');
+                });
+            } else {
+                self.delete_help(true);
+            }
         };
     };
 });

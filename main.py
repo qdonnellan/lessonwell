@@ -13,6 +13,7 @@ from api.users import UsersAPI
 from api.card import CardAPI
 from api.curriculum import CurriculumAPI
 from api.customer import CustomerAPI
+from api.redeem import RedeemAPI
 
 app = Flask(__name__)
 rest_api = Api(app)
@@ -48,5 +49,10 @@ rest_api.add_resource(
 rest_api.add_resource(
     CustomerAPI, 
     '/api/customer'
+    )
+
+rest_api.add_resource(
+    RedeemAPI, 
+    '/api/redeem'
     )
 

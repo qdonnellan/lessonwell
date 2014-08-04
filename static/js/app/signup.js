@@ -5,6 +5,7 @@ define(['knockout'], function (ko) {
         self.server_msg = ko.observable(null)
         self.username = ko.observable('');
         self.formal_name = ko.observable('');
+        self.sponsor_code = ko.observable('');
         self.error_msg = ko.computed(function() {
             if (self.username().length < 5) {
                 return 'username is too short; must be at least 5 characters';
@@ -38,15 +39,18 @@ define(['knockout'], function (ko) {
                 $('.btn-waiting-text').show();
                 $('#create-account-btn').prop('disabled', false);
             }
-        }
+        };
 
         self.createAccount = function () {
             self.toggle_loading_button('on');
             self.server_msg(null);
+
             var data = {
                 formalName : self.formal_name(),
                 username : self.username(),
+                sponsorCode : self.sponsor_code()
             };
+            
             $.post('/api/users', data, function (response) {
                 if ('error' in response) {
                     self.server_msg(response['error']);
@@ -57,7 +61,7 @@ define(['knockout'], function (ko) {
                 self.toggle_loading_button('off');
             });
 
-        }
+        };
     };
 
     var vm = new viewModel()

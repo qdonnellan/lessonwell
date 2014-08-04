@@ -5,6 +5,7 @@ from decorators.auth import link_if_no_google_user, abort_if_no_google_user
 from controllers.validation import validate_username
 from controllers.modify_user import new_user
 from controllers.stripe_controllers.new_customer import new_customer
+from controllers.stripe_controllers.redeem import verify_code
 from google.appengine.api import users
 import datetime
 
@@ -32,32 +33,5 @@ class SignUpPage(MethodView):
                 google_users_api = users,
                 stripe_publish_key = pub_key
                 )
-
-    def post(self):
-        """
-        handle the post request for the signup page
-        """
-        username = request.form['username']
-        stripeToken = request.form['stripeToken']
-        formalName = request.form['formalName']
-        email = users.get_current_user().email()
-        try: 
-            validate_username(username)
-            if not stripeToken or stripeToken == '': 
-                raise NameError('Invalid Payment Information')
-            user = new_user(
-                username = username, 
-                formalName = formalName, 
-                email = email,
-                googleID = users.get_current_user().user_id()
-                )
-            if not user:
-                raise NameError('There was a problem creating your user account, please try again')
-            new_customer(stripeToken, email, user)
-
-        except Exception as e:
-            return redirect('/signup?error=%s' % e)
-        else:
-            return redirect('/success')
 
 
