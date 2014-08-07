@@ -19,4 +19,5 @@ class ProfilePage(MethodView):
             teacher = teacher,
             active_user = get_active_user(),
             google_users_api = users,
+            mathjax = True
             )

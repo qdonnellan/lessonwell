@@ -136,6 +136,7 @@ html {
   bottom: 0px;
   height: 28px;
   width: 100%;
+  z-index: 999 !important;
 }
 
 .footer {

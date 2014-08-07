@@ -1,11 +1,13 @@
 from flask import Flask
 from flask.ext.restful import Api
 from views.public.front import FrontPage
+from views.public.google_page import GooglePage
 from views.public.link import LinkPage
 from views.public.signup import SignUpPage
 from views.public.success import SuccessPage
 from views.public.sandbox import SandboxPage
 from views.public.sponsor import SponsorPage
+from views.public.pricing import PricingPage
 from views.public.administrator import AdministratorPage
 from views.teacher.profile import ProfilePage
 from views.teacher.edit_content import EditContentPage
@@ -25,8 +27,11 @@ app.add_url_rule('/signup', view_func=SignUpPage.as_view('signup'))
 app.add_url_rule('/success', view_func=SuccessPage.as_view('success'))
 app.add_url_rule('/edit', view_func=EditContentPage.as_view('edit'))
 app.add_url_rule('/sandbox', view_func=SandboxPage.as_view('sandbox'))
+app.add_url_rule('/google', view_func=GooglePage.as_view('google_page'))
 app.add_url_rule('/administrator', view_func=AdministratorPage.as_view('administrator'))
 app.add_url_rule('/sponsor/<username>', view_func=SponsorPage.as_view('sponsor'))
+app.add_url_rule('/pricing/<pricing_type>', view_func=PricingPage.as_view('pricing'))
+app.add_url_rule('/pricing', view_func=PricingPage.as_view('pricing_main'))
 app.add_url_rule('/<username>', view_func=ProfilePage.as_view('profile'))
 
 # the restful API routes

@@ -46,9 +46,3 @@ class AdministratorPage(MethodView):
                 'multi_sponsor_success.html',
                 mathjax = False
                 )
-
-
-
-
-
-

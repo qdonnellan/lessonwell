@@ -21,4 +21,5 @@ class EditContentPage(MethodView):
                 active_user = get_active_user(),
                 google_users_api = users,
                 stripe_publish_key = pub_key,
+                mathjax = True,
                 )
