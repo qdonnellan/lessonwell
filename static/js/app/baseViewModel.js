@@ -18,6 +18,7 @@ define(
         self.current_unit_description = ko.observable('');
         self.current_unit_id = ko.observable('');
         self.current_lessons = ko.observableArray([]);
+        
         self.current_lesson_title = ko.observable('');
         self.current_lesson_body = ko.observable('');
         self.current_lesson_id = ko.observable(null);
@@ -35,6 +36,21 @@ define(
 
         self.subscription = ko.observable(null);
         self.last_four_raw = ko.observable(null);
+
+        self.sort_content = function(array, key_name) {
+            return array.sort(function(a,b) {
+                var x = a['content'][key_name]; var y = b['content'][key_name];
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0 ));
+            });
+        };
+
+        self.current_lessons_sorted = ko.computed(function() {
+            if ( self.current_lessons() ) {
+                return self.sort_content(self.current_lessons(), 'title');
+            } else {
+                return null;
+            }
+        });
 
         self.teacher_name_computed = ko.computed(function () {
             if ( self.teacher_name() ) {

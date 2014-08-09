@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+import logging
 
 def get_content_by_id(content_id):
     """
@@ -13,6 +14,8 @@ def get_course_by_id(content_id):
 
     the content_id may be for a lesson, unit, or course
     """
+
+    logging.info(content_id)
     content = ndb.Key('Curriculum', int(content_id)).get()
     if not content:
         raise Exception("that content id does not exist")

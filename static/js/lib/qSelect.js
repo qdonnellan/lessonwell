@@ -2,9 +2,10 @@
 // https://github.com/timdown/rangyinputs
 
 define(
-    ['rangyinputs', 'jquery'], function (rangy, $) {
+    ['jquery', 'rangyinputs'], function ($, rangy) {
 
     return function qSelect(viewModel) {
+
         var self = this;
         var $ta = $(".inputContent");
         var $startIndex = $("#startIndex"), $endIndex = $("#endIndex");

@@ -35,10 +35,29 @@ define(['knockout'], function (ko, icheck) {
             return script_string;
         });
 
+        self.getParameterByName = function(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        };
+
     };
 
     var vm = new viewModel()
     ko.applyBindings( vm );
+
+    $( document ).ready(function() {
+        var sub = vm.getParameterByName("subscriptions");
+        
+        if ( sub == '5' ) {
+            $("#quantity05").prop("checked", true);
+        } else if ( sub == '10' ) {
+            $("#quantity10").prop("checked", true);
+        } else if ( sub == '20' ) {
+            $("#quantity20").prop("checked", true);
+        }
+    });
 
 
 });

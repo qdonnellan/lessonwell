@@ -9,8 +9,23 @@ html {
 }
 
 .front-header {
-  margin-top: 100px;
+  padding-top: 100px;
+  margin-top: -40px;
+  padding-bottom: 80px;
   margin-bottom: 100px;
+  background-color: #434A54;
+  color: #E6E9ED;
+}
+
+.front-page-dropdown a {
+  font-size: 1.2em;
+  color: #E6E9ED !important;
+  background-color: #434A54 !important;
+
+}
+
+.front-header .lead {
+  color: #AAB2BD;
 }
 
 .front-brand {
@@ -18,16 +33,28 @@ html {
   font-size: 5em;
 }
 
+#howitworks {
+  padding-bottom: 50px;
+}
+
+.img-shadow {
+  box-shadow: 0px 5px 30px 10px #888;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.type-this-div {
+  font-size: 1.2em;
+  font-family: 'Inconsolata' !important;
+}
+
 .front-logo {
-  background-color: #37BC9B;
-  height: 200px;
-  width: 250px;
   display: inline-block;
   text-align: center;
   font-family: 'Meddon', sans-serif ;
   font-size: 100px;
   padding-top: 25px;
-  color: #fff;
+  color: #37BC9B;
 }
 
 .logo {
@@ -56,6 +83,12 @@ html {
   height: 7px;
   width: 100%;
   z-index: 999;
+}
+
+.dont-forget-to-save {
+  margin-top: 5px;
+  margin-right: 10px;
+  padding: 7px;
 }
 
 .right-sidebar {
@@ -103,8 +136,8 @@ html {
 }
 
 .edit-lesson-div,
-.edit-lesson-div > div,
-.edit-lesson-div > div > .panel {
+.edit-lesson-div > .col-sm-6,
+.edit-lesson-div > .col-sm-6 > .panel {
   height: 100% !important;
 }
 
@@ -173,6 +206,16 @@ code {
 
 .formatted-lesson pre {
   background-color: #eee;
+}
+
+#lesson-div {
+  padding-bottom: 50px;
+}
+
+.lesson-div img,
+#lesson-div img {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #lesson-div > pre > code,

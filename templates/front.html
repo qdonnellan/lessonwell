@@ -1,31 +1,86 @@
 {% extends "base.html" %}
 {% block body %}
 
+<div class="front-page-dropdown">
 {% include 'public_user_dropdown.html' %}
+</div>
 
-<div class="container">
-    <div class="front-header text-center row">
+<div class="front-header text-center">
+    <div class="container">
         <span class="front-logo">lw</span>
         <h1 class="front-brand">lessonwell</h1>
         <div class="col-sm-6 col-sm-offset-3">
             <p class='lead'>Automatically styled and organized lessons that look great on all your students' devices</p>
-            <p class="lead">
-                <a href="/#howitworks" class="btn btn-default btn-lg">See How It Works</a>
+            <p>
                 {% if active_user %}
                     <a href="/{{ active_user.username }}" class="btn btn-info btn-lg">Go to your Profile</a>
                 {% else %}
-                    <a href="/link" class="btn btn-info btn-lg">Start For Free</a>
+                <span class="front-page-market-button"> 
+                    <a href="/link" class="btn btn-info btn-lg">
+                        Start For Free
+                    </a>
+                </span>
                 {% endif %}
             </p>
         </div>
     </div>
-    <div id="howitworks" class="row">
-        <hr>
-        <div>
-            <h2  class="text-center">Automatically Styled</h2>
+</div>
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="page-header text-center">
+                <h2>Stop wasting time with complicated "content management" platforms</h2>
+                <p class='lead'>Lessonwell is a <em>lesson platform</em> that does all the time-consuming stuff for you so that you can focus on what you do really well: writing awesome lessons</p>
+            </div>
+        </div>
+        <div class="col-md-10 col-md-offset-1">
+            <img class="img-responsive" src="{{url_for('static', filename='img/auto_organized.png')}}">
         </div>
     </div>
-
+    <div class="row" id="howitworks">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="row">
+                <h2 class='text-center'>Why Lessonwell?</h2>
+                <p class="lead text-center"><em>Lessonwell is an online lesson-writing platform that saves teacher time and effort. </em></p>
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3 class="text-center">Automatic Formatting</h3>
+                            <p>Teachers don't waste time choosing colors, fonts, sizes, margins, etc: we do all that for them. Instead, teachers focus on what they do best: <em>writing great content</em>
+                            <p>Every lesson is formatted to look great on any mobile device to enhance student experience as well.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3 class="text-center">Automatic Organization</h3>
+                            <p>Teachers also don't have to worry about grouping their lessons into appropriate units or courses: lessonwell automatically organizes their lessons! Proper menus and page naviation are generated without any effort by the teacher.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3 class="text-center">Not Complicated</h3>
+                            <p>Unlike many content-management systems out there, lessonwell is not bogged down by a million bells and whistles. We do one thing, and we do it very well: <em>writing lessons</em></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3 class="text-center">Intuitive User Interface</h3>
+                            <p>Many "made for teacher" platforms are just too confusing for the typical teacher to use effectively without training. Lessonwell is designed to be simple to use, and intuitive for even the least "tech savvy" user.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

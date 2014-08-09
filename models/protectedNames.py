@@ -3,6 +3,7 @@ ProtectedNames = [
     'about', 
     'shorthand', 
     'index', 
+    'terms',
     'privacy', 
     'username', 
     'pricing', 

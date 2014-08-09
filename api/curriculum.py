@@ -25,9 +25,12 @@ class CurriculumAPI(Resource):
         try:
             content = get_content_by_id(content_id)
             data = content_to_dict(content)
+            logging.info('made it here 1')
             if content.content_type == 'course':
+                logging.info('made it here 2')
                 unit_list = []
                 for unit_id in content.content['units']:
+                    logging.info('made it here in unit: %s' % unit_id)
                     unit = get_content_by_id(unit_id)
                     unit_list.append(content_to_dict(unit))
 

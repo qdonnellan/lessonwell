@@ -2,7 +2,7 @@ from models.user import User
 from fetch_user import get_user_by_username
 from validation import validate_username
 
-def new_user(username, formalName, email, googleID, stripeID=None):
+def new_user(username, formalName, email, googleID, bio=None, stripeID=None):
     """
     create a new user, return the user Object
     """
@@ -13,7 +13,7 @@ def new_user(username, formalName, email, googleID, stripeID=None):
         googleID = googleID,
         stripeID = stripeID,
         email = email,
-        bio = '',
+        bio = bio,
         parent = None,
         courses = [],
         )

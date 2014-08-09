@@ -1,19 +1,25 @@
-<div class="col-sm-6">
+<div class="col-sm-12">
     {% include 'edit_divs/shorthand_buttons.html' %}
+
+    <button class="btn btn-info pull-right" id="save-lesson-button" data-bind="click: saveLesson, enable: contentChangesDetected">
+        <i class="fa fa-save fa-lg"></i><strong> save lesson</strong>
+    </button>
+    <span class="badge badge-danger pull-right dont-forget-to-save" data-bind="if: contentChangesDetected">
+        Changes detected, don't forget to save!
+        <i class="fa fa-arrow-right fa-lg"></i> 
+    </span>
     
-    <textarea data-bind="value: current_lesson_body, valueUpdate: 'afterkeydown', event: {keypress: lessonChange}" class="col-sm-12 form-control inputContent" placeholder="type your lesson in this box" id="lesson-textarea"></textarea>
+</div>
+
+<div class="col-sm-6">
+    <textarea data-bind="value: current_lesson_body, valueUpdate: 'afterkeydown', event: {input: lessonChange}" class="col-sm-12 form-control inputContent" placeholder="Start typing your lesson here. The first line will become this lesson's title" id="lesson-textarea"></textarea>
 </div>
 <div class="col-sm-6">
-    <div class="row">
-        <div class="col-sm-12">
-            <span class="badge badge-danger" data-bind="if: contentChangesDetected">Changes detected, don't forget to save!</span>
-            <button class="btn btn-info pull-right" id="save-lesson-button" data-bind="click: saveLesson, enable: contentChangesDetected">
-                <i class="fa fa-save fa-lg"></i><strong> save lesson</strong>
-            </button>
-        </div>
-    </div>
     <div class="panel panel-default">
         <div class="panel-body lesson-div formatted-lesson" data-bind="html: formatted_lesson"></div>
     </div>
 </div>
+
+
+
 
